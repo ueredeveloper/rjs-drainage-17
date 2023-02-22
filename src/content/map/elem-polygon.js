@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { converterPostgresToGmaps } from '../tools';
+import { converterPostgresToGmaps } from '../../tools';
 
 /**
 * Elemento de Polígono gmaps api.

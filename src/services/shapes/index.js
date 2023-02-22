@@ -1,7 +1,7 @@
 // mudar para https://njs-adasa-postgres.ueredeveloper.repl.co
 const url = 'https://adasa-postgres.ueredeveloper.repl.co';
 
-export async function findPointsInsidePolygon(polygon) {
+async function findPointsInsidePolygon(polygon) {
 
   console.log(JSON.stringify(polygon))
   let points = await fetch(url + '/findPointsInsidePolygon', {
@@ -14,7 +14,7 @@ export async function findPointsInsidePolygon(polygon) {
 
   return points;
 }
-export async function findPointsInsideCircle(circle) {
+async function findPointsInsideCircle(circle) {
 
   let points = await fetch(url + '/findPointsInsideCircle', {
     method: 'POST',
@@ -26,7 +26,7 @@ export async function findPointsInsideCircle(circle) {
 
   return points;
 }
-export async function findPointsInsideRectangle(rectangle) {
+async function findPointsInsideRectangle(rectangle) {
   let points = await fetch(url + '/findPointsInsideRectangle', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -42,7 +42,7 @@ export async function findPointsInsideRectangle(rectangle) {
 * @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
 *
   */
-export async function getShape(shape) {
+async function getShape(shape) {
 
   let response = await fetch(url + `/getShape?shape=${shape}`, {
     method: 'GET',
@@ -63,7 +63,7 @@ export async function getShape(shape) {
 * @para {float} lng Longitue.
 *
   */
-export async function findPointsInASystem(tp_id, lat, lng) {
+async function findPointsInASystem(tp_id, lat, lng) {
   console.log('find tp_id ', tp_id)
   let response = await fetch(url + `/findPointsInASystem?tp_id=${tp_id}&lat=${lat}&lng=${lng}`, {
     method: 'GET',
@@ -77,3 +77,42 @@ export async function findPointsInASystem(tp_id, lat, lng) {
   })
   return response;
 }
+
+const njs_azure_url = `https://njs-azure.ueredeveloper.repl.co`;
+/**
+* Buscar a shape solicitada no servidor
+* @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
+*
+  */
+async function getUsuario(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
+
+  let response = await fetch(njs_azure_url + `/getUsuario?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/JSON',
+      'Content-Type': 'application/JSON',
+    }
+
+  }).then(res => {
+    return res.json();
+  })
+  return response;
+}
+
+async function getDemandas (end_id) {
+
+  let response = await fetch(njs_azure_url + `/getDemandas?end_id=${end_id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/JSON',
+      'Content-Type': 'application/JSON',
+    }
+
+  }).then(res => {
+    return res.json();
+  })
+  return response;
+}
+
+
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsuario, getDemandas }

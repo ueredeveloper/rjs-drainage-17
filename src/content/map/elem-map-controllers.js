@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { initialState } from '../initial-state'
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import LayersClearIcon from '@mui/icons-material/LayersClear';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
-import { initialState } from '../App'
+
 
 function ElemMapControllers({ data, setData }) {
 
-  const [checked, setChecked] = React.useState([false, false]);
+  const [checked, setChecked] = useState([false, false]);
 
   const handleChange1 = (event) => {
     setChecked([event.target.checked, checked[1]]);
@@ -83,7 +84,7 @@ function ElemMapControllers({ data, setData }) {
         <Checkbox name="fraturado" checked={checked[1]} onChange={handleChange2} />
         <FormLabel id="demo-controlled-radio-buttons-group">Fraturado</FormLabel>
         {/** limpar */}
-        <Button className='mx-4 bg-red-500' onClick={handleChange3}><LayersClearIcon /></Button>
+        <Button className='mx-4' onClick={handleChange3}><LayersClearIcon /></Button>
       </Box>
     </FormControl>
   )

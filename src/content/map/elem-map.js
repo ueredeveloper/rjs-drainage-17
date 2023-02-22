@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { darkMap } from './dark-map';
 /**
   * Elemento mapa
-*/
+  */
 
 function ElemMap ({ mode, center, zoom, onClick, map, setMap }) {
 
@@ -40,7 +40,7 @@ function ElemMap ({ mode, center, zoom, onClick, map, setMap }) {
 
 
   return (
-    <div className="h-80" ref={ref} id="map" />
+    <div style={{width: '100%', height: '100%'}} ref={ref} id="map" />
   );
 
 }
