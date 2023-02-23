@@ -115,7 +115,7 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Vazão (l/dia)'}</TableCell>
-                {console.log('flow ', _demanda)}
+            
                 {_demanda.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>

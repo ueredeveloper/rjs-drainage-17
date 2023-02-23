@@ -9,7 +9,7 @@ function ElemBarChart({ hg_analyse }) {
   /**
   * Dados sobre a disponibilidade.
   */
-  console.log(hg_analyse)
+ 
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
   useEffect(() => {

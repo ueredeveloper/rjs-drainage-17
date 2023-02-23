@@ -33,7 +33,7 @@ const style = {
     p: 4,
 };
 
-function ElemGrant() {
+function ElemGrant({ data, setData }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -72,10 +72,6 @@ function ElemGrant() {
         }
     ])
 
-    useEffect(() => {
-        console.log('user dem', user.dt_demandas)
-    })
-
     const handleUserChange = (event) => {
         setUser(prev => {
             return {
@@ -83,6 +79,37 @@ function ElemGrant() {
                 [event.target.name]: event.target.value
             }
         });
+
+        /*
+        let _vol_anual = 0;
+        user.dt_demandas.demanda.forEach(dem => {
+            _vol_anual += parseInt(dem.vol_mensal_mm)
+        })
+
+        let {_n_points,_q_ex,_q_ex_per,_q_points, _q_points_per,_vol_avaiable} = data.system.hg_analyse
+        // somar ponto analizado
+        let __n_points = _n_points + 1
+        // somatório das vazões anuais mais a vazão anual do usuário
+        let __q_points = _q_points + _vol_anual
+        //  porcentagem -> regra de três
+        let __q_points_per = __q_points * 100 / _q_ex
+        // subtrair do volume disponível o volume do usuário
+        let __vol_avaiable = _vol_avaiable - _vol_anual
+
+        setData(prev => {
+            return {
+                ...prev,
+                system: {
+                    ...prev.system,
+                    ...prev.system.hg_analyse._n_points = __n_points,
+                    ...prev.system.hg_analyse._q_points = __q_points,
+                    ...prev.system.hg_analyse._q_points_per = __q_points_per,
+                    ...prev.system.hg_analyse._vol_avaiable = __vol_avaiable
+                }
+            }
+
+        });
+        */
     };
 
     async function _getDemandas(end_id) {
@@ -136,7 +163,11 @@ function ElemGrant() {
                                     </TableHead>
                                     <TableBody>
                                         {users.map((row, i) => (
-                                            <ElemListUsers key={'_' + i} row={row} getDemandas={_getDemandas} setUser={setUser} />
+                                            <ElemListUsers 
+                                                key={'_' + i} row={row} 
+                                                getDemandas={_getDemandas} 
+                                                user={user} setUser={setUser}
+                                                data={data} setData={setData} />
                                         ))}
                                     </TableBody>
                                 </Table>

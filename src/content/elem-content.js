@@ -23,6 +23,10 @@ function ElemContent() {
     const center = { lat: -15.762744, lng: -47.813301 };
     const zoom = 10;
 
+    useEffect(()=>{
+      console.log(data.system)
+    }, [data])
+
     function onClick() {
         console.log('on click')
     }
@@ -74,7 +78,7 @@ function ElemContent() {
                   <ElemWellType
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
-                  <ElemAnalyse hg_analyse={data.system.hg_analyse} />
+                  <ElemAnalyse data={data} setData={setData} hg_analyse={data.system.hg_analyse} />
                   <ElemBarChart hg_analyse={data.system.hg_analyse} />
                 </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>

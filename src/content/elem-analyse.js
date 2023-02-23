@@ -12,7 +12,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ElemGrant from './grant';
 
-function ElemAnalyse({ hg_analyse }) {
+function ElemAnalyse({ data, setData, hg_analyse }) {
   /**
     * Dados sobre a disponibilidade.
     */
@@ -27,7 +27,7 @@ function ElemAnalyse({ hg_analyse }) {
       <FormControl>
         <Box sx={{display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between'}}>
           <FormLabel id="demo-controlled-radio-buttons-group">Análise</FormLabel>
-          <ElemGrant/>
+          <ElemGrant data={data} setData={setData}/>
         </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
           <Table aria-label="collapsible table">
