@@ -8,7 +8,7 @@ import { ElemContent } from './content';
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 
-function App() {
+function App({mode}) {
 
   return (
     <Box
@@ -23,7 +23,7 @@ function App() {
       }}
     >
       <ElemTopBar ColorModeContext={ColorModeContext} />
-      <ElemContent />
+      <ElemContent mode={mode}/>
 
 
     </Box>
@@ -58,11 +58,11 @@ export default function ToggleColorMode() {
             }
             : {
               // palette values for dark mode
-              primary: deepOrange,
-              divider: deepOrange[700],
+              primary: grey,
+              divider: grey[700],
               background: {
-                default: deepOrange[900],
-                paper: deepOrange[900],
+                default: grey[900],
+                paper: grey[900],
               },
               text: {
                 primary: '#fff',
@@ -78,7 +78,7 @@ export default function ToggleColorMode() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <App />
+        <App mode={mode}/>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

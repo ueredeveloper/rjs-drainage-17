@@ -14,10 +14,10 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';;
 
 
-function ElemContent() {
+function ElemContent({mode}) {
 
     const [map, setMap] = useState();
-    const [mode, setMode] = useState('light');
+ 
     const [data, setData] = useState(initialState());
     const [value, setValue] = useState("1");
     const center = { lat: -15.762744, lng: -47.813301 };
