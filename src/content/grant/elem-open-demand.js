@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { red } from '@mui/material/colors';
 
 function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
 
@@ -31,10 +32,10 @@ function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
   }
   
   return (
-    <TableRow>
+    <TableRow >
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box sx={{ margin: 1 }}>
+          <Box sx={{ margin: 1}}>
             <Typography variant="p" gutterBottom component="div">
               Finalidades Autorizadas
             </Typography>
@@ -51,7 +52,7 @@ function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
               <TableBody>
                 {
                   row.demandas.map((dt, i) =>
-                    <TableRow key={"____" + i}>
+                    <TableRow key={"____" + i} sx={{bgcolor: '#e4e4e4'}}>
                       <TableCell component="th" scope="row">
                         {dt.int_latitude}
                       </TableCell>

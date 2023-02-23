@@ -36,10 +36,13 @@ function ElemAnalyse({ data, setData }) {
   useEffect(()=>{
 
     let {hg_analyse} = data.system
+
     hg_analyse._n_points +=1
-    hg_analyse._q_points += user.q_user
-    hg_analyse._q_points_per = (hg_analyse._q_points * 100 / hg_analyse._q_ex).toFixed(4)
-    hg_analyse._vol_avaiable = hg_analyse._vol_avaiable - user.q_user
+    hg_analyse._q_points = (Number(hg_analyse._q_points) +  Number(user.q_user)).toFixed(2)
+    hg_analyse._q_points_per = (Number(hg_analyse._q_points) * 100 / Number(hg_analyse._q_ex)).toFixed(4)
+    hg_analyse._vol_avaiable = (Number(hg_analyse._vol_avaiable) - Number(user.q_user)).toFixed(2)
+
+    console.log(hg_analyse)
 
     setData(prev => {
         return {
