@@ -1,31 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+
 import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
 import { nFormatter } from '../tools';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-
-export default function ElemBarChart({ hg_analyse }) {
+function ElemBarChart({ hg_analyse }) {
 
   /**
   * Dados sobre a disponibilidade.
   */
+  console.log(hg_analyse)
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
   useEffect(() => {
@@ -103,3 +87,5 @@ export default function ElemBarChart({ hg_analyse }) {
     </div>
   );
 }
+
+export default ElemBarChart;

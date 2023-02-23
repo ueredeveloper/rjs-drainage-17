@@ -132,7 +132,7 @@ function Row(props) {
   );
 }
 
-function GrantTable({ points }) {
+function ElemListGrants({ points }) {
 
   const [rows, setRows] = useState([createData('', '', '', '', { demandas: [] }, { finalidades: [] })])
 
@@ -181,4 +181,4 @@ function GrantTable({ points }) {
     </TableContainer>
   );
 }
-export default GrantTable;
+export default ElemListGrants;

@@ -5,7 +5,7 @@ import ElemAnalyse from './elem-analyse';
 import ElemMapControllers from './map/elem-map-controllers';
 import ElemBarChart from './elem-bar-chart';
 import ElemLatLng from './elem-lat-lng';
-import GrantTable from './grant-table';
+import ElemListGrants from './elem-list-grants';
 import { initialState } from './initial-state';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -75,7 +75,7 @@ function ElemContent() {
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
                   <ElemAnalyse hg_analyse={data.system.hg_analyse} />
-                  {/*<ElemBarChart hg_analyse={data.system.hg_analyse} />*/}
+                  <ElemBarChart hg_analyse={data.system.hg_analyse} />
                 </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>
                 <TabPanel value="3">Item Three</TabPanel>
@@ -85,9 +85,8 @@ function ElemContent() {
 
             </Box>
             {/** TABELA */}
-
             <Box> 
-            <GrantTable points={data.system.points} />
+            <ElemListGrants points={data.system.points} />
              </Box>
 
         </Box>
