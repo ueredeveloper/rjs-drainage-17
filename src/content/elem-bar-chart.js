@@ -21,6 +21,7 @@ function ElemBarChart({ hg_analyse }) {
     scales: {
       y: {
         beginAtZer: 0,
+        type: 'logarithmic',
         position: 'left',
         ticks: {
           callback: function (value) {
@@ -30,6 +31,7 @@ function ElemBarChart({ hg_analyse }) {
       },
       percentage: {
         beginAtZer: 0,
+        type: 'logarithmic',
         position: 'right',
         grid: {
           drawOnChartArea: false
