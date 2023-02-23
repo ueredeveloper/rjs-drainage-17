@@ -23,9 +23,9 @@ ChartJS.register(
 
 export default function ElemBarChart({ hg_analyse }) {
 
-    /**
-    * Dados sobre a disponibilidade.
-    */
+  /**
+  * Dados sobre a disponibilidade.
+  */
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function ElemBarChart({ hg_analyse }) {
         beginAtZer: 0,
         position: 'left',
         ticks: {
-          callback: function(value) {
+          callback: function (value) {
             return nFormatter(value, 1)
           }
         }
@@ -51,7 +51,7 @@ export default function ElemBarChart({ hg_analyse }) {
           drawOnChartArea: false
         },
         ticks: {
-          callback: function(value) {
+          callback: function (value) {
             return `${value}%`
 
           }
@@ -94,11 +94,12 @@ export default function ElemBarChart({ hg_analyse }) {
         }
       ]
   };
-  
+
   return (
     <div>
       {/** responsividade css => h-52...*/}
-      <Bar className='h-52 min-h-52 max-h-52 w-full max-w-full' options={options} data={data} />
+      <Bar style={{ height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
+        options={options} data={data} />
     </div>
   );
 }

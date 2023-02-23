@@ -25,10 +25,10 @@ function ElemAnalyse({ hg_analyse }) {
   return (
     <Box>
       <FormControl>
-        <div className='flex flex-row justify-between'>
+        <Box sx={{display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between'}}>
           <FormLabel id="demo-controlled-radio-buttons-group">Análise</FormLabel>
           <ElemGrant/>
-        </div>
+        </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>

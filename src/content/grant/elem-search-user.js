@@ -41,10 +41,10 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
   return (
     <Box sx={{pt: 0}}>
       <FormLabel id="demo-controlled-radio-buttons-group">Pesquisa</FormLabel>
-      <Box className='flex flex-row justify-between' sx={{ marginTop: 2, marginBottom: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between', marginTop: 2, marginBottom: 2 }}>
         {/* Pesquisa de Usários*/}
-        <Box className='flex flex-row'>
-          <Box className='mx-4'>
+        <Box  sx={{ display: 'flex', flexDirection: 'flex-row'}}>
+          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
             <TextField id="us_nome"
               name="us_nome"
               value={search.us_nome}
@@ -52,7 +52,7 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <Box className='mx-4'>
+          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
             <TextField id="us_cpf_cnpj"
               name="us_cpf_cnpj"
               value={search.us_cpf_cnpj}
@@ -60,7 +60,7 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <Box className='mx-4'>
+          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
             <TextField id="doc_sei"
               name="doc_sei"
               value={search.doc_sei}
@@ -69,7 +69,7 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
               onChange={handleUserChange} />
 
           </Box>
-          <Box className='mx-4'>
+          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
             <TextField id="proc_sei"
               name="proc_sei"
               value={search.proc_sei}
@@ -90,4 +90,6 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
 
   )
 }
+
+
 export { ElemSearchUser }
