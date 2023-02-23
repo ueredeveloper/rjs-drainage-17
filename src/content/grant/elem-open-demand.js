@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import Table from '@mui/material/Table';
@@ -13,46 +13,23 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
 
   function onClick(dt) {
+
+    let _q_user = 0;
+    dt.dt_demandas.demanda.forEach(dem => {
+      _q_user += parseInt(dem.vol_mensal_mm)
+    })
+
     setUser(prev=>{
       return {
         ...prev,
-        dt_demandas: dt.dt_demandas
+        dt_demandas: dt.dt_demandas, 
+        q_user: _q_user
+
       }
     });
 
-    
-    let _vol_anual = 0;
-    user.dt_demandas.demanda.forEach(dem => {
-        _vol_anual += parseInt(dem.vol_mensal_mm)
-    })
-
-    let {_n_points,_q_ex,_q_ex_per,_q_points, _q_points_per,_vol_avaiable} = data.system.hg_analyse
-    // somar ponto analizado
-    let __n_points = _n_points + 1
-    // somatório das vazões anuais mais a vazão anual do usuário
-    let __q_points = _q_points + _vol_anual
-    //  porcentagem -> regra de três
-    let __q_points_per = __q_points * 100 / _q_ex
-    // subtrair do volume disponível o volume do usuário
-    let __vol_avaiable = _vol_avaiable - _vol_anual
-
-    setData(prev => {
-        return {
-            ...prev,
-            system: {
-                ...prev.system,
-                ...prev.system.hg_analyse._n_points = __n_points,
-                ...prev.system.hg_analyse._q_points = __q_points,
-                ...prev.system.hg_analyse._q_points_per = __q_points_per,
-                ...prev.system.hg_analyse._vol_avaiable = __vol_avaiable
-            }
-        }
-
-    });
-
-    console.log('ele open click ')
   }
-
+  
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

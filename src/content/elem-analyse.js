@@ -12,22 +12,52 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ElemGrant from './grant';
 
-function ElemAnalyse({ data, setData, hg_analyse }) {
+function ElemAnalyse({ data, setData }) {
   /**
     * Dados sobre a disponibilidade.
     */
-  const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
+  const [_hg_analyse, _setHGAnalyse] = useState(data.system.hg_analyse);
+
+   /* mudar, pois aqui o que importa é só da demanda, a palavra user não interesa neste momento */
+   const [user, setUser] = useState({
+    "us_nome": "",
+    "us_cpf_cnpj": "",
+    "doc_end": 0,
+    "doc_sei": "123",
+    "proc_sei": "",
+    "dt_demandas": { "demanda": [] },
+    "q_user": 0
+});
 
   useEffect(() => {
-    _setHGAnalyse(hg_analyse)
-  }, [hg_analyse])
+   _setHGAnalyse(data.system.hg_analyse)
+  }, [data])
 
+  useEffect(()=>{
+
+    let {hg_analyse} = data.system
+    hg_analyse._n_points +=1
+    hg_analyse._q_points += user.q_user
+    hg_analyse._q_points_per = (hg_analyse._q_points * 100 / hg_analyse._q_ex).toFixed(4)
+    hg_analyse._vol_avaiable = hg_analyse._vol_avaiable - user.q_user
+
+    setData(prev => {
+        return {
+            ...prev,
+            system: {
+                ...prev.system,
+                hg_analyse: hg_analyse
+            }
+        }
+    });
+  }, [user])
+  
   return (
     <Box>
       <FormControl>
         <Box sx={{display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between'}}>
           <FormLabel id="demo-controlled-radio-buttons-group">Análise</FormLabel>
-          <ElemGrant data={data} setData={setData}/>
+          <ElemGrant user={user} setUser={setUser} data={data} setData={setData}/>
         </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
           <Table aria-label="collapsible table">

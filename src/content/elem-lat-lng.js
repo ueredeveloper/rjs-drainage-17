@@ -52,17 +52,23 @@ function ElemLatLng({ map, tp_id, position, setData }) {
         }
       });
       let _q_ex_per = ((_q_ex * 100) / _q_ex).toFixed(0);
-      let _q_points = _Q;
       let _n_points = _points.length;
+      let _q_points = _Q;
       let _q_points_per = ((_Q * 100) / _q_ex).toFixed(4);
 
       return {
+        // Q explotável
         _q_ex: _q_ex,
-        _q_ex_per: _q_ex_per,
-        _q_points: _q_points,
+        // nº pontos
         _n_points: _n_points,
+        // Q outorgada
+        _q_points: _q_points,
+        // 100%
+        _q_ex_per: _q_ex_per,
+        // % utilizada
         _q_points_per: _q_points_per,
-        _vol_avaiable: _q_ex - _q_points
+        // vol disponível
+        _vol_avaiable: (_q_ex - _q_points).toFixed(2)
       };
     }
 

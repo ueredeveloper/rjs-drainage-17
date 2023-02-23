@@ -33,19 +33,11 @@ const style = {
     p: 4,
 };
 
-function ElemGrant({ data, setData }) {
+function ElemGrant({ user, setUser, data, setData }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    /* mudar, pois aqui o que importa é só da demanda, a palavra user não interesa neste momento */
-    const [user, setUser] = useState({
-        "us_nome": "",
-        "us_cpf_cnpj": "",
-        "doc_end": 0,
-        "doc_sei": "123",
-        "proc_sei": "",
-        "dt_demandas": { "demanda": [] }
-    });
+   
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
         us_nome: "",
