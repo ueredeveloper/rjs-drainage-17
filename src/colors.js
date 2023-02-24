@@ -3,36 +3,65 @@ import { grey } from '@mui/material/colors';
 const colors = [
     {
         // palette values for dark mode
-        primary: {main: grey[500]},
+        primary: { main: grey[500] },
         text: {
             primary: '#fff',
             secondary: 'rgba(255, 255, 255, 0.7)',
             disable: 'rgba(255, 255, 255, 0.5)',
-         
+
         },
-       tertiary:{main: '#fff'}
-    }, 
+        tertiary: { main: '#fff' }
+    },
     //blue
     {
         primary: {
-            main: '#0006FF',
-           
+            main: '#1506be',
+
         },
         secondary: {
-            main: '#36D381',
+            main: '#be1506',
         },
-        tertiary: {main: '#FF0085'}
+        tertiary: {
+            main: '#06be15'
+        }
     }
     , // pink
     {
         primary: {
-            main: '#FA053E',
+            main: '#be0648',
         },
         secondary: {
-            main: '#623BCE',
+            main: '#bea106',
         },
-        tertiary: {main: '#B9FA05'}
+        tertiary: {
+            main: '#0692be'
+        }
     }
+    , // green
+    {
+        primary: {
+            main: '#54cb19',
+        },
+        secondary: {
+            main: '#19cbb4',
+        },
+        tertiary: {
+            main: '#cb199b'
+        }
+    }
+    , // red
+    {
+        primary: {
+            main: '#cb1919',
+        },
+        secondary: {
+            main: '#a7cb19',
+        },
+        tertiary: { 
+            main: '#1960cb' 
+        }
+    }
+
 ]
 
 

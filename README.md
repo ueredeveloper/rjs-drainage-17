@@ -13,4 +13,5 @@
 
 2. Verificar se o usuário buscado está dentro da shape de disponibilidade solicitada
 
-Trabalhando com as cores da página, o objetivo é que a pessoa possa escolher uns três tipos de cores diferentes.
+3. Trabalhando com as cores da página, o objetivo é que a pessoa possa escolher uns três tipos de cores diferentes.
+Utilizei o site `https://hue.tools/` para gerar cores para o site.

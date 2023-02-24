@@ -84,7 +84,7 @@ function ElemMapControllers({ data, setData }) {
         <Checkbox color="secondary" name="fraturado" checked={checked[1]} onChange={handleChange2} />
         <FormLabel id="demo-controlled-radio-buttons-group">Fraturado</FormLabel>
         {/** limpar */}
-        <Button sx={{marginLeft: '1rem', marginRight: '1rem'}} onClick={handleChange3}><LayersClearIcon /></Button>
+        <Button sx={{marginLeft: '1rem', marginRight: '1rem'}} onClick={handleChange3}><LayersClearIcon color="secondary"/></Button>
       </Box>
     </FormControl>
   )
