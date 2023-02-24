@@ -16,11 +16,13 @@ function ElemListUsers({row, getDemandas, user, setUser, data, setData}) {
     }
   }, [open])
 
+  
   return (
     <React.Fragment>
       <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
         <TableCell>
           <IconButton
+          color="secondary"
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}

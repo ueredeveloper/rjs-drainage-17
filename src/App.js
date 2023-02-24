@@ -1,36 +1,15 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import { amber, grey, deepOrange, purple } from '@mui/material/colors';
+import colors from './colors';
 import { ElemTopBar } from './header';
 import { ElemContent } from './content';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
 
-function App({mode}) {
+export default function App() {
 
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-        justifyContent: 'center',
-        bgcolor: 'background.default',
-        color: 'text.primary',
-        borderRadius: 1,
-      }}
-    >
-      <ElemTopBar ColorModeContext={ColorModeContext} />
-      <ElemContent mode={mode}/>
-
-
-    </Box>
-  );
-}
-
-export default function ToggleColorMode() {
   const [mode, setMode] = React.useState('light');
   const colorMode = React.useMemo(
     () => ({
@@ -40,46 +19,42 @@ export default function ToggleColorMode() {
     }),
     [],
   );
-
+ 
   const theme = React.useMemo(
     () =>
       createTheme({
         palette: {
           mode,
           ...(mode === 'light'
-            ? {
-              // palette values for light mode
-              primary: amber,
-              divider: amber[200],
-              text: {
-                primary: grey[900],
-                secondary: grey[800],
-              },
-            }
-            : {
-              // palette values for dark mode
-              primary: grey,
-              divider: grey[700],
-              background: {
-                default: grey[900],
-                paper: grey[900],
-              },
-              text: {
-                primary: '#fff',
-                secondary: grey[500],
-              },
-            }),
+            ? colors[2]
+            : colors[0]),
 
-        }, // mode final
+        },
       }),
     [mode],
   );
 
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <App mode={mode}/>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            justifyContent: 'center',
+            bgcolor: 'background.default',
+            color: 'text.primary',
+            borderRadius: 1,
+          }}
+        >
+          <ElemTopBar ColorModeContext={ColorModeContext} />
+          <ElemContent mode={mode} theme={theme}/>
+        </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>
+
   );
 }
+

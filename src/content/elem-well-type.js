@@ -61,8 +61,8 @@ function ElemWellType({ tp_id, setData }) {
         onChange={handleChange}
         sx={{ display: 'flex', flexFlow: 'row wrap' }}
       >
-        <FormControlLabel value="1" control={<Radio />} label="Manual" />
-        <FormControlLabel value="2" control={<Radio />} label="Tubular" />
+        <FormControlLabel  value="1" control={<Radio color="secondary" />} label="Manual" />
+        <FormControlLabel value="2" control={<Radio color="secondary" />} label="Tubular" />
       </RadioGroup>
     </FormControl>
   )

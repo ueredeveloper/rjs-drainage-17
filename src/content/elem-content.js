@@ -14,7 +14,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';;
 
 
-function ElemContent({mode}) {
+function ElemContent({mode, theme}) {
 
     const [map, setMap] = useState();
  
@@ -42,7 +42,7 @@ function ElemContent({mode}) {
                 <Box sx={{ flex: 1 }}>
                     <TabContext value={"0"}>
                         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                            <TabList>
+                            <TabList textColor="secondary"  indicatorColor="secondary">
                                 <Tab label="Mapa" value="0" />
                             </TabList>
                         </Box>
@@ -58,7 +58,7 @@ function ElemContent({mode}) {
                 <Box sx={{ width: '100%', typography: 'body1' }}>
               <TabContext value={value}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList onChange={handleChange} aria-label="lab API tabs example">
+                  <TabList textColor="secondary"  indicatorColor="secondary" onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Geral" value="1" />
                     <Tab label="Superficial" value="2" />
                     <Tab label="Subterrâneo" value="3" />
@@ -75,7 +75,7 @@ function ElemContent({mode}) {
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
                   <ElemAnalyse data={data} setData={setData}/>
-                  <ElemBarChart hg_analyse={data.system.hg_analyse} />
+                  <ElemBarChart theme={theme} hg_analyse={data.system.hg_analyse} />
                 </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>
                 <TabPanel value="3">Item Three</TabPanel>

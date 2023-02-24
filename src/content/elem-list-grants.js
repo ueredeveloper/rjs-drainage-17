@@ -77,7 +77,7 @@ function Row(props) {
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         {/* icon down up*/}
         <TableCell>
-          <IconButton
+          <IconButton color="secondary"
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}

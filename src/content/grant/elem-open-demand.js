@@ -31,6 +31,7 @@ function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
 
   }
   
+  
   return (
     <TableRow >
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -59,7 +60,7 @@ function ElemOpenDemand({ open, row, user, setUser, data, setData }) {
                       <TableCell>{dt.int_longitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
-                      <TableCell><IconButton size="large" onClick={() => { onClick(dt) }}>
+                      <TableCell><IconButton color="secondary" size="large" onClick={() => { onClick(dt) }}>
                         <DoneAllIcon />
                       </IconButton></TableCell>
                     </TableRow>

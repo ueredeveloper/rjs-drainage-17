@@ -125,10 +125,10 @@ function ElemLatLng({ map, tp_id, position, setData }) {
         </Box>
         {/* botôes de manipulação */}
         <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <IconButton size="large" onClick={() => { _findPointsInASystem() }}>
+          <IconButton color="secondary" size="large" onClick={() => { _findPointsInASystem() }}>
             <SearchIcon />
           </IconButton>
-          <IconButton size="large">
+          <IconButton color="secondary"size="large">
             <ContentCopyIcon />
           </IconButton>
         </Box>

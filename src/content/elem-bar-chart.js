@@ -4,8 +4,9 @@ import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { nFormatter } from '../tools';
 
-function ElemBarChart({ hg_analyse }) {
-
+function ElemBarChart({ theme, hg_analyse }) {
+  console.log(theme.palette.primary
+    )
   /**
   * Dados sobre a disponibilidade.
   */
@@ -62,20 +63,20 @@ function ElemBarChart({ hg_analyse }) {
 
           data: [_hg_analyse._q_ex, _hg_analyse._q_points],
           type: 'line',
-          backgroundColor: 'aqua',
-          borderColor: 'black',
+          backgroundColor: theme.palette.tertiary.main,
+          borderColor: theme.palette.tertiary.main,
           borderWidth: 1,
 
         },
         {
           label: 'Vazão',
           id: "A",
-          backgroundColor: 'green',
+          backgroundColor: theme.palette.primary.dark,
           data: [_hg_analyse._q_ex, _hg_analyse._q_points],
         }, {
           label: 'Porcentagem',
           yAxisID: 'percentage',
-          backgroundColor: 'red',
+          backgroundColor: theme.palette.secondary.dark,
           data: [_hg_analyse._q_ex_per, _hg_analyse._q_points_per],
         }
       ]

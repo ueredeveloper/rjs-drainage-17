@@ -62,6 +62,7 @@ function ElemListFlow({ user, setUser }) {
     })
   };
 
+  
   return (
     <Box>
       <FormLabel id="demo-controlled-radio-buttons-group">Vazão</FormLabel>
@@ -92,13 +93,15 @@ function ElemListFlow({ user, setUser }) {
                 <TableCell>
                   {isEditable.vazao_dia ? (
                     <>
-                      <IconButton
+                      <IconButton color="secondary"
+
                         aria-label="done"
                         onClick={() => onToggleEditMode('vazao_dia')}
                       >
                         <DoneAllOutlinedIcon sx={{ fontSize: 20 }} />
                       </IconButton>
-                      <IconButton
+                      <IconButton color="secondary"
+
                         aria-label="revert"
                         onClick={() => onToggleEditMode('vazao_dia')}
                       >
@@ -106,7 +109,7 @@ function ElemListFlow({ user, setUser }) {
                       </IconButton>
                     </>
                   ) : (
-                    <IconButton
+                    <IconButton color="secondary"
                       aria-label="delete"
                       onClick={() => onToggleEditMode('vazao_dia')}
                     >
@@ -115,7 +118,7 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Vazão (l/dia)'}</TableCell>
-            
+
                 {_demanda.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>
@@ -142,13 +145,13 @@ function ElemListFlow({ user, setUser }) {
                 <TableCell>
                   {isEditable.tempo_h ? (
                     <>
-                      <IconButton
+                      <IconButton color="secondary"
                         aria-label="done"
                         onClick={() => onToggleEditMode('tempo_h')}
                       >
                         <DoneAllOutlinedIcon sx={{ fontSize: 20 }} />
                       </IconButton>
-                      <IconButton
+                      <IconButton color="secondary"
                         aria-label="revert"
                         onClick={() => onToggleEditMode('tempo_h')}
                       >
@@ -156,7 +159,7 @@ function ElemListFlow({ user, setUser }) {
                       </IconButton>
                     </>
                   ) : (
-                    <IconButton
+                    <IconButton color="secondary"
                       aria-label="delete"
                       onClick={() => onToggleEditMode('tempo_h')}
                     >
@@ -190,13 +193,13 @@ function ElemListFlow({ user, setUser }) {
                 <TableCell>
                   {isEditable.tempo_h ? (
                     <>
-                      <IconButton
+                      <IconButton color="secondary"
                         aria-label="done"
                         onClick={() => onToggleEditMode('periodo_d')}
                       >
                         <DoneAllOutlinedIcon sx={{ fontSize: 20 }} />
                       </IconButton>
-                      <IconButton
+                      <IconButton color="secondary"
                         aria-label="revert"
                         onClick={() => onToggleEditMode('periodo_d')}
                       >
@@ -204,7 +207,7 @@ function ElemListFlow({ user, setUser }) {
                       </IconButton>
                     </>
                   ) : (
-                    <IconButton
+                    <IconButton color="secondary"
                       aria-label="delete"
                       onClick={() => onToggleEditMode('periodo_d')}
                     >

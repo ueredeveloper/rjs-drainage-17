@@ -68,6 +68,7 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
 
+
           </Box>
           <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
             <TextField id="proc_sei"
@@ -77,7 +78,7 @@ function ElemSearchUser({ search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <IconButton size="large" onClick={() => {
+          <IconButton color="secondary" size="large" onClick={() => {
             _searchUsers()
 
           }}>
