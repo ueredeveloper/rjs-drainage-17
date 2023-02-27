@@ -26,7 +26,7 @@ export default function App() {
         palette: {
           mode,
           ...(mode === 'light'
-            ? colors[1]
+            ? colors[4]
             : colors[0]),
 
         },

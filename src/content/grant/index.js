@@ -33,7 +33,7 @@ const style = {
     p: 4,
 };
 
-function ElemGrant({ user, setUser, data, setData }) {
+function ElemGrant({ map, user, setUser, data, setData }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -87,7 +87,6 @@ function ElemGrant({ user, setUser, data, setData }) {
         setUsers(_users)
     }
 
-    
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
@@ -104,9 +103,9 @@ function ElemGrant({ user, setUser, data, setData }) {
                 {/** Box Geral */}
                 <Box sx={style}>
 
-                    {/** Pesquisa */}
-                    <ElemSearchUser search={search} setSearch={setSearch} setUsers={setUsers} />
-                    {/* Resultado da Busca de Usuários */}
+                    {/** Pesquisar usuários */}
+                    <ElemSearchUser map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
+                    {/* Listar usuários */}
                     <Box>
                         <FormLabel id="demo-controlled-radio-buttons-group">Usuário</FormLabel>
                         {/** sx={{ height: 300, maxHeight: 300, marginTop: 2, marginBottom: 2 }}*/}
@@ -127,7 +126,9 @@ function ElemGrant({ user, setUser, data, setData }) {
                                     <TableBody>
                                         {users.map((row, i) => (
                                             <ElemListUsers 
-                                                key={'_' + i} row={row} 
+                                                key={'_' + i} 
+                                                map={map}
+                                                row={row} 
                                                 getDemandas={_getDemandas} 
                                                 user={user} setUser={setUser}
                                                 data={data} setData={setData} />
@@ -138,8 +139,7 @@ function ElemGrant({ user, setUser, data, setData }) {
                         </Paper>
 
                     </Box>
-
-                    {/* Vazão do usuário selecionado */}
+                    {/* Listar a vazão da demanda do usuário selecionado */}
                     <ElemListFlow user={user} setUser={setUser} />
                 </Box>
                 {/* fim Box Geral */}

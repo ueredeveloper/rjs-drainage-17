@@ -14,6 +14,7 @@ function ElemWellType({ tp_id, setData }) {
   const [_tp_id, _setTpId] = useState(tp_id);
 
   const handleChange = (event) => {
+
     _setTpId(event.target.value);
 
     setData(prev => {
@@ -50,6 +51,12 @@ function ElemWellType({ tp_id, setData }) {
       }
     });
   }, [_tp_id])
+  /**
+   * Atualizar o tipo de poço.
+   */
+  useEffect(()=>{
+    _setTpId(tp_id);
+  }, [tp_id])
 
   return (
     <FormControl>

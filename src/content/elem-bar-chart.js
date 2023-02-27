@@ -5,8 +5,7 @@ import 'chart.js/auto';
 import { nFormatter } from '../tools';
 
 function ElemBarChart({ theme, hg_analyse }) {
-  console.log(theme.palette.primary
-    )
+
   /**
   * Dados sobre a disponibilidade.
   */

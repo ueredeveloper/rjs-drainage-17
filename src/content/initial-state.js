@@ -6,7 +6,7 @@ const initialState = () => {
                     id: null,
                     info: { id: null, tp_id: 1 },
                     /* position: { lat: -15.7749874, lng: -47.9402802 },*/
-                    position: { lat: -15.821111, lng: -48.101111 },
+                    position: { lat: -15.683965, lng: -48.145345 },
                     user: {
                         "id": 5220,
                         "us_id": 36426,

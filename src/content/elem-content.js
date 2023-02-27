@@ -20,12 +20,16 @@ function ElemContent({mode, theme}) {
  
     const [data, setData] = useState(initialState());
     const [value, setValue] = useState("1");
-    const center = { lat: -15.762744, lng: -47.813301 };
+    const center = { lat: -15.683965, lng: -48.145345 };
     const zoom = 10;
 
     function onClick() {
         console.log('on click')
     }
+
+    useEffect(()=>{
+     // console.log(data.overlays.marker)
+    })
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -74,7 +78,7 @@ function ElemContent({mode, theme}) {
                   <ElemWellType
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
-                  <ElemAnalyse data={data} setData={setData}/>
+                  <ElemAnalyse map={map} data={data} setData={setData}/>
                   <ElemBarChart theme={theme} hg_analyse={data.system.hg_analyse} />
                 </TabPanel>
                 <TabPanel value="2">Item Two</TabPanel>

@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ElemOpenDemand } from './elem-open-demand';
 
-function ElemListUsers({row, getDemandas, user, setUser, data, setData}) {
+function ElemListUsers({map, row, getDemandas, user, setUser, data, setData}) {
   //const { row } = props;
   const [open, setOpen] = useState(false);
 
@@ -40,7 +40,7 @@ function ElemListUsers({row, getDemandas, user, setUser, data, setData}) {
         <TableCell>{row.end_logradouro}</TableCell>
 
       </TableRow>
-      <ElemOpenDemand open={open} row={row} user={user} setUser={setUser} data={data} setData={setData}/>
+      <ElemOpenDemand map={map} open={open} row={row} user={user} setUser={setUser} data={data} setData={setData}/>
 
     </React.Fragment>
   );

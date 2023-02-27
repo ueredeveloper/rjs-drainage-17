@@ -7,7 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import { searchUsers } from '../../services/search';
 
-function ElemSearchUser({ search, setSearch, setUsers }) {
+function ElemSearchUser({ map, search, setSearch, setUsers }) {
 
   const handleUserChange = (event) => {
     setSearch(prev => {

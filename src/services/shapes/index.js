@@ -3,7 +3,6 @@ const url = 'https://adasa-postgres.ueredeveloper.repl.co';
 
 async function findPointsInsidePolygon(polygon) {
 
-  console.log(JSON.stringify(polygon))
   let points = await fetch(url + '/findPointsInsidePolygon', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -64,7 +63,7 @@ async function getShape(shape) {
 *
   */
 async function findPointsInASystem(tp_id, lat, lng) {
-  console.log('find tp_id ', tp_id)
+
   let response = await fetch(url + `/findPointsInASystem?tp_id=${tp_id}&lat=${lat}&lng=${lng}`, {
     method: 'GET',
     headers: {

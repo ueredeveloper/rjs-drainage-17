@@ -13,13 +13,18 @@ function ElemLatLng({ map, tp_id, position, setData }) {
 
   const [_position, _setPosition] = useState(position);
   const [_tp_id, _setTpId] = useState(tp_id);
-
+  /**
+   * Setar posição e tipo de poço - talves possa fazer os dois juntos em um só hooks.
+   */
   useEffect(() => {
     _setPosition(position);
     _setTpId(tp_id);
 
   }, [position, tp_id]);
-
+  /**
+   * Mudar as coordenadas de cada caixa de texto.
+   * @param {*} event 
+   */
   const handleChange = (event) => {
 
     setData(prev => {
@@ -38,7 +43,10 @@ function ElemLatLng({ map, tp_id, position, setData }) {
       }
     });
   };
-
+  /**
+   * Buscar pontos outorgados no sistema (Fraturado ou Poroso) e retornar dados como vazão outorgada, nº de poços etc.
+   * @returns _q_ex - Vazão Explotável, _n_points - Número de pontos outorgados na área, etc...
+   */
   async function _findPointsInASystem() {
     let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
 
@@ -68,7 +76,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
         // % utilizada
         _q_points_per: _q_points_per,
         // vol disponível
-        _vol_avaiable: (_q_ex - _q_points).toFixed(2)
+        _vol_avaiable: (_q_ex - _q_points).toFixed(4)
       };
     }
 

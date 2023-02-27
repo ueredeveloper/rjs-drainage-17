@@ -38,6 +38,7 @@ const ElemMarker = ({ info, options }) => {
   if (marker) {
     if (info.id === null) {
       marker.setOptions({ ...options, icon: setIcon(3) });
+      marker.setAnimation(window.google.maps.Animation.BOUNCE);
     } else {
       marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
     }
