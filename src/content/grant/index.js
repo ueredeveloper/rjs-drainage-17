@@ -43,7 +43,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
         us_nome: "",
         us_cpf_cnpj: "",
         doc_end: 0,
-        doc_sei: "123",
+        doc_sei: "",
         proc_sei: "",
     })
 

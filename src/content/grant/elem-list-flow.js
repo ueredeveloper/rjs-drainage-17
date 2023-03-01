@@ -19,6 +19,10 @@ function ElemListFlow({ user, setUser }) {
 
   const [_demanda, _setDemanda] = useState(user.dt_demandas.demanda);
 
+  useEffect(()=>{
+    console.log(_demanda)
+  }, [_demanda])
+
   useEffect(() => {
     let _dem = user.dt_demandas
     _setDemanda(_dem.demanda)
@@ -26,18 +30,19 @@ function ElemListFlow({ user, setUser }) {
 
 
   const [isEditable, setIsEditable] = useState({
-    vazao_dia: false,
+    vazao_lh: false,
     tempo_h: false,
     periodo_d: false
   })
 
   const onToggleEditMode = (obj) => {
+    /* revisar a edição e adicionar máscara de número, mundando ponto para vírgula, ex: 1.38 para 1,38
     setIsEditable(prev => {
       return {
         ...prev,
         [obj]: !isEditable[obj]
       }
-    })
+    })*/
 
   };
 
@@ -62,7 +67,7 @@ function ElemListFlow({ user, setUser }) {
     })
   };
 
-  
+
   return (
     <Box>
       <FormLabel id="demo-controlled-radio-buttons-group">Vazão</FormLabel>
@@ -91,19 +96,19 @@ function ElemListFlow({ user, setUser }) {
               <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
                 {/* botões de edião*/}
                 <TableCell>
-                  {isEditable.vazao_dia ? (
+                  {isEditable.vazao_lh ? (
                     <>
                       <IconButton color="secondary"
 
                         aria-label="done"
-                        onClick={() => onToggleEditMode('vazao_dia')}
+                        onClick={() => onToggleEditMode('vazao_lh')}
                       >
                         <DoneAllOutlinedIcon sx={{ fontSize: 20 }} />
                       </IconButton>
                       <IconButton color="secondary"
 
                         aria-label="revert"
-                        onClick={() => onToggleEditMode('vazao_dia')}
+                        onClick={() => onToggleEditMode('vazao_lh')}
                       >
                         <DoDisturbOutlinedIcon sx={{ fontSize: 20 }} />
                       </IconButton>
@@ -111,28 +116,29 @@ function ElemListFlow({ user, setUser }) {
                   ) : (
                     <IconButton color="secondary"
                       aria-label="delete"
-                      onClick={() => onToggleEditMode('vazao_dia')}
+                      onClick={() => onToggleEditMode('vazao_lh')}
                     >
                       <ModeEditOutlineOutlinedIcon sx={{ fontSize: 20 }} />
                     </IconButton>
                   )}
                 </TableCell>
-                <TableCell>{'Vazão (l/dia)'}</TableCell>
+                <TableCell>{'Vazão (l/h)'}</TableCell>
 
                 {_demanda.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>
 
-                    {isEditable.vazao_dia ? (
+                    {isEditable.vazao_lh ? (
                       <TextField
-                        name={'vazao_dia'}
-                        value={row.vazao_dia}
+                        color="secondary"
+                        name={'vazao_lh'}
+                        value={row.vazao_lh}
 
                         onChange={(e) => onChange(e, i)}
                         variant="standard"
                       />
                     ) : (
-                      row.vazao_dia
+                      row.vazao_lh
                     )}
                   </TableCell>
                 )
@@ -173,6 +179,7 @@ function ElemListFlow({ user, setUser }) {
                   <TableCell key={'__' + i}>
                     {isEditable.tempo_h ? (
                       <TextField
+                        color="secondary"
                         name={'tempo_h'}
                         value={row.tempo_h}
 
@@ -221,6 +228,7 @@ function ElemListFlow({ user, setUser }) {
                   <TableCell key={'__' + i}>
                     {isEditable.periodo_d ? (
                       <TextField
+                        color="secondary"
                         name={'periodo_d'}
                         value={row.periodo_d}
 
@@ -245,7 +253,7 @@ function ElemListFlow({ user, setUser }) {
   )
 }
 
-let demanda = [{ "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "28", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "28", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_dia": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }]
+//let demanda = [{ "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "28", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "28", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "30", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "30", "vol_mensal_mm": "0" }, { "vazao_lh": "0", "vazao_lh": "0", "mes": "31", "vazao_mh": "0", "tempo_h": "0", "vol_max_md": "0", "periodo_d": "31", "vol_mensal_mm": "0" }]
 
 
 export { ElemListFlow }

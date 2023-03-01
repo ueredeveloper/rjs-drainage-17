@@ -6,10 +6,6 @@ import { darkMap } from './dark-map';
 
 function ElemMap ({ mode, center, zoom, onClick, map, setMap }) {
 
-  useEffect(()=>{
-    console.log(mode)
-  }, [mode])
-
   const ref = useRef();
 
   useEffect(() => {

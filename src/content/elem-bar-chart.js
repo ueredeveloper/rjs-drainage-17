@@ -84,7 +84,7 @@ function ElemBarChart({ theme, hg_analyse }) {
   return (
     <div>
       {/** responsividade css => h-52...*/}
-      <Bar style={{ height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
+      <Bar style={{marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
         options={options} data={data} />
     </div>
   );

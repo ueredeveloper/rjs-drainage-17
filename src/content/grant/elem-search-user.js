@@ -57,6 +57,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
         <Box sx={{ display: 'flex', flexDirection: 'flex-row' }}>
           <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="us_nome"
+              color="secondary"
               name="us_nome"
               value={search.us_nome}
               label="Usuário"
@@ -65,6 +66,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
           </Box>
           <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="us_cpf_cnpj"
+              color="secondary"
               name="us_cpf_cnpj"
               value={search.us_cpf_cnpj}
               label="CPF/CNPJ"
@@ -73,6 +75,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
           </Box>
           <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="doc_sei"
+              color="secondary"
               name="doc_sei"
               value={search.doc_sei}
               label="Documento"
@@ -83,6 +86,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
           </Box>
           <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="proc_sei"
+              color="secondary"
               name="proc_sei"
               value={search.proc_sei}
               label="Processo"

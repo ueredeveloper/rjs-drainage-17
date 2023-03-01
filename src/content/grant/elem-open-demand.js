@@ -53,7 +53,6 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
 
         // somatório da vazão anual do usuário
         let _q_user = 0;
-        console.log(dt.dt_demandas.demanda)
         dt.dt_demandas.demanda.forEach(dem => {
           _q_user += Number(dem.vol_mensal_mm)
         })
@@ -144,15 +143,29 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
               <TableBody>
                 {
                   row.demandas.map((dt, i) =>
-                    <TableRow key={"____" + i} sx={{ bgcolor: 'secondary.light' }}>
+                    <TableRow key={"____" + i} sx={{ bgcolor: '#ECECEC' }}>
                       <TableCell>{dt.int_latitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
-                      <TableCell>{dt.int_longitude}</TableCell>
-                      <TableCell>{dt.int_longitude}</TableCell>
+                      {/** mostra vazões em janeiro */}
+                      {
+                        dt.dt_demandas.demanda.length !== 0
+                          ?
+                          <TableCell>{dt.dt_demandas.demanda[0].vazao_lh}</TableCell>
+                          :
+                          <TableCell>{''}</TableCell>
+                      }
+                      {
+                        dt.dt_demandas.demanda.length !== 0
+                          ?
+                          <TableCell>{dt.dt_demandas.demanda[0].vazao_dia}</TableCell>
+                          :
+                          <TableCell>{''}</TableCell>
+                      }
+
                       <TableCell>
                         <Box sx={{ display: 'flex' }}>
                           {loading ? <Fade
-                            sx={{ alignSelf: 'center', color: "secondary.contrastText", margin: 1.5 }}
+                            sx={{ alignSelf: 'center', color: "secondary.main", margin: 1.5 }}
                             in={loading}
                             style={{
                               transitionDelay: loading ? '800ms' : '0ms',
@@ -163,7 +176,7 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
                           </Fade>
                             :
                             <IconButton
-                              color="secondary.contrastText"
+                              color="secondary"
                               size="large"
 
                               onClick={() => { onClick(dt) }}>

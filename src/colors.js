@@ -15,14 +15,13 @@ const colors = [
     //blue
     {
         primary: {
-            main: '#1506be',
-
+            main: '#0597F2',
         },
         secondary: {
-            main: '#be1506',
+            main: '#F24607',
         },
         tertiary: {
-            main: '#06be15'
+            main: '#49D907'
         }
     }
     , // pink

@@ -5,8 +5,7 @@ const initialState = () => {
                 marker: {
                     id: null,
                     info: { id: null, tp_id: 1 },
-                    /* position: { lat: -15.7749874, lng: -47.9402802 },*/
-                    position: { lat: -15.683965, lng: -48.145345 },
+                    position: { lat: -15.7749874, lng: -47.9402802 },     
                     user: {
                         "id": 5220,
                         "us_id": 36426,

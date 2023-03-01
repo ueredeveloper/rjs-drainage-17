@@ -35,7 +35,9 @@ vol_mensal_mm: "122"
 O valor da variável `vol_mensal_mm` deveria ser `periodo_d` * `vazao_dia` / 1000 = 122,36.
 
 
+01/03/2023
 
+Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) com o clique na linha 2 - tempo(h/dia).
 
 
 

@@ -23,7 +23,7 @@ function ElemAnalyse({ map, data, setData }) {
     "us_nome": "",
     "us_cpf_cnpj": "",
     "doc_end": 0,
-    "doc_sei": "123",
+    "doc_sei": "",
     "proc_sei": "",
     "dt_demandas": { "demanda": [] },
     "q_user": 0
@@ -71,22 +71,26 @@ function ElemAnalyse({ map, data, setData }) {
     <Box>
       <FormControl>
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
-          <FormLabel id="demo-controlled-radio-buttons-group">Análise</FormLabel>
+          <FormLabel id="demo-controlled-radio-buttons-group" sx={{marginTop: 2, marginBottom: 2}}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
-                <TableCell>Q Explotável (m³/ano)</TableCell>
-                <TableCell>N° Poços</TableCell>
-                <TableCell>Q Total Outorgada (m³/ano)</TableCell>
-                <TableCell >% UTILIZADA</TableCell>
-                <TableCell >Vol. Disponível (m³/ano)</TableCell>
+                <TableCell align="center">Sistema</TableCell>
+                <TableCell align="center">Código</TableCell>
+                <TableCell align="center">Q Explotável (m³/ano)</TableCell>
+                <TableCell align="center">N° Poços</TableCell>
+                <TableCell align="center">Q Total Outorgada (m³/ano)</TableCell>
+                <TableCell align="center">% UTILIZADA</TableCell>
+                <TableCell align="center">Vol. Disponível (m³/ano)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
+                <TableCell align="center">{data.system.hg_info.sistema}</TableCell>
+                <TableCell align="center">{data.system.hg_info.cod_plan}</TableCell>
                 <TableCell align="center">{replaceDotToComma(_hg_analyse._q_ex)}</TableCell>
                 <TableCell align="center">{_hg_analyse._n_points}</TableCell>
                 <TableCell align="center">{replaceDotToComma(_hg_analyse._q_points)}</TableCell>

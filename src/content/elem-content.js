@@ -20,7 +20,7 @@ function ElemContent({ mode, theme }) {
 
   const [data, setData] = useState(initialState());
   const [value, setValue] = useState("1");
-  const center = { lat: -15.683965, lng: -48.145345 };
+  const center = { lat: -15.760780, lng: -47.815997 };
   const zoom = 10;
 
   function onClick() {

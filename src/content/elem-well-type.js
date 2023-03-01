@@ -4,6 +4,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { Paper, TableContainer } from '@mui/material';
 /**
 * Elemento de escolha do tipo de poço, se 1 - manual (poroso), ou 2 - tubular (fraturado).
 * @param tp_id Tipo de poço, se manual ou tubular.
@@ -59,18 +60,20 @@ function ElemWellType({ tp_id, setData }) {
   }, [tp_id])
 
   return (
-    <FormControl>
-      <FormLabel id="demo-controlled-radio-buttons-group">Tipo do Poço</FormLabel>
+    <FormControl sx={{display: 'flex', flex: 1}}>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 2}}>Tipo do Poço</FormLabel>
+      <Paper>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={_tp_id}
         onChange={handleChange}
-        sx={{ display: 'flex', flexFlow: 'row wrap' }}
+        sx={{ display: 'flex', flexFlow: 'row wrap', marginLeft: 1, my: 1, ml: 2}}
       >
         <FormControlLabel  value="1" control={<Radio color="secondary" />} label="Manual" />
         <FormControlLabel value="2" control={<Radio color="secondary" />} label="Tubular" />
       </RadioGroup>
+      </Paper>
     </FormControl>
   )
 }

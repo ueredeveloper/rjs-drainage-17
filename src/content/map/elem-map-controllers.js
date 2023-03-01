@@ -6,6 +6,7 @@ import LayersClearIcon from '@mui/icons-material/LayersClear';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
+import { Paper } from '@mui/material';
 
 
 function ElemMapControllers({ data, setData }) {
@@ -76,8 +77,9 @@ function ElemMapControllers({ data, setData }) {
   }
 
   return (
-    <FormControl>
-      <FormLabel id="demo-controlled-radio-buttons-group">Shapes</FormLabel>
+    <FormControl sx={{display: 'flex', flex: 1}}>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Shapes</FormLabel>
+      <Paper>
       <Box>
         <Checkbox color="secondary" name="poroso" checked={checked[0]} onChange={handleChange1} />
         <FormLabel color="secondary" id="demo-controlled-radio-buttons-group">Poroso</FormLabel>
@@ -86,6 +88,7 @@ function ElemMapControllers({ data, setData }) {
         {/** limpar */}
         <Button sx={{marginLeft: '1rem', marginRight: '1rem'}} onClick={handleChange3}><LayersClearIcon color="secondary"/></Button>
       </Box>
+      </Paper>
     </FormControl>
   )
 }

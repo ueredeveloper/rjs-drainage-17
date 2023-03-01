@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { findPointsInASystem } from '../services';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { CircularProgress, Fade } from '@mui/material';
+import { CircularProgress, Fade, Paper, TableContainer } from '@mui/material';
 
 
 function ElemLatLng({ map, tp_id, position, setData }) {
@@ -106,18 +106,21 @@ function ElemLatLng({ map, tp_id, position, setData }) {
   return (
 
     <FormControl sx={{ display: 'flex' }}>
-      <FormLabel id="demo-controlled-radio-buttons-group">Coordenadas</FormLabel>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{marginBottom: 2}}>Coordenadas</FormLabel>
+      <Paper>
       {/* entradas latitude e longitude */}
       <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
       >
         <Box sx={{ display: 'flex', flex: 4, flexDirection: 'row' }}>
           <TextField
             sx={{
-              m: 1,
+              my:2,
+              ml: 2,
               display: 'flex',
               flexGrow: 1
             }}
             label="Latitude"
+            color="secondary"
             name="lat"
             value={_position.lat}
             onChange={handleChange}
@@ -125,11 +128,13 @@ function ElemLatLng({ map, tp_id, position, setData }) {
           />
           <TextField
             sx={{
-              m: 1,
+              my:2,
+              ml: 2,
               display: 'flex',
               flexGrow: 1,
 
             }}
+            color="secondary"
             label="Longitude"
             name="lng"
             value={_position.lng}
@@ -164,7 +169,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
           </IconButton>
         </Box>
       </Box>
-
+      </Paper>
     </FormControl>
 
   )
