@@ -19,7 +19,7 @@ export default function App() {
     }),
     [],
   );
- 
+
   const theme = React.useMemo(
     () =>
       createTheme({
@@ -50,7 +50,7 @@ export default function App() {
           }}
         >
           <ElemTopBar ColorModeContext={ColorModeContext} />
-          <ElemContent mode={mode} theme={theme}/>
+          <ElemContent mode={mode} theme={theme} />
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

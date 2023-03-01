@@ -11,10 +11,15 @@ import IconButton from '@mui/material/IconButton';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { red } from '@mui/material/colors';
 import { findPointsInASystem } from '../../services';
+import { CircularProgress, Fade } from '@mui/material';
 
 function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
+  // mostrar barra de progresso ao clicar
+  const [loading, setLoading] = useState(false);
 
   function onClick(dt) {
+
+    setLoading((prevLoading) => !prevLoading);
 
     // id do marcador
     let id = Date.now();
@@ -43,26 +48,27 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
       }
     });
 
-    _findPointsInASystem(dt.sub_tp_id, dt.int_latitude, dt.int_longitude).then(() => {
+    _findPointsInASystem(dt.sub_tp_id, dt.int_latitude, dt.int_longitude)
+      .then(() => {
 
-      // somatório da vazão anual do usuário
-      let _q_user = 0;
-      console.log(dt.dt_demandas.demanda)
-      dt.dt_demandas.demanda.forEach(dem => {
-        _q_user += Number(dem.vol_mensal_mm)
-      })
-      console.log(_q_user)
+        // somatório da vazão anual do usuário
+        let _q_user = 0;
+        console.log(dt.dt_demandas.demanda)
+        dt.dt_demandas.demanda.forEach(dem => {
+          _q_user += Number(dem.vol_mensal_mm)
+        })
 
-      // setar usuário
-      setUser(prev => {
-        return {
-          ...prev,
-          dt_demandas: dt.dt_demandas,
-          q_user: _q_user
+        // setar usuário
+        setUser(prev => {
+          return {
+            ...prev,
+            dt_demandas: dt.dt_demandas,
+            q_user: _q_user
 
-        }
-      });
-    })
+          }
+        });
+
+      }).then(() => { setLoading(false); })
 
   }
 
@@ -127,7 +133,7 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
             </Typography>
             <Table size="small" aria-label="purchases">
               <TableHead>
-                <TableRow>
+                <TableRow sx={{ p: 3 }}>
                   <TableCell>Latitude</TableCell>
                   <TableCell>Longitude</TableCell>
                   <TableCell>Vazão Jan (L/H)</TableCell>
@@ -138,14 +144,32 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
               <TableBody>
                 {
                   row.demandas.map((dt, i) =>
-                    <TableRow key={"____" + i} sx={{ bgcolor: '#e4e4e4' }}>
+                    <TableRow key={"____" + i} sx={{ bgcolor: 'secondary.light' }}>
                       <TableCell>{dt.int_latitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
                       <TableCell>{dt.int_longitude}</TableCell>
-                      <TableCell><IconButton color="secondary" size="large" onClick={() => { onClick(dt) }}>
-                        <DoneAllIcon />
-                      </IconButton></TableCell>
+                      <TableCell>
+                        <Box sx={{ display: 'flex' }}>
+                          {loading ? <Fade
+                            sx={{ alignSelf: 'center', color: "secondary.contrastText", margin: 1.5 }}
+                            in={loading}
+                            style={{
+                              transitionDelay: loading ? '800ms' : '0ms',
+                            }}
+                            unmountOnExit
+                          >
+                            <CircularProgress size={25} />
+                          </Fade>
+                            :
+                            <IconButton
+                              color="secondary.contrastText"
+                              size="large"
+
+                              onClick={() => { onClick(dt) }}>
+                              <DoneAllIcon />
+                            </IconButton>}
+                        </Box></TableCell>
                     </TableRow>
                   )
                 }

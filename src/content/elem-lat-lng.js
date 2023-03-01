@@ -7,9 +7,12 @@ import IconButton from '@mui/material/IconButton';
 import { findPointsInASystem } from '../services';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { CircularProgress, Fade } from '@mui/material';
 
 
 function ElemLatLng({ map, tp_id, position, setData }) {
+
+  const [loading, setLoading] = useState(false);
 
   const [_position, _setPosition] = useState(position);
   const [_tp_id, _setTpId] = useState(tp_id);
@@ -48,7 +51,10 @@ function ElemLatLng({ map, tp_id, position, setData }) {
    * @returns _q_ex - Vazão Explotável, _n_points - Número de pontos outorgados na área, etc...
    */
   async function _findPointsInASystem() {
-    let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
+    setLoading((prevLoading) => !prevLoading);
+
+    let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng)
+
 
     function analyseItsAvaiable(_q_ex, _points) {
       let _Q = 0;
@@ -133,10 +139,27 @@ function ElemLatLng({ map, tp_id, position, setData }) {
         </Box>
         {/* botôes de manipulação */}
         <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <IconButton color="secondary" size="large" onClick={() => { _findPointsInASystem() }}>
-            <SearchIcon />
-          </IconButton>
-          <IconButton color="secondary"size="large">
+          {
+            loading ?
+              <Fade
+                sx={{ color: "secondary.main" }}
+                in={loading}
+                style={{
+                  transitionDelay: loading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+              >
+                <CircularProgress size={25} />
+              </Fade>
+              :
+              <IconButton color="secondary" size="large" onClick={() => { _findPointsInASystem().then(() => { setLoading(false); }); }}>
+                <SearchIcon />
+              </IconButton>
+
+          }
+
+
+          <IconButton color="secondary" size="large">
             <ContentCopyIcon />
           </IconButton>
         </Box>

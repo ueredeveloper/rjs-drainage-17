@@ -6,10 +6,16 @@ import FormLabel from '@mui/material/FormLabel';
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
 import { searchUsers } from '../../services/search';
+import { blue } from '@mui/material/colors';
+import { CircularProgress, Fade } from '@mui/material';
 
 function ElemSearchUser({ map, search, setSearch, setUsers }) {
 
+  // mostrar barra de progresso ao clicar
+  const [loading, setLoading] = useState(false);
+
   const handleUserChange = (event) => {
+
     setSearch(prev => {
       return {
         ...prev,
@@ -26,25 +32,30 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
   * @param {string} prc_sei Processo.
   */
   async function _searchUsers() {
-    let users = await searchUsers(search.us_nome,
+    setLoading((prevLoading) => !prevLoading);
+
+    await searchUsers(search.us_nome,
       search.us_cpf_cnpj,
       search.doc_sei,
-      search.proc_sei);
-
-    let _users = users.map(user => {
-      user.demandas = []
-      return user;
-    })
-    setUsers(_users)
+      search.proc_sei)
+      .then((users) => {
+        let _users = users.map(user => {
+          user.demandas = []
+          return user;
+        })
+        setUsers(_users)
+      }
+      ).then(() =>
+        setLoading(false));
   }
 
   return (
-    <Box sx={{pt: 0}}>
+    <Box sx={{ pt: 0 }}>
       <FormLabel id="demo-controlled-radio-buttons-group">Pesquisa</FormLabel>
       <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between', marginTop: 2, marginBottom: 2 }}>
         {/* Pesquisa de Usários*/}
-        <Box  sx={{ display: 'flex', flexDirection: 'flex-row'}}>
-          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'flex-row' }}>
+          <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="us_nome"
               name="us_nome"
               value={search.us_nome}
@@ -52,7 +63,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
+          <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="us_cpf_cnpj"
               name="us_cpf_cnpj"
               value={search.us_cpf_cnpj}
@@ -60,7 +71,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
+          <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="doc_sei"
               name="doc_sei"
               value={search.doc_sei}
@@ -70,7 +81,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
 
 
           </Box>
-          <Box sx={{marginLeft: '1rem', marginRight: '1rem'}}>
+          <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="proc_sei"
               name="proc_sei"
               value={search.proc_sei}
@@ -78,12 +89,26 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
               variant="standard"
               onChange={handleUserChange} />
           </Box>
-          <IconButton color="secondary" size="large" onClick={() => {
-            _searchUsers()
+          <Box sx={{ display: 'flex' }}>
+            {loading ?
+              <Fade
+                sx={{ alignSelf: 'center', color: "secondary.main", backgroundColor: blue }}
+                in={loading}
+                style={{
+                  transitionDelay: loading ? '800ms' : '0ms',
+                }}
+                unmountOnExit
+              >
+                <CircularProgress size={25} />
+              </Fade>
+              :
+              <IconButton color="secondary" size="large" onClick={() => {
+                _searchUsers()
 
-          }}>
-            <SearchIcon />
-          </IconButton>
+              }}>
+                <SearchIcon />
+              </IconButton>}
+          </Box>
         </Box>
       </Box>
 
