@@ -20,7 +20,7 @@ function ElemListFlow({ user, setUser }) {
   const [_demanda, _setDemanda] = useState(user.dt_demandas.demanda);
 
   useEffect(()=>{
-    console.log(_demanda)
+    //console.log(_demanda)
   }, [_demanda])
 
   useEffect(() => {

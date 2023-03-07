@@ -19,9 +19,23 @@ function ElemContent({ mode, theme }) {
   const [map, setMap] = useState();
 
   const [data, setData] = useState(initialState());
+  /* mudar, pois aqui o que importa é só da demanda, a palavra user não interesa neste momento */
+  const [user, setUser] = useState({
+    "us_nome": "",
+    "us_cpf_cnpj": "",
+    "doc_end": 0,
+    "doc_sei": "",
+    "proc_sei": "",
+    "dt_demandas": { "demanda": [] },
+    "q_user": 0
+  });
   const [value, setValue] = useState("1");
+
+  
   const center = { lat: -15.760780, lng: -47.815997 };
   const zoom = 10;
+
+
 
   function onClick() {
     console.log('on click')
@@ -36,7 +50,7 @@ function ElemContent({ mode, theme }) {
   };
 
   return (
-    <Box >
+    <Box>
       <Box
         sx={{
           display: 'flex',
@@ -69,17 +83,20 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value="1">
+                {/** Latitude e Longitude */}
                 <ElemLatLng
                   map={map}
                   tp_id={data.overlays.marker.info.tp_id}
                   position={data.overlays.marker.position}
                   setData={setData}
                 />
+                {/** Tipo de Poço */}
                 <ElemWellType
                   tp_id={data.overlays.marker.info.tp_id}
                   setData={setData} />
-                <ElemAnalyse map={map} data={data} setData={setData} />
-                <ElemBarChart theme={theme} hg_analyse={data.system.hg_analyse} />
+                <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} />
+                {/** Barras */}
+                <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
               </TabPanel>
               <TabPanel value="2">Item Two</TabPanel>
               <TabPanel value="3">Item Three</TabPanel>

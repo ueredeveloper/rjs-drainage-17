@@ -39,5 +39,28 @@ O valor da variável `vol_mensal_mm` deveria ser `periodo_d` * `vazao_dia` / 100
 
 Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) com o clique na linha 2 - tempo(h/dia).
 
+03/03/2023
+ * Saulo <br>
+    1. Alterar o nome dos poços para:<br>
+        a. Manual para Manual/Tubular Raso. <br>
+        b. Tubular para tubular profundo
+    2. Colocar o nome da UH na Análise.
+    3. Alterar o título para balanço hídrico
+    4. Retirar a barra de porcentagem
+    5. Valores no Chart Bar.<br>
+        a. Q explotável (m3/ano)<br>
+        b. Q outorgada (m3/ano)<br>
+        c. Q disponível (m3/ano)<br>
+        d. Q solicitada (m3/ano)<br>
+    6. Pergunta
+        * Há disponibilidade? <br>
+            - Cálculo: 
+                * q_disponiveL < q_solicitada = NÃO
+                * q_disponivel > q_solicitada = SIM
+
+            
+
+
+
 
 

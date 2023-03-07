@@ -3,24 +3,26 @@ import React, { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { nFormatter } from '../tools';
+import { FormLabel, Paper } from '@mui/material';
+import { Box } from '@mui/system';
 
-function ElemBarChart({ theme, hg_analyse }) {
+function ElemBarChart({ theme, user, hg_analyse }) {
 
   /**
   * Dados sobre a disponibilidade.
   */
- 
+
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
   useEffect(() => {
     _setHGAnalyse(hg_analyse)
+
   }, [hg_analyse])
 
   const options = {
     responsive: true,
     scales: {
       y: {
-        beginAtZer: 0,
         type: 'logarithmic',
         position: 'left',
         ticks: {
@@ -28,65 +30,55 @@ function ElemBarChart({ theme, hg_analyse }) {
             return nFormatter(value, 1)
           }
         }
-      },
-      percentage: {
-        beginAtZer: 0,
-        type: 'logarithmic',
-        position: 'right',
-        grid: {
-          drawOnChartArea: false
-        },
-        ticks: {
-          callback: function (value) {
-            return `${value}%`
-
-          }
-        }
       }
     },
     plugins: {
 
       title: {
-        display: true,
-        text: 'Disponibilidade',
+        display: false,
+        text: '',
       }
     },
   };
 
   const data = {
-    labels: ['Subsistema', 'Outorgados'],
+    labels: [''],
     datasets:
       [
         {
-          label: '',
-
-          data: [_hg_analyse._q_ex, _hg_analyse._q_points],
-          type: 'line',
-          backgroundColor: theme.palette.tertiary.main,
-          borderColor: theme.palette.tertiary.main,
+          label: 'Q Explotável',
+          data: [hg_analyse.q_ex],
+          backgroundColor: '#4E79A7',
+         
           borderWidth: 1,
 
         },
         {
-          label: 'Vazão',
-          id: "A",
-          backgroundColor: theme.palette.primary.dark,
-          data: [_hg_analyse._q_ex, _hg_analyse._q_points],
+          label: 'Q Outorgada',
+          backgroundColor: '#F28E2B',
+          data: [hg_analyse.q_points],
         }, {
-          label: 'Porcentagem',
-          yAxisID: 'percentage',
-          backgroundColor: theme.palette.secondary.dark,
-          data: [_hg_analyse._q_ex_per, _hg_analyse._q_points_per],
+          label: 'Q Disponível',
+          backgroundColor: '#E15759',
+          data: [hg_analyse.q_ex - hg_analyse.q_points],
+        },
+        {
+          label: 'Q Usuário',
+          backgroundColor: '#76B7B2',
+          data: [user.q_user],
         }
       ]
   };
 
   return (
-    <div>
-      {/** responsividade css => h-52...*/}
-      <Bar style={{marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
-        options={options} data={data} />
-    </div>
+    <Box>
+      <FormLabel sx={{my: 1}}>Balanço Hídrico</FormLabel>
+      <Paper>
+        {/** responsividade css => h-52...*/}
+        <Bar style={{ marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
+          options={options} data={data} />
+      </Paper>
+    </Box>
   );
 }
 

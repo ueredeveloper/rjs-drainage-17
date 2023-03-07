@@ -11,23 +11,15 @@ import Paper from '@mui/material/Paper';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ElemGrant from './grant';
+import { numberWithCommas } from '../tools';
 
-function ElemAnalyse({ map, data, setData }) {
+function ElemAnalyse({ map, user, setUser, data, setData }) {
   /**
     * Dados sobre a disponibilidade.
     */
   const [_hg_analyse, _setHGAnalyse] = useState(data.system.hg_analyse);
 
-  /* mudar, pois aqui o que importa é só da demanda, a palavra user não interesa neste momento */
-  const [user, setUser] = useState({
-    "us_nome": "",
-    "us_cpf_cnpj": "",
-    "doc_end": 0,
-    "doc_sei": "",
-    "proc_sei": "",
-    "dt_demandas": { "demanda": [] },
-    "q_user": 0
-  });
+  
   /**
    * Atualizar a variável _hg_analyse
    */
@@ -41,7 +33,7 @@ function ElemAnalyse({ map, data, setData }) {
 
     hg_analyse._n_points += 1
     hg_analyse._q_points = (Number(hg_analyse._q_points) + Number(user.q_user)).toFixed(4)
-    hg_analyse._q_points_per = (Number(hg_analyse._q_points) * 100 / Number(hg_analyse._q_ex)).toFixed(4)
+    hg_analyse._q_points_per = (Number(hg_analyse._q_points) * 100 / Number(hg_analyse.q_ex)).toFixed(4)
     hg_analyse._vol_avaiable = (Number(hg_analyse._vol_avaiable) - Number(user.q_user)).toFixed(4)
 
     setData(prev => {
@@ -54,30 +46,20 @@ function ElemAnalyse({ map, data, setData }) {
       }
     });
   }, [user])
-  /**
-   * Mudar ponto por vírgula em um número
-   * @param {*} number 
-   * @returns 
-   */
-  function replaceDotToComma(number) {
-    if (typeof number === 'number') {
-      let _n = number.toString();
-      return _n.replace(".", ",")
-    }
-    return number.replace(".", ",")
-  }
+ 
 
   return (
     <Box>
       <FormControl>
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" sx={{marginTop: 2, marginBottom: 2}}>Análise</FormLabel>
+          <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>
           <Table aria-label="collapsible table">
             <TableHead>
               <TableRow>
+                <TableCell align="center">UH</TableCell>
                 <TableCell align="center">Sistema</TableCell>
                 <TableCell align="center">Código</TableCell>
                 <TableCell align="center">Q Explotável (m³/ano)</TableCell>
@@ -89,13 +71,14 @@ function ElemAnalyse({ map, data, setData }) {
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell align="center">{data.system.hg_info.sistema}</TableCell>
-                <TableCell align="center">{data.system.hg_info.cod_plan}</TableCell>
-                <TableCell align="center">{replaceDotToComma(_hg_analyse._q_ex)}</TableCell>
-                <TableCell align="center">{_hg_analyse._n_points}</TableCell>
-                <TableCell align="center">{replaceDotToComma(_hg_analyse._q_points)}</TableCell>
-                <TableCell align="center">{replaceDotToComma(_hg_analyse._q_points_per)}</TableCell>
-                <TableCell align="center">{replaceDotToComma(_hg_analyse._vol_avaiable)}</TableCell>
+                <TableCell align="center">{_hg_analyse.uh}</TableCell>
+                <TableCell align="center">{_hg_analyse.sistema}</TableCell>
+                <TableCell align="center">{_hg_analyse.cod_plan}</TableCell>
+                <TableCell align="center">{numberWithCommas(_hg_analyse.q_ex)}</TableCell>
+                <TableCell align="center">{_hg_analyse.n_points}</TableCell>
+                <TableCell align="center">{numberWithCommas(_hg_analyse.q_points)}</TableCell>
+                <TableCell align="center">{numberWithCommas(_hg_analyse.q_points_per)}</TableCell>
+                <TableCell align="center">{numberWithCommas(_hg_analyse.vol_avaiable)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

@@ -12,6 +12,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { red } from '@mui/material/colors';
 import { findPointsInASystem } from '../../services';
 import { CircularProgress, Fade } from '@mui/material';
+import { analyseItsAvaiable } from '../../tools';
 
 function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
   // mostrar barra de progresso ao clicar
@@ -74,37 +75,9 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
   async function _findPointsInASystem(tp_id, lat, lng) {
     let points = await findPointsInASystem(tp_id, lat, lng);
 
-    function analyseItsAvaiable(_q_ex, _points) {
-      let _Q = 0;
-      _points.map((_point) => {
-        if (typeof _point.demandas.volume.vol_a_ma === 'undefined') {
-          return _Q += 0;
-        } else {
-          return _Q += parseFloat(_point.demandas.volume.vol_a_ma);
-        }
-      });
-      let _q_ex_per = ((_q_ex * 100) / _q_ex).toFixed(0);
-      let _n_points = _points.length;
-      let _q_points = _Q;
-      let _q_points_per = ((_Q * 100) / _q_ex).toFixed(4);
 
-      return {
-        // Q explotável
-        _q_ex: _q_ex,
-        // nº pontos
-        _n_points: _n_points,
-        // Q outorgada
-        _q_points: _q_points,
-        // 100%
-        _q_ex_per: _q_ex_per,
-        // % utilizada
-        _q_points_per: _q_points_per,
-        // vol disponível
-        _vol_avaiable: (_q_ex - _q_points).toFixed(4)
-      };
-    }
 
-    let _hg_analyse = analyseItsAvaiable(points._hg_info.re_cm_ano, points._points)
+    let _hg_analyse = analyseItsAvaiable(points._hg_info, points._points);
 
     setData(prev => {
       return {
