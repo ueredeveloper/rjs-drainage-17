@@ -31,10 +31,13 @@ function ElemAnalyse({ map, user, setUser, data, setData }) {
 
     let { hg_analyse } = data.system
 
-    hg_analyse._n_points += 1
-    hg_analyse._q_points = (Number(hg_analyse._q_points) + Number(user.q_user)).toFixed(4)
-    hg_analyse._q_points_per = (Number(hg_analyse._q_points) * 100 / Number(hg_analyse.q_ex)).toFixed(4)
-    hg_analyse._vol_avaiable = (Number(hg_analyse._vol_avaiable) - Number(user.q_user)).toFixed(4)
+    let {vol_anual_ma} = user.dt_demandas;
+
+    hg_analyse.n_points += 1
+    hg_analyse.q_points = (Number(hg_analyse.q_points) + Number(vol_anual_ma)).toFixed(4)
+    console.log(hg_analyse.q_points, hg_analyse.q_ex)
+    hg_analyse.q_points_per = (Number(hg_analyse.q_points) * 100 / Number(hg_analyse.q_ex)).toFixed(4)
+    hg_analyse.vol_avaiable = (Number(hg_analyse.vol_avaiable) - Number(vol_anual_ma)).toFixed(4)
 
     setData(prev => {
       return {
@@ -45,6 +48,8 @@ function ElemAnalyse({ map, user, setUser, data, setData }) {
         }
       }
     });
+
+    console.log('user')
   }, [user])
  
 

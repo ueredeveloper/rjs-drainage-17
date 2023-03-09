@@ -5,7 +5,7 @@ const initialState = () => {
                 marker: {
                     id: null,
                     info: { id: null, tp_id: 1 },
-                    position: { lat: -15.7749874, lng: -47.9402802 },     
+                    position: { lat: -15.7749874, lng: -47.9402802 },
                     user: {},
                 },
                 markers: [],
@@ -27,9 +27,10 @@ const initialState = () => {
                 hg_analyse: {
                     uh: "",
                     sistema: "",
-                    q_ex: 0,
-                    q_points: 0,
+                    cod_plan: "",
+                    q_ex: 1,
                     n_points: 0,
+                    q_points: 0,
                     q_points_per: 0,
                     vol_avaiable: 0
                 }
@@ -42,4 +43,4 @@ const initialState = () => {
     )
 };
 
-export {initialState}
+export { initialState }

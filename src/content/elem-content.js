@@ -26,12 +26,11 @@ function ElemContent({ mode, theme }) {
     "doc_end": 0,
     "doc_sei": "",
     "proc_sei": "",
-    "dt_demandas": { "demanda": [] },
-    "q_user": 0
+    "dt_demandas": { "demanda": [], "vol_anual_ma": 0 },
   });
   const [value, setValue] = useState("1");
 
-  
+
   const center = { lat: -15.760780, lng: -47.815997 };
   const zoom = 10;
 

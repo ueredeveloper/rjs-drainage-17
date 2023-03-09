@@ -75,3 +75,8 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
 
 4. Readme 
   renomear readme
+
+5. Adicionar título na análise com o nome da bacia e sub-bacia (uh) e código.
+    a. ex: Bacia  Paranoá, UH Riacho Fundo (056_18_R3/Q3)
+
+6. Verificar registros repetidos, a pesoa pesquisou um poço que já está na disponibilidade.

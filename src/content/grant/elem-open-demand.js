@@ -52,19 +52,11 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
     _findPointsInASystem(dt.sub_tp_id, dt.int_latitude, dt.int_longitude)
       .then(() => {
 
-        // somatório da vazão anual do usuário
-        let _q_user = 0;
-        dt.dt_demandas.demanda.forEach(dem => {
-          _q_user += Number(dem.vol_mensal_mm)
-        })
-
         // setar usuário
         setUser(prev => {
           return {
             ...prev,
-            dt_demandas: dt.dt_demandas,
-            q_user: _q_user
-
+            dt_demandas: dt.dt_demandas
           }
         });
 
@@ -88,85 +80,85 @@ function ElemOpenDemand({ map, open, row, user, setUser, data, setData }) {
             hg_analyse: _hg_analyse
           }
         }
-      }).then(
-        // centralizar o mapa na nova coordenada
-        map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) })
-      );
+      })
 
-  });
+    }).then(
+      // centralizar o mapa na nova coordenada
+      () => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+    );
 
-}
+  }
 
-return (
-  <TableRow >
-    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <Box sx={{ margin: 1 }}>
-          <Typography variant="p" gutterBottom component="div">
-            Finalidades Autorizadas
-          </Typography>
-          <Table size="small" aria-label="purchases">
-            <TableHead>
-              <TableRow sx={{ p: 3 }}>
-                <TableCell>Latitude</TableCell>
-                <TableCell>Longitude</TableCell>
-                <TableCell>Vazão Jan (L/H)</TableCell>
-                <TableCell>Vazão Jan (L/Dia)</TableCell>
-              </TableRow>
-            </TableHead>
+  return (
+    <TableRow >
+      <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Box sx={{ margin: 1 }}>
+            <Typography variant="p" gutterBottom component="div">
+              Finalidades Autorizadas
+            </Typography>
+            <Table size="small" aria-label="purchases">
+              <TableHead>
+                <TableRow sx={{ p: 3 }}>
+                  <TableCell>Latitude</TableCell>
+                  <TableCell>Longitude</TableCell>
+                  <TableCell>Vazão Jan (L/H)</TableCell>
+                  <TableCell>Vazão Jan (L/Dia)</TableCell>
+                </TableRow>
+              </TableHead>
 
-            <TableBody>
-              {
-                row.demandas.map((dt, i) =>
-                  <TableRow key={"____" + i} sx={{ bgcolor: '#ECECEC' }}>
-                    <TableCell>{dt.int_latitude}</TableCell>
-                    <TableCell>{dt.int_longitude}</TableCell>
-                    {/** mostra vazões em janeiro */}
-                    {
-                      dt.dt_demandas.demanda.length !== 0
-                        ?
-                        <TableCell>{dt.dt_demandas.demanda[0].vazao_lh}</TableCell>
-                        :
-                        <TableCell>{''}</TableCell>
-                    }
-                    {
-                      dt.dt_demandas.demanda.length !== 0
-                        ?
-                        <TableCell>{dt.dt_demandas.demanda[0].vazao_dia}</TableCell>
-                        :
-                        <TableCell>{''}</TableCell>
-                    }
-
-                    <TableCell>
-                      <Box sx={{ display: 'flex' }}>
-                        {loading ? <Fade
-                          sx={{ alignSelf: 'center', color: "secondary.main", margin: 1.5 }}
-                          in={loading}
-                          style={{
-                            transitionDelay: loading ? '800ms' : '0ms',
-                          }}
-                          unmountOnExit
-                        >
-                          <CircularProgress size={25} />
-                        </Fade>
+              <TableBody>
+                {
+                  row.demandas.map((dt, i) =>
+                    <TableRow key={"____" + i} sx={{ bgcolor: '#ECECEC' }}>
+                      <TableCell>{dt.int_latitude}</TableCell>
+                      <TableCell>{dt.int_longitude}</TableCell>
+                      {/** mostra vazões em janeiro */}
+                      {
+                        dt.dt_demandas.demanda.length !== 0
+                          ?
+                          <TableCell>{dt.dt_demandas.demanda[0].vazao_lh}</TableCell>
                           :
-                          <IconButton
-                            color="secondary"
-                            size="large"
+                          <TableCell>{''}</TableCell>
+                      }
+                      {
+                        dt.dt_demandas.demanda.length !== 0
+                          ?
+                          <TableCell>{dt.dt_demandas.demanda[0].vazao_dia}</TableCell>
+                          :
+                          <TableCell>{''}</TableCell>
+                      }
 
-                            onClick={() => { onClick(dt) }}>
-                            <DoneAllIcon />
-                          </IconButton>}
-                      </Box></TableCell>
-                  </TableRow>
-                )
-              }
-            </TableBody>
-          </Table>
-        </Box>
-      </Collapse>
-    </TableCell>
-  </TableRow>
-)
+                      <TableCell>
+                        <Box sx={{ display: 'flex' }}>
+                          {loading ? <Fade
+                            sx={{ alignSelf: 'center', color: "secondary.main", margin: 1.5 }}
+                            in={loading}
+                            style={{
+                              transitionDelay: loading ? '800ms' : '0ms',
+                            }}
+                            unmountOnExit
+                          >
+                            <CircularProgress size={25} />
+                          </Fade>
+                            :
+                            <IconButton
+                              color="secondary"
+                              size="large"
+
+                              onClick={() => { onClick(dt) }}>
+                              <DoneAllIcon />
+                            </IconButton>}
+                        </Box></TableCell>
+                    </TableRow>
+                  )
+                }
+              </TableBody>
+            </Table>
+          </Box>
+        </Collapse>
+      </TableCell>
+    </TableRow>
+  )
 }
 export { ElemOpenDemand }
