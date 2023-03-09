@@ -65,7 +65,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
         {
           label: 'Q Usuário',
           backgroundColor: '#76B7B2',
-          data: [user.q_user],
+          data: [user.dt_demandas.vol_anual_ma],
         }
       ]
   };
