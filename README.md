@@ -58,6 +58,11 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
                 * q_disponiveL < q_solicitada = NÃO
                 * q_disponivel > q_solicitada = SIM
 
+07/03/2023
+
+botao para dupliocar vazao, por exemplo 10 com a mesma vazao
+subsistemas diferentes e mais de umpoco no mesmo subsistema com vazoes dierentes
+
             
 
 

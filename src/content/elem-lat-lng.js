@@ -52,14 +52,13 @@ function ElemLatLng({ map, tp_id, position, setData }) {
    * @returns _q_ex - Vazão Explotável, _n_points - Número de pontos outorgados na área, etc...
    */
   async function _findPointsInASystem() {
+
     setLoading((prevLoading) => !prevLoading);
 
     let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
 
 
     let _hg_analyse = analyseItsAvaiable(points._hg_info, points._points)
-
-    console.log(_hg_analyse)
 
     setData(prev => {
       return {
@@ -68,10 +67,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
           points: points._points,
           hg_shape: points._hg_shape,
           hg_info: points._hg_info,
-          hg_analyse: {
-            q_user: 5000,
-            ..._hg_analyse
-          }
+          hg_analyse: _hg_analyse
         }
       }
 
