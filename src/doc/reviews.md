@@ -1,7 +1,4 @@
-
-
-
-# Revisões :
+# Revisões
 
 23/02/2023 <br>
 1. Adicionar o Sistema e Código na tabela de análise: 
@@ -77,4 +74,4 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
  rever somatorio de vazoes dos usuario com as vazoes dos usuarios cadasrrados
 
 4. Readme 
-  renomear readme para 
+  renomear readme
