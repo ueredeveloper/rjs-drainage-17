@@ -15,7 +15,7 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-import { ElemShowUser } from './elem-show-user';
+import {ElemShowUser} from './elem-show-user';
 import { ElemListFlow } from './elem-list-flow';
 import { ElemSearchUsers } from './elem-search-users';
 
