@@ -11,7 +11,9 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';;
+import TabPanel from '@mui/lab/TabPanel'; import { findPointsInASystem } from '../services';
+import { analyseItsAvaiable } from '../tools';
+;
 
 
 function ElemContent({ mode, theme }) {
@@ -19,30 +21,95 @@ function ElemContent({ mode, theme }) {
   const [map, setMap] = useState();
 
   const [data, setData] = useState(initialState());
-  /* mudar, pois aqui o que importa é só da demanda, a palavra user não interesa neste momento */
-  const [user, setUser] = useState({
-    "us_nome": "",
-    "us_cpf_cnpj": "",
-    "doc_end": 0,
-    "doc_sei": "",
-    "proc_sei": "",
-    "dt_demandas": { "demanda": [], "vol_anual_ma": 0 },
-  });
-  const [value, setValue] = useState("1");
+  /**
+   * Usuário solicitado.
+   */
+  const [user, setUser] = useState(
+    {
+      "id": 0,
+      "us_id": 0,
+      "sub_tp_id": 0,
+      "us_nome": "",
+      "us_cpf_cnpj": "",
+      "us_doc_id": 0,
+      "doc_end": 0,
+      "doc_sei": "",
+      "proc_sei": "",
+      "end_id": 0,
+      "end_logradouro": "",
+      "int_latitude": "",
+      "int_longitude": "",
+      "dt_demanda": {
+        "demandas": [],
+        "vol_anual_ma": "0"
+      },
+      "int_shape": { "coordinates": [] }
 
+    });
+
+  useEffect(() => {
+
+    // id do marcador
+    let id = Date.now();
+    if (user.sub_tp_id !== 0)
+      findPointsInASystem(user.sub_tp_id, user.int_latitude, user.int_longitude)
+        .then(points => {
+
+          let _points = points._points;
+          // adicionar usuário na array de pontos outorgados no polígono.
+          let __points = [..._points, user]
+          // verificar disponibilidade com o ponto (user) adicionado.
+          let _hg_analyse = analyseItsAvaiable(points._hg_info, __points);
+
+          setData(prev => {
+            return {
+              ...prev,
+              overlays: {
+                ...prev.overlays,
+                marker: {
+                  ...prev.overlays.marker,
+                  id: id,
+                  position: {
+                    lat: user.int_latitude.toFixed(6),
+                    lng: user.int_longitude.toFixed(6)
+
+                  },
+                  info: {
+                    ...prev.overlays.marker.info,
+                    tp_id: user.sub_tp_id
+                  }
+                }
+              },
+              system: {
+                // adicionar todos os pontos, contendo também o usuário
+                points: __points,
+                hg_shape: points._hg_shape,
+                hg_info: points._hg_info,
+                hg_analyse: _hg_analyse
+              }
+            }
+          });
+        })
+        .then(
+          // centralizar o mapa na nova coordenada
+          () => { map.setCenter({ lat: parseFloat(user.int_latitude), lng: parseFloat(user.int_longitude) }) }
+        )
+    //.then(() => { setLoading(false); });
+  }, [user])
+  /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
+   * 
+   */
+  const [grantedRows, setGrantedRows] = useState([]);
+
+  const [value, setValue] = useState("1");
 
   const center = { lat: -15.760780, lng: -47.815997 };
   const zoom = 10;
 
-
-
   function onClick() {
-    console.log('on click')
+    // console.log('on click')
   }
 
-  useEffect(() => {
-    // console.log(data.overlays.marker)
-  })
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -75,7 +142,7 @@ function ElemContent({ mode, theme }) {
           <Box sx={{ width: '100%', typography: 'body1' }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList textColor="secondary" indicatorColor="secondary" onChange={handleChange} aria-label="lab API tabs example">
+                <TabList textColor="secondary" indicatorColor="secondary" onChange={handleChange} aria-label="">
                   <Tab label="Geral" value="1" />
                   <Tab label="Superficial" value="2" />
                   <Tab label="Subterrâneo" value="3" />
@@ -93,7 +160,7 @@ function ElemContent({ mode, theme }) {
                 <ElemWellType
                   tp_id={data.overlays.marker.info.tp_id}
                   setData={setData} />
-                <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} />
+                <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} grantedRows={grantedRows} />
                 {/** Barras */}
                 <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
               </TabPanel>
@@ -106,7 +173,7 @@ function ElemContent({ mode, theme }) {
       </Box>
       {/** TABELA */}
       <Box>
-        <ElemListGrants points={data.system.points} />
+        <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
       </Box>
 
     </Box>

@@ -11,8 +11,8 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   /**
   * Dados sobre a disponibilidade.
   */
-
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
+
 
   useEffect(() => {
     _setHGAnalyse(hg_analyse)
@@ -49,7 +49,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
           label: 'Q Explotável',
           data: [hg_analyse.q_ex],
           backgroundColor: '#4E79A7',
-         
+
           borderWidth: 1,
 
         },
@@ -65,17 +65,17 @@ function ElemBarChart({ theme, user, hg_analyse }) {
         {
           label: 'Q Usuário',
           backgroundColor: '#76B7B2',
-          data: [user.dt_demandas.vol_anual_ma],
+          data: [user.dt_demanda.vol_anual_ma],
         }
       ]
   };
 
   return (
     <Box>
-      <FormLabel sx={{my: 1}}>Balanço Hídrico</FormLabel>
+      <FormLabel sx={{ my: 1 }}>Balanço Hídrico</FormLabel>
       <Paper>
         {/** responsividade css => h-52...*/}
-        <Bar style={{ marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
+        <Bar style={{ display: 'inline', marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
           options={options} data={data} />
       </Paper>
     </Box>

@@ -21,7 +21,7 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-//import { points } from "./points";
+import { test_points } from "./points";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -274,7 +274,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function ElemListGrants({ points }) {
+export default function ElemListGrants({ points, setGrantedRows }) {
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
@@ -285,6 +285,7 @@ export default function ElemListGrants({ points }) {
   const [paddingHeight, setPaddingHeight] = useState(0);
 
   const [rows, setRows] = useState(points);
+  const [_points, _setPoints] = useState();
 
   useEffect(() => {
     let rowsOnMount = stableSort(
@@ -300,9 +301,26 @@ export default function ElemListGrants({ points }) {
     setVisibleRows(rowsOnMount);
   }, [rows]);
 
+
   useEffect(() => {
     setRows(points)
   }, [points])
+
+  /*
+    useEffect(()=>{
+      setRows(test_points)
+    }, [])
+    */
+
+  useEffect(() => {
+
+    let _rows = rows.filter(r => {
+      return selected.includes(r.id)
+    })
+
+    setGrantedRows(_rows);
+
+  }, [selected, rows])
 
   const handleRequestSort = useCallback(
     (event, newOrderBy) => {
@@ -327,24 +345,29 @@ export default function ElemListGrants({ points }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.us_nome);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+    
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
+
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
+    
       newSelected = newSelected.concat(selected.slice(0, -1));
     } else if (selectedIndex > 0) {
+   
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
         selected.slice(selectedIndex + 1)
@@ -403,7 +426,7 @@ export default function ElemListGrants({ points }) {
     setDense(event.target.checked);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (id) => selected.indexOf(id) !== -1;
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -426,17 +449,17 @@ export default function ElemListGrants({ points }) {
             <TableBody>
               {visibleRows
                 ? visibleRows.map((row, index) => {
-                  const isItemSelected = isSelected(row.us_nome);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.us_nome)}
+                      onClick={(event) => handleClick(event, row.id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={index}
+                      key={'elem_list_grants_' + index}
                       selected={isItemSelected}
                       sx={{ cursor: "pointer" }}
                     >
@@ -449,24 +472,18 @@ export default function ElemListGrants({ points }) {
                           }}
                         />
                       </TableCell>
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.us_nome}
-                      </TableCell>
+                      <TableCell component="th" id={labelId} scope="row" padding="none">{row.us_nome}</TableCell>
                       <TableCell align="right">{row.us_cpf_cnpj}</TableCell>
                       <TableCell align="right">{row.int_processo}</TableCell>
                       <TableCell align="right">{row.emp_endereco}</TableCell>
-                      {row.demandas.demandas.map((dem, i) => {
-                        return (
-                          <TableCell key={i}>
-                            {parseFloat(dem.vol_mensal_mm).toFixed(2)}
-                          </TableCell>
-                        );
-                      })}
+                      {
+                        row.dt_demanda.demandas.map((dem, i) => {
+                          return (
+                            <TableCell key={i}>
+                              {parseFloat(dem.vol_mensal_mm).toFixed(2)}
+                            </TableCell>
+                          );
+                        })}
                     </TableRow>
                   );
                 })

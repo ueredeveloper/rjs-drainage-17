@@ -12,14 +12,14 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ElemGrant from './grant';
 import { numberWithCommas } from '../tools';
+import { analyseItsAvaiable } from '../tools';
 
-function ElemAnalyse({ map, user, setUser, data, setData }) {
+function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
   /**
     * Dados sobre a disponibilidade.
     */
   const [_hg_analyse, _setHGAnalyse] = useState(data.system.hg_analyse);
 
-  
   /**
    * Atualizar a variável _hg_analyse
    */
@@ -27,15 +27,20 @@ function ElemAnalyse({ map, user, setUser, data, setData }) {
     _setHGAnalyse(data.system.hg_analyse)
   }, [data])
 
+  /*
   useEffect(() => {
 
     let { hg_analyse } = data.system
 
-    let {vol_anual_ma} = user.dt_demandas;
+    let {vol_anual_ma} = user.dt_demanda;
 
-    hg_analyse.n_points += 1
-    hg_analyse.q_points = (Number(hg_analyse.q_points) + Number(vol_anual_ma)).toFixed(4)
+
+    hg_analyse.n_points += 1;
+    // vazão outorgada
+    hg_analyse.q_points = (Number(hg_analyse.q_points) + Number(vol_anual_ma)).toFixed(4);
+    // percentual de vazão outorgada
     hg_analyse.q_points_per = (Number(hg_analyse.q_points) * 100 / Number(hg_analyse.q_ex)).toFixed(4)
+    // volume disponível
     hg_analyse.vol_avaiable = (Number(hg_analyse.vol_avaiable) - Number(vol_anual_ma)).toFixed(4)
 
     setData(prev => {
@@ -48,14 +53,21 @@ function ElemAnalyse({ map, user, setUser, data, setData }) {
       }
     });
 
-  }, [user])
- 
+  }, [user]);
+  */
+
+  useEffect(() => {
+    let __hg_analyse = analyseItsAvaiable(data.system.hg_info, grantedRows)
+    _setHGAnalyse(__hg_analyse)
+
+  }, [grantedRows])
+
 
   return (
     <Box>
       <FormControl>
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Análise</FormLabel>
+          <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
         <TableContainer sx={{ maxHeight: 330 }} component={Paper}>

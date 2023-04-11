@@ -1,28 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { ElemOpenDemand } from './elem-open-demand';
+import { ElemOpenDemands } from './elem-open-demands';
 
-function ElemListUsers({map, row, getDemandas, user, setUser, data, setData}) {
+function ElemShowUser({ map, setData, user, setUser}) {
+
   //const { row } = props;
   const [open, setOpen] = useState(false);
 
-  useEffect(()=>{
-    if(open){
-      getDemandas(row.end_id)
-    }
-  }, [open])
-
   
+ 
   return (
     <React.Fragment>
+      {/** main table */}
       <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
         <TableCell>
           <IconButton
-          color="secondary"
+            color="secondary"
             aria-label="expand row"
             size="small"
             onClick={() => setOpen(!open)}
@@ -31,18 +28,19 @@ function ElemListUsers({map, row, getDemandas, user, setUser, data, setData}) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {user.name}
         </TableCell>
-        <TableCell>{row.us_nome}</TableCell>
-        <TableCell>{row.us_cpf_cnpj}</TableCell>
-        <TableCell>{row.doc_sei}</TableCell>
-        <TableCell>{row.proc_sei}</TableCell>
-        <TableCell>{row.end_logradouro}</TableCell>
+
+        <TableCell>{user.us_nome}</TableCell>
+        <TableCell>{user.us_cpf_cnpj}</TableCell>
+        <TableCell>{user.doc_sei}</TableCell>
+        <TableCell>{user.proc_sei}</TableCell>
+        <TableCell>{user.end_logradouro}</TableCell>
 
       </TableRow>
-      <ElemOpenDemand map={map} open={open} row={row} user={user} setUser={setUser} data={data} setData={setData}/>
-
+      {/** collpsible table */}
+      <ElemOpenDemands open={open}  map={map} user={user} setUser={setUser} setData={setData}/>
     </React.Fragment>
   );
 }
-export { ElemListUsers }
+export { ElemShowUser }

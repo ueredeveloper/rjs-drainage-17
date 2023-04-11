@@ -83,9 +83,9 @@ const njs_azure_url = `https://njs-azure.ueredeveloper.repl.co`;
 * @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
 *
   */
-async function getUsuario(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
+async function getUsers (us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
-  let response = await fetch(njs_azure_url + `/getUsuario?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
+  let response = await fetch(njs_azure_url + `/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
     method: 'GET',
     headers: {
       Accept: 'application/JSON',
@@ -98,7 +98,8 @@ async function getUsuario(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
   return response;
 }
 
-async function getDemandas (end_id) {
+async function getDemands (end_id) {
+
 
   let response = await fetch(njs_azure_url + `/getDemandas?end_id=${end_id}`, {
     method: 'GET',
@@ -110,8 +111,9 @@ async function getDemandas (end_id) {
   }).then(res => {
     return res.json();
   })
+ 
   return response;
 }
 
 
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsuario, getDemandas }
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsers, getDemands }

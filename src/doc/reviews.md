@@ -80,3 +80,13 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
     a. ex: Bacia  Paranoá, UH Riacho Fundo (056_18_R3/Q3)
 
 6. Verificar registros repetidos, a pesoa pesquisou um poço que já está na disponibilidade.
+
+7.  Adicionar dois tipos de barra (normal e logarítima).
+
+8. Adicionar infowindow com informações da outorga.
+
+Lembrete: 
+retirar ao atualizar
+busca de usuário: Retirar nome fictício, CIPLAN.
+mapa: Colocar na posição parar de desenhar
+points.js: retirar este arquivo

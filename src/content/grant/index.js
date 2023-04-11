@@ -14,10 +14,10 @@ import TableRow from '@mui/material/TableRow';
 import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import { getDemandas } from '../../services/shapes';
-import { ElemListUsers } from './elem-list-users';
+
+import { ElemShowUser } from './elem-show-user';
 import { ElemListFlow } from './elem-list-flow';
-import { ElemSearchUser } from './elem-search-user';
+import { ElemSearchUsers } from './elem-search-users';
 
 import './index.css';
 
@@ -37,10 +37,10 @@ function ElemGrant({ map, user, setUser, data, setData }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-   
+
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
-        us_nome: "",
+        us_nome: "CIPLAN",
         us_cpf_cnpj: "",
         doc_end: 0,
         doc_sei: "",
@@ -60,9 +60,12 @@ function ElemGrant({ map, user, setUser, data, setData }) {
             "end_log": "",
             "int_latitude": "",
             "int_longitude": "",
-            "demandas": [{ "dt_demandas": { "demanda": [] } }]
+            "dt_demanda": {
+                "demandas": [],
+                "vol_anual_ma": "0"
+            }
         }
-    ])
+    ]);
 
     const handleUserChange = (event) => {
         setUser(prev => {
@@ -74,23 +77,12 @@ function ElemGrant({ map, user, setUser, data, setData }) {
 
     };
 
-    async function _getDemandas(end_id) {
-        let _demandas = await getDemandas(end_id);
-
-        let _users = users.map(user => {
-            // adicionar demandas ao endereço específico
-            if (user.end_id === end_id) {
-                return { ...user, demandas: _demandas }
-            }
-            return user;
-        })
-        setUsers(_users)
-    }
+    
 
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
-                <Button color="secondary"  onClick={handleOpen}><PersonAddAltIcon /></Button>
+                <Button color="secondary" onClick={handleOpen}><PersonAddAltIcon /></Button>
             </Box>
 
             <Modal
@@ -104,7 +96,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                 <Box sx={style}>
 
                     {/** Pesquisar usuários */}
-                    <ElemSearchUser map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
+                    <ElemSearchUsers map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
                     {/* Listar usuários */}
                     <Box>
                         <FormLabel id="demo-controlled-radio-buttons-group">Usuário</FormLabel>
@@ -124,14 +116,14 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                                             <TableCell>Endereço</TableCell></TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((row, i) => (
-                                            <ElemListUsers 
-                                                key={'_' + i} 
+                                        {users.map((_user, i) => (
+                                            <ElemShowUser
+                                                key={'_' + i}
                                                 map={map}
-                                                row={row} 
-                                                getDemandas={_getDemandas} 
-                                                user={user} setUser={setUser}
-                                                data={data} setData={setData} />
+                                                user={_user}
+                                                setUser={setUser}
+                                                setData={setData}
+                                                />
                                         ))}
                                     </TableBody>
                                 </Table>

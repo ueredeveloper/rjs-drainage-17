@@ -91,12 +91,14 @@ function nFormatter(num, digits) {
  * Analisar se é possível outorgar a partir da vazão requerida, vazões outorgadas etc.
  */
 function analyseItsAvaiable(_info, _points) {
+
   let _Q = 0;
   _points.map((_point) => {
-    if (typeof _point.demandas.volume.vol_a_ma === 'undefined') {
+ 
+    if (typeof _point.dt_demanda.vol_anual_ma === 'undefined') {
       return _Q += 0;
     } else {
-      return _Q += parseFloat(_point.demandas.volume.vol_a_ma);
+      return _Q += parseFloat(_point.dt_demanda.vol_anual_ma);
     }
   });
   // vazão explotável/ ano
@@ -124,7 +126,7 @@ function analyseItsAvaiable(_info, _points) {
     // % utilizada
     q_points_per: _q_points_per,
     // vol disponível
-    vol_avaiable: (_q_ex - _q_points).toFixed(4)
+    vol_avaiable: (Number(_q_ex) - Number(_q_points)).toFixed(4)
   };
 }
 /**

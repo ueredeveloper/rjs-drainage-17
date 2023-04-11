@@ -1,4 +1,4 @@
-export const points = [
+export const test_points = [
     {
       id: 5220,
       us_id: 36426,
@@ -55,7 +55,7 @@ export const points = [
           descricao: "ABASTECIMENTO HUMANO"
         }
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2473",
@@ -202,9 +202,7 @@ export const points = [
             vol_mensal_mm: "37.200000"
           }
         ],
-        volume: {
-          vol_a_ma: "438.000000"
-        }
+        vol_anual_ma: "123456789"
       }
     },
     {
@@ -273,7 +271,7 @@ export const points = [
           }
         ]
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2476",
@@ -420,9 +418,7 @@ export const points = [
             vol_mensal_mm: "24.800000"
           }
         ],
-        volume: {
-          vol_a_ma: "307.300000"
-        }
+        vol_anual_ma: "307.300000"
       }
     },
     {
@@ -481,7 +477,7 @@ export const points = [
           descricao: "ABASTECIMENTO HUMANO"
         }
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2684",
@@ -628,9 +624,7 @@ export const points = [
             vol_mensal_mm: "99.200000"
           }
         ],
-        volume: {
-          vol_a_ma: "1168.000000"
-        }
+        vol_anual_ma: "1168.000000"
       }
     },
     {
@@ -699,7 +693,7 @@ export const points = [
           }
         ]
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2690",
@@ -846,9 +840,7 @@ export const points = [
             vol_mensal_mm: "32.240000"
           }
         ],
-        volume: {
-          vol_a_ma: "379.600000"
-        }
+        vol_anual_ma: "379.600000"
       }
     },
     {
@@ -907,7 +899,7 @@ export const points = [
           descricao: "ABASTECIMENTO HUMANO"
         }
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2691",
@@ -1054,9 +1046,7 @@ export const points = [
             vol_mensal_mm: "31.000000"
           }
         ],
-        volume: {
-          vol_a_ma: "365.000000"
-        }
+        vol_anual_ma: "365.000000"
       }
     },
     {
@@ -1115,7 +1105,7 @@ export const points = [
           descricao: "ABASTECIMENTO HUMANO"
         }
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "2699",
@@ -1262,9 +1252,7 @@ export const points = [
             vol_mensal_mm: "7.440000"
           }
         ],
-        volume: {
-          vol_a_ma: "87.600000"
-        }
+        vol_anual_ma: "87.600000"
       }
     },
     {
@@ -1323,7 +1311,7 @@ export const points = [
           descricao: "IRRIGAÇÃO DE CULTURAS"
         }
       },
-      demandas: {
+      dt_demanda: {
         demandas: [
           {
             id_interferencia: "7061",
@@ -1470,9 +1458,7 @@ export const points = [
             vol_mensal_mm: "0.000000"
           }
         ],
-        volume: {
-          vol_a_ma: "214.000000"
-        }
+        vol_anual_ma: "214.000000"
       }
     }
   ];

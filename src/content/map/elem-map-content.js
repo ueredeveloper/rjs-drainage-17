@@ -14,9 +14,10 @@ import { getShape } from '../../services';
 *
 */
 function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setData }) {
+  const [points, setPoints] = useState()
 
   /**
-  * Manter os polígonos para não precisar toda hora acessar o servidor, busca uma vez e salva nesta variável.
+  * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
   */
   const [_shapes, _setShapes] = useState({
     fraturado: { polygons: [] },
@@ -58,15 +59,15 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     }
 
   }
-
+  /**
+      * Buscar no servidor se estiver as duas variáveis vazias {data.shapes e _shape}, caso contrário 
+      buscar os dados na variável _shapes que já foi preenchida com os polígonos fraturado ou poroso.
+      */
   useEffect(() => {
 
     ['poroso', 'fraturado'].forEach(system => {
       let { checked, shapes } = data.shapes[system];
-      /**
-      * Buscar no servidor se estiver as duas variáveis vazias {data.shapes e _shape}, caso contrário 
-      buscar os dados na variável _shapes que já foi preenchida com os polígonos fraturado ou fraturado.
-      */
+      
       if (checked && shapes.length === 0 && _shapes[system].polygons.length === 0) {
 
         _getShape(system).then(_polygons => {
@@ -106,7 +107,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
 
   //style={{height: '20rem'}}
   return (
-    <Box sx={{ height: '63vh' }} >
+    <Box sx={{ height: '63.5vh' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
         {/* Desenhar círculos, polígonos etc */}
@@ -116,6 +117,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
           data.overlays.markers.map(markers => {
             return markers.points.map((info, ii) => {
               // coordenadas da outorga em formato geometry
+
               let [x, y] = info.int_shape.coordinates;
               return (
                 <ElemMarker
@@ -128,6 +130,8 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
         }
         {
           data.system.points.map((point, i) => {
+
+            // capturar coordenadas
             let [x, y] = point.int_shape.coordinates;
 
             return (

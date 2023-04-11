@@ -34,7 +34,6 @@ export default function App() {
     [mode],
   );
 
-
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>

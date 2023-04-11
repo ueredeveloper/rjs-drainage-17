@@ -6,9 +6,9 @@ const njs_azure_url = `https://njs-azure.ueredeveloper.repl.co`;
 * @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
 *
   */
-export async function searchUsers (us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
+export async function getUsers (us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
-    let response = await fetch(njs_azure_url + `/searchUsers?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
+    let response = await fetch(njs_azure_url + `/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
       method: 'GET',
       headers: {
         Accept: 'application/JSON',

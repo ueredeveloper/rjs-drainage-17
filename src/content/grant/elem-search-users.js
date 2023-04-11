@@ -5,11 +5,11 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
-import { searchUsers } from '../../services/search';
+import { getUsers } from '../../services/search';
 import { blue } from '@mui/material/colors';
 import { CircularProgress, Fade } from '@mui/material';
 
-function ElemSearchUser({ map, search, setSearch, setUsers }) {
+function ElemSearchUsers({ map, search, setSearch, setUsers }) {
 
   // mostrar barra de progresso ao clicar
   const [loading, setLoading] = useState(false);
@@ -34,13 +34,16 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
   async function _searchUsers() {
     setLoading((prevLoading) => !prevLoading);
 
-    await searchUsers(search.us_nome,
+    await getUsers(search.us_nome,
       search.us_cpf_cnpj,
       search.doc_sei,
       search.proc_sei)
       .then((users) => {
         let _users = users.map(user => {
-          user.demandas = []
+          user.dt_demanda = {
+            "demandas": [],
+            "vol_anual_ma": "0"
+          }
           return user;
         })
         setUsers(_users)
@@ -106,10 +109,7 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
                 <CircularProgress size={25} />
               </Fade>
               :
-              <IconButton color="secondary" size="large" onClick={() => {
-                _searchUsers()
-
-              }}>
+              <IconButton color="secondary" size="large" onClick={() => {_searchUsers()}}>
                 <SearchIcon />
               </IconButton>}
           </Box>
@@ -122,4 +122,4 @@ function ElemSearchUser({ map, search, setSearch, setUsers }) {
 }
 
 
-export { ElemSearchUser }
+export { ElemSearchUsers }
