@@ -28,7 +28,7 @@ const initialState = () => {
                     uh: "",
                     sistema: "",
                     cod_plan: "",
-                    q_ex: 1,
+                    q_ex: 0,
                     n_points: 0,
                     q_points: 0,
                     q_points_per: 0,

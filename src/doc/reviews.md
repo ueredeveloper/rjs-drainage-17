@@ -85,8 +85,10 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
 
 8. Adicionar infowindow com informações da outorga.
 
-Lembrete: 
-retirar ao atualizar
-busca de usuário: Retirar nome fictício, CIPLAN.
-mapa: Colocar na posição parar de desenhar
-points.js: retirar este arquivo
+9. Poder selecionar várias demandas.
+
+Lembrete (12/04/2023): 
+    Retirar ao atualizar
+        busca de usuário: Retirar nome fictício, CIPLAN.
+        mapa: Colocar na posição parar de desenhar
+        points.js: retirar este arquivo

@@ -40,7 +40,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
 
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
-        us_nome: "CIPLAN",
+        us_nome: "",
         us_cpf_cnpj: "",
         doc_end: 0,
         doc_sei: "",

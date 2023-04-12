@@ -71,7 +71,7 @@ function ElemOpenDemands({ open, user, setUser, map, setData }) {
   }
 
   return (
-    <TableRow >
+    <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <Box sx={{ margin: 1 }}>

@@ -24,6 +24,7 @@ export function ElemDemand({ demand, map, user, setUser, setData }) {
                 ...prev,
                 us_nome: demand.us_nome,
                 sub_tp_id: demand.sub_tp_id,
+                tp_id: demand.sub_tp_id,
                 dt_demanda: demand.dt_demanda,
                 int_shape: {
                     coordinates: [demand.int_longitude, demand.int_latitude],

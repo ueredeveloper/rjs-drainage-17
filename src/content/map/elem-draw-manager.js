@@ -11,7 +11,7 @@ const ElemDrawManager = ({ map, data, setData }) => {
   useEffect(() => {
 
     let _draw = new window.google.maps.drawing.DrawingManager({
-      drawingMode: window.google.maps.drawing.OverlayType.MARKER,
+      //drawingMode: window.google.maps.drawing.OverlayType.MARKER,
       drawingControl: true,
       drawingControlOptions: {
         position: window.google.maps.ControlPosition.TOP_CENTER,
