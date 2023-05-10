@@ -25,11 +25,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     }
-    ,backgroundColor: 'orange'
   },
   map: {
     flexBasis: "50%",
-    
+
 
   },
   infos: {
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     overflowX: "auto",
-   
+
   },
 
 }));
@@ -155,7 +154,7 @@ function ElemContent({ mode, theme }) {
                   <Tab label="Mapa" value="0" />
                 </TabList>
               </Box>
-              <TabPanel value="0" style={{ backgroundColor: 'red' }}>
+              <TabPanel value="0" >
                 <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
                 <ElemMapControllers data={data} setData={setData} />
               </TabPanel>
@@ -174,7 +173,7 @@ function ElemContent({ mode, theme }) {
                     <Tab label="Subterrâneo" value="3" />
                   </TabList>
                 </Box>
-                <TabPanel value="1" style={{ backgroundColor: 'green' }}>
+                <TabPanel value="1">
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}

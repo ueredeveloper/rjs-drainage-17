@@ -7,9 +7,6 @@ import ElemMarker from './elem-marker';
 import ElemPolygon from './elem-polygon';
 import ElemPolyline from './elem-polyline';
 import { getShape } from '../../services';
-import { makeStyles } from '@mui/styles';
-
-
 
 /**
 * Element Home Map
@@ -69,7 +66,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
 
     ['poroso', 'fraturado'].forEach(system => {
       let { checked, shapes } = data.shapes[system];
-      
+
       if (checked && shapes.length === 0 && _shapes[system].polygons.length === 0) {
 
         _getShape(system).then(_polygons => {
@@ -106,31 +103,13 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     )
 
   }
-  
 
-  const [mapHeight, setMapHeight] = useState(window.innerHeight * 0.6);
-
-  const handleResize = () => {
-    setMapHeight(window.innerHeight * 0.6);
-  };
-
-  React.useEffect(() => {
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const style = {
-    width: '100%',
-    height: `${mapHeight}px`
-  };
 
 
   //style={{height: '20rem'}}
   return (
-    <Box style={style} >
+    <Box style={{ display: 'flex', height: '65vh' }} >
+
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
         {/* Desenhar círculos, polígonos etc */}
