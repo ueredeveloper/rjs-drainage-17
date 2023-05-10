@@ -62,13 +62,13 @@ function ElemWellType({ tp_id, setData }) {
   return (
     <FormControl sx={{display: 'flex', flex: 1}}>
       <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Tipo do Poço</FormLabel>
-      <Paper>
+      <Paper elevation={3} style={{ margin: 1 }}>
       <RadioGroup
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         value={_tp_id}
         onChange={handleChange}
-        sx={{ display: 'flex', flexFlow: 'row wrap', marginLeft: 1, my: 1, ml: 2}}
+        sx={{ display: 'flex', flexFlow: 'row wrap', marginLeft: 1, my: 0, ml: 1}}
       >
         <FormControlLabel  value="1" control={<Radio color="secondary" />} label="Manual/Tubular Raso" />
         <FormControlLabel value="2" control={<Radio color="secondary" />} label="Tubular Profundo" />

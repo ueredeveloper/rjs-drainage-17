@@ -49,9 +49,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
           label: 'Q Explotável',
           data: [hg_analyse.q_ex],
           backgroundColor: '#4E79A7',
-
           borderWidth: 1,
-
         },
         {
           label: 'Q Outorgada',
@@ -71,11 +69,11 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   };
 
   return (
-    <Box>
-      <FormLabel sx={{ my: 1 }}>Balanço Hídrico</FormLabel>
-      <Paper>
+    <Box sx={{my: 1}}>
+      <FormLabel sx={{my: 1}}>Balanço Hídrico</FormLabel>
+      <Paper elevation={3} sx={{ padding: 1}}>
         {/** responsividade css => h-52...*/}
-        <Bar style={{ display: 'inline', marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
+        <Bar style={{ display: 'inline', marginTop: 4, height: '8rem', minHeight: '8rem', maxHeight: '8rem', width: '100%', maxWidth: '100%' }}
           options={options} data={data} />
       </Paper>
     </Box>

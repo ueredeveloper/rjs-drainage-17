@@ -147,7 +147,7 @@ function ElemContent({ mode, theme }) {
       <Box className={classes.content}>
         <Box className={classes.map}>
           {/** MAPA */}
-          <Box>
+          <Box sx={{resize: 'horizontal'}}>
             <TabContext value={"0"}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList textColor="secondary" indicatorColor="secondary">

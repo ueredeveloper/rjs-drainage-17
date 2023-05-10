@@ -78,16 +78,16 @@ function ElemLatLng({ map, tp_id, position, setData }) {
   return (
 
     <FormControl sx={{ display: 'flex' }}>
-      <FormLabel id="demo-controlled-radio-buttons-group" sx={{ marginBottom: 0 }}>Coordenadas</FormLabel>
-      <Paper>
+      <FormLabel id="demo-controlled-radio-buttons-group" >Coordenadas</FormLabel>
+      <Paper elevation={3} style={{ margin: 1 }}>
         {/* entradas latitude e longitude */}
         <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
         >
           <Box sx={{ display: 'flex', flex: 4, flexDirection: 'row' }}>
             <TextField
               sx={{
-                my: 2,
-                ml: 2,
+                my: 1,
+                ml: 1,
                 display: 'flex',
                 flexGrow: 1
               }}
@@ -100,8 +100,8 @@ function ElemLatLng({ map, tp_id, position, setData }) {
             />
             <TextField
               sx={{
-                my: 2,
-                ml: 2,
+                my: 1,
+                ml: 1,
                 display: 'flex',
                 flexGrow: 1,
 

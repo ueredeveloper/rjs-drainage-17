@@ -6,14 +6,13 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import ElemGrant from './grant';
 import { numberWithCommas } from '../tools';
 import { analyseItsAvaiable } from '../tools';
 import { makeStyles } from '@mui/styles';
+import { Paper } from '@mui/material';
 
 function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
   /**
@@ -51,18 +50,18 @@ function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
           <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
-        <TableContainer >
+        <Paper elevation={3} style={{ margin: 1 }}>
           <Table className={classes.table} aria-label="simple table" size="small">
             <TableHead>
               <TableRow>
-                <TableCell align="center">UH</TableCell>
-                <TableCell align="center">Sistema</TableCell>
-                <TableCell align="center">Código</TableCell>
-                <TableCell align="center">Q Explotável (m³/ano)</TableCell>
-                <TableCell align="center">N° Poços</TableCell>
-                <TableCell align="center">Q Total Outorgada (m³/ano)</TableCell>
-                <TableCell align="center">% UTILIZADA</TableCell>
-                <TableCell align="center">Vol. Disponível (m³/ano)</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>UH</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>Sistema</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>Código</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>Q Explotável (m³/ano)</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>N° Poços</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>Q Total Outorgada (m³/ano)</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>% UTILIZADA</TableCell>
+                <TableCell align="center" sx={{fontSize: 12}}>Vol. Disponível (m³/ano)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -78,7 +77,7 @@ function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
               </TableRow>
             </TableBody>
           </Table>
-        </TableContainer>
+        </Paper>
       </FormControl>
     </Box>
   )

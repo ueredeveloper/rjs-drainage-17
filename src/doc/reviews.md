@@ -92,3 +92,10 @@ Lembrete (12/04/2023):
         busca de usuário: Retirar nome fictício, CIPLAN.
         mapa: Colocar na posição parar de desenhar
         points.js: retirar este arquivo
+10. Atualizar os pontos no mapa, a análise de disponibilidade e o chart de balanço hídrico ao selecionar pontos na tabela pontos outorgados.
+
+11. Pesquisar pelo código do sistema a porcentagem utilizada, disponibilidade.
+
+12. Botão para escolher Chart Bar logarítmica ou não
+
+13. 
