@@ -11,9 +11,36 @@ import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel'; import { findPointsInASystem } from '../services';
+import TabPanel from '@mui/lab/TabPanel';
+import { makeStyles } from '@mui/styles';
+import { findPointsInASystem } from '../services';
 import { analyseItsAvaiable } from '../tools';
-;
+import { orange } from '@mui/material/colors';
+
+const useStyles = makeStyles((theme) => ({
+  content: {
+    display: "flex",
+    flexDirection: "row",
+
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    }
+    ,backgroundColor: 'orange'
+  },
+  map: {
+    flexBasis: "50%",
+    
+
+  },
+  infos: {
+    flexBasis: "50%",
+    display: "flex",
+    flexDirection: "column",
+    overflowX: "auto",
+   
+  },
+
+}));
 
 
 function ElemContent({ mode, theme }) {
@@ -110,72 +137,72 @@ function ElemContent({ mode, theme }) {
     // console.log('on click')
   }
 
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const classes = useStyles();
+
   return (
     <Box>
-      <Box
-        sx={{
-          display: 'flex',
-          flexFlow: 'row wrap'
-        }}>
-        {/** MAPA */}
-        <Box sx={{ flex: 1 }}>
-          <TabContext value={"0"}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <TabList textColor="secondary" indicatorColor="secondary">
-                <Tab label="Mapa" value="0" />
-              </TabList>
-            </Box>
-            <TabPanel value="0">
-              <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
-              <ElemMapControllers data={data} setData={setData} />
-            </TabPanel>
-          </TabContext>
-        </Box>
-        {/** TABS */}
-        <Box sx={{ flex: 1 }}>
-
-          <Box sx={{ width: '100%', typography: 'body1' }}>
-            <TabContext value={value}>
+      <Box className={classes.content}>
+        <Box className={classes.map}>
+          {/** MAPA */}
+          <Box>
+            <TabContext value={"0"}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList textColor="secondary" indicatorColor="secondary" onChange={handleChange} aria-label="">
-                  <Tab label="Geral" value="1" />
-                  <Tab label="Superficial" value="2" />
-                  <Tab label="Subterrâneo" value="3" />
+                <TabList textColor="secondary" indicatorColor="secondary">
+                  <Tab label="Mapa" value="0" />
                 </TabList>
               </Box>
-              <TabPanel value="1">
-                {/** Latitude e Longitude */}
-                <ElemLatLng
-                  map={map}
-                  tp_id={data.overlays.marker.info.tp_id}
-                  position={data.overlays.marker.position}
-                  setData={setData}
-                />
-                {/** Tipo de Poço */}
-                <ElemWellType
-                  tp_id={data.overlays.marker.info.tp_id}
-                  setData={setData} />
-                <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} grantedRows={grantedRows} />
-                {/** Barras */}
-                <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
+              <TabPanel value="0" style={{ backgroundColor: 'red' }}>
+                <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
+                <ElemMapControllers data={data} setData={setData} />
               </TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
             </TabContext>
           </Box>
         </Box>
-
+        {/** INFOS */}
+        <Box className={classes.infos}>
+          <Box sx={{ flex: 1 }}>
+            <Box sx={{ width: '100%', typography: 'body1' }}>
+              <TabContext value={value}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <TabList textColor="secondary" indicatorColor="secondary" onChange={handleChange} aria-label="">
+                    <Tab label="Geral" value="1" />
+                    <Tab label="Superficial" value="2" />
+                    <Tab label="Subterrâneo" value="3" />
+                  </TabList>
+                </Box>
+                <TabPanel value="1" style={{ backgroundColor: 'green' }}>
+                  {/** Latitude e Longitude */}
+                  <ElemLatLng
+                    map={map}
+                    tp_id={data.overlays.marker.info.tp_id}
+                    position={data.overlays.marker.position}
+                    setData={setData}
+                  />
+                  {/** Tipo de Poço */}
+                  <ElemWellType
+                    tp_id={data.overlays.marker.info.tp_id}
+                    setData={setData} />
+                  <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} grantedRows={grantedRows} />
+                  {/** Barras */}
+                  <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
+                </TabPanel>
+                <TabPanel value="2">Item Two</TabPanel>
+                <TabPanel value="3">Item Three</TabPanel>
+              </TabContext>
+            </Box>
+          </Box>
+        </Box>
       </Box>
-      {/** TABELA */}
       <Box>
-        <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
+        {/** OUTORGAS */}
+        <Box>
+          <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
+        </Box>
       </Box>
-
     </Box>
   );
 }
