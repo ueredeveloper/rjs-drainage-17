@@ -103,10 +103,9 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     )
 
   }
-
+  //<Box style={{ display: 'flex', height: '50vh' }} >
   return (
-    <Box style={{ display: 'flex', height: '50vh' }} >
-
+    <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
         {/* Desenhar círculos, polígonos etc */}

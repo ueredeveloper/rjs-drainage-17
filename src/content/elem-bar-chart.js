@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import { Bar } from 'react-chartjs-2';
-import 'chart.js/auto';
+import Chart from 'chart.js/auto';
+import { CategoryScale, LinearScale } from 'chart.js';
+import { Box, FormControl, Paper, Typography } from '@mui/material';
 import { nFormatter } from '../tools';
-import { FormLabel, Paper } from '@mui/material';
-import { Box } from '@mui/system';
+
+Chart.register(CategoryScale, LinearScale);
+
+
 
 function ElemBarChart({ theme, user, hg_analyse }) {
 
@@ -39,6 +43,16 @@ function ElemBarChart({ theme, user, hg_analyse }) {
         text: '',
       }
     },
+    maintainAspectRatio: false,
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            ]
+        }
   };
 
   const data = {
@@ -69,14 +83,21 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   };
 
   return (
-    <Box sx={{my: 1}}>
-      <FormLabel sx={{my: 1}}>Balanço Hídrico</FormLabel>
-      <Paper elevation={3} sx={{ padding: 1}}>
-        {/** responsividade css => h-52...*/}
-        <Bar style={{ display: 'inline', marginTop: 4, height: '8rem', minHeight: '8rem', maxHeight: '8rem', width: '100%', maxWidth: '100%' }}
-          options={options} data={data} />
-      </Paper>
-    </Box>
+    <Box style={{ display: "flex", flex: 3, flexDirection: 'column' }}>
+            <FormControl>Gráfico</FormControl>
+            <Paper style={{ display: 'flex', flex: 1, padding: 1, margin: 0 }}>
+                <Box style={{ width: '100%', height: '100%' }}>
+                    <Bar
+                        data={data}
+                        options={options}
+                        width={'100%'}
+                        height={'100%'}
+                       
+                    />
+                </Box>
+            </Paper>
+
+        </Box>
   );
 }
 

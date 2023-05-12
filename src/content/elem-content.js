@@ -21,21 +21,18 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
     flexDirection: "row",
-
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     }
   },
   map: {
-    flexBasis: "50%",
-
-
+    flexBasis: "40%",
   },
-  infos: {
-    flexBasis: "50%",
+  info: {
+    flexBasis: "60%",
     display: "flex",
     flexDirection: "column",
-    overflowX: "auto",
+    //overflowX: "auto",
 
   },
 
@@ -145,35 +142,39 @@ function ElemContent({ mode, theme }) {
   return (
     <Box>
       <Box className={classes.content}>
+
+        {/** MAPA */}
         <Box className={classes.map}>
-          {/** MAPA */}
-          <Box sx={{resize: 'horizontal'}}>
+          <Box sx={{ typography: 'body1' }} >
             <TabContext value={"0"}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <TabList textColor="secondary" indicatorColor="secondary">
                   <Tab label="Mapa" value="0" />
                 </TabList>
               </Box>
-              <TabPanel value="0" >
-                <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
-                <ElemMapControllers data={data} setData={setData} />
+              <TabPanel value="0" style={{margin: -10 }}>
+                <Box style={{ height: '65vh', display: 'flex', flexDirection: "column", alignItems: 'stretch' }}>
+                  <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
+                  <ElemMapControllers data={data} setData={setData} />
+                </Box>
               </TabPanel>
             </TabContext>
           </Box>
         </Box>
-        {/** INFOS */}
-        <Box className={classes.infos}>
-          <Box sx={{ flex: 1 }}>
-            <Box sx={{ width: '100%', typography: 'body1' }}>
-              <TabContext value={value}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                  <TabList textColor="secondary" indicatorColor="secondary" onChange={handleChange} aria-label="">
-                    <Tab label="Geral" value="1" />
-                    <Tab label="Superficial" value="2" />
-                    <Tab label="Subterrâneo" value="3" />
-                  </TabList>
-                </Box>
-                <TabPanel value="1">
+
+        {/** INFO */}
+        <Box className={classes.info}>
+          <Box sx={{ typography: 'body1' }}>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList aria-label="lab API tabs example">
+                  <Tab label="Geral" value="1" />
+                  <Tab label="Superficial" value="2" />
+                  <Tab label="Subterrâneo" value="3" />
+                </TabList>
+              </Box>
+              <TabPanel value="1" style={{margin: -10 }}>
+                <Box style={{ height: '65vh', display: 'flex', flexDirection: "column"}}>
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}
@@ -188,11 +189,11 @@ function ElemContent({ mode, theme }) {
                   <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} grantedRows={grantedRows} />
                   {/** Barras */}
                   <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
-                </TabPanel>
-                <TabPanel value="2">Item Two</TabPanel>
-                <TabPanel value="3">Item Three</TabPanel>
-              </TabContext>
-            </Box>
+                </Box>
+              </TabPanel>
+              <TabPanel value="2">Item Two</TabPanel>
+              <TabPanel value="3">Item Three</TabPanel>
+            </TabContext>
           </Box>
         </Box>
       </Box>

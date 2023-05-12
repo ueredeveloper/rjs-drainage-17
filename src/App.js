@@ -41,8 +41,6 @@ export default function App() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            width: '100%',
-            justifyContent: 'center',
             bgcolor: 'background.default',
             color: 'text.primary',
             borderRadius: 1,

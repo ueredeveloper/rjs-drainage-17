@@ -77,8 +77,8 @@ function ElemMapControllers({ data, setData }) {
   }
 
   return (
-    <FormControl sx={{display: 'flex', flex: 1}}>
-      <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Shapes</FormLabel>
+    <FormControl style={{ display: "flex", flex: 1, flexDirection: 'column' }}>
+      <FormLabel id="demo-controlled-radio-buttons-group" >Shapes</FormLabel>
       <Paper elevation={3} style={{ padding: 1, margin: 1 }}>
       <Box>
         <Checkbox color="secondary" name="poroso" checked={checked[0]} onChange={handleChange1} />
