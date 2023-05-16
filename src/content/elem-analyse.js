@@ -49,10 +49,10 @@ function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
     <Box style={{ display: "flex", flex: 1, flexDirection: 'column' }}>
       <FormControl >
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
-          <FormLabel id="demo-controlled-radio-buttons-group">Análise</FormLabel>
+          <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
-        <Paper elevation={3} style={{ margin: 5 }}>
+        <Paper elevation={3} style={{ margin: 0 }}>
           <Box style={{ overflowX: "auto" }}>
             <Table className={classes.table} aria-label="simple table" size="small">
               <TableHead>

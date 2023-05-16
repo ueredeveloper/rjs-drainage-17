@@ -95,7 +95,9 @@ Lembrete (12/04/2023):
 10. Atualizar os pontos no mapa, a análise de disponibilidade e o chart de balanço hídrico ao selecionar pontos na tabela pontos outorgados.
 
 11. Pesquisar pelo código do sistema a porcentagem utilizada, disponibilidade.
-
+    - 15/05/2023 - Isto pode ser feito pesquisando uma coordenada. Ao pesquisar mostrará o subsistema, vazão utilizada neste subsistema etc...
+   
 12. Botão para escolher Chart Bar logarítmica ou não
+    - 15/05/2023 - Solucionado.
 
-13. 
+13. Voltar com o botão Fade - loading - ao inserir uma vazão

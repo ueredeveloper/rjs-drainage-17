@@ -55,24 +55,32 @@ function ElemWellType({ tp_id, setData }) {
   /**
    * Atualizar o tipo de poço.
    */
-  useEffect(()=>{
+  useEffect(() => {
     _setTpId(tp_id);
   }, [tp_id])
 
   return (
     <FormControl style={{ display: "flex", flex: 1, flexDirection: 'column' }}>
-      <FormLabel id="demo-controlled-radio-buttons-group">Tipo do Poço</FormLabel>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Tipo do Poço</FormLabel>
       <Paper elevation={3} style={{ margin: 0 }}>
-      <RadioGroup
-        aria-labelledby="demo-controlled-radio-buttons-group"
-        name="controlled-radio-buttons-group"
-        value={_tp_id}
-        onChange={handleChange}
-        sx={{ display: 'flex', flexFlow: 'row wrap', marginLeft: 1, my: 0, ml: 1}}
-      >
-        <FormControlLabel  value="1" control={<Radio color="secondary" />} label="Manual/Tubular Raso" />
-        <FormControlLabel value="2" control={<Radio color="secondary" />} label="Tubular Profundo" />
-      </RadioGroup>
+        <RadioGroup
+          aria-labelledby="demo-controlled-radio-buttons-group"
+          name="controlled-radio-buttons-group"
+          value={_tp_id}
+          onChange={handleChange}
+          sx={{ display: 'flex', flexFlow: 'row wrap', ml: 1, my: 1 }}
+        >
+          <FormControlLabel value="1" control={<Radio sx={{
+            '& .MuiSvgIcon-root': {
+              fontSize: 20,
+            },
+          }} color="secondary" />} label="Manual/Tubular Raso" />
+          <FormControlLabel value="2" control={<Radio sx={{
+            '& .MuiSvgIcon-root': {
+              fontSize: 20,
+            },
+          }} color="secondary" />} label="Tubular Profundo" />
+        </RadioGroup>
       </Paper>
     </FormControl>
   )

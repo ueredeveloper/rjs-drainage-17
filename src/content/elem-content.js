@@ -19,20 +19,20 @@ import { orange } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    display: "flex",
-    flexDirection: "row",
+    display: 'flex',
+    flexDirection: 'row',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     }
   },
   map: {
-    flexBasis: "40%",
+    flexBasis: '40%',
   },
   info: {
-    flexBasis: "60%",
-    display: "flex",
-    flexDirection: "column",
-    //overflowX: "auto",
+    flexBasis: '60%',
+    display: 'flex',
+    flexDirection: 'column',
+    //overflowX: 'auto',
 
   },
 
@@ -49,24 +49,24 @@ function ElemContent({ mode, theme }) {
    */
   const [user, setUser] = useState(
     {
-      "id": 0,
-      "us_id": 0,
-      "sub_tp_id": 0,
-      "us_nome": "",
-      "us_cpf_cnpj": "",
-      "us_doc_id": 0,
-      "doc_end": 0,
-      "doc_sei": "",
-      "proc_sei": "",
-      "end_id": 0,
-      "end_logradouro": "",
-      "int_latitude": "",
-      "int_longitude": "",
-      "dt_demanda": {
-        "demandas": [],
-        "vol_anual_ma": "0"
+      'id': 0,
+      'us_id': 0,
+      'sub_tp_id': 0,
+      'us_nome': '',
+      'us_cpf_cnpj': '',
+      'us_doc_id': 0,
+      'doc_end': 0,
+      'doc_sei': '',
+      'proc_sei': '',
+      'end_id': 0,
+      'end_logradouro': '',
+      'int_latitude': '',
+      'int_longitude': '',
+      'dt_demanda': {
+        'demandas': [],
+        'vol_anual_ma': '0'
       },
-      "int_shape": { "coordinates": [] }
+      'int_shape': { 'coordinates': [] }
 
     });
 
@@ -124,7 +124,7 @@ function ElemContent({ mode, theme }) {
    */
   const [grantedRows, setGrantedRows] = useState([]);
 
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState('1');
 
   const center = { lat: -15.760780, lng: -47.815997 };
   const zoom = 10;
@@ -146,14 +146,14 @@ function ElemContent({ mode, theme }) {
         {/** MAPA */}
         <Box className={classes.map}>
           <Box sx={{ typography: 'body1' }} >
-            <TabContext value={"0"}>
+            <TabContext value={'0'}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList textColor="secondary" indicatorColor="secondary">
-                  <Tab label="Mapa" value="0" />
+                <TabList textColor='secondary' indicatorColor='secondary'>
+                  <Tab label='Mapa' value='0' />
                 </TabList>
               </Box>
-              <TabPanel value="0" style={{margin: -10 }}>
-                <Box style={{ height: '65vh', display: 'flex', flexDirection: "column", alignItems: 'stretch' }}>
+              <TabPanel value='0' style={{ margin: -10 }}>
+                <Box style={{ height: '75vh', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
                   <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
                   <ElemMapControllers data={data} setData={setData} />
                 </Box>
@@ -167,14 +167,14 @@ function ElemContent({ mode, theme }) {
           <Box sx={{ typography: 'body1' }}>
             <TabContext value={value}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList aria-label="lab API tabs example">
-                  <Tab label="Geral" value="1" />
-                  <Tab label="Superficial" value="2" />
-                  <Tab label="Subterrâneo" value="3" />
+                <TabList textColor='secondary' indicatorColor='secondary' onChange={handleChange} aria-label=''>
+                  <Tab label='Geral' value='1' />
+                  <Tab label='Superficial' value='2' />
+                  <Tab label='Subterrâneo' value='3' />
                 </TabList>
               </Box>
-              <TabPanel value="1" style={{margin: -10 }}>
-                <Box style={{ height: '65vh', display: 'flex', flexDirection: "column"}}>
+              <TabPanel value='1' style={{ margin: -10 }}>
+                <Box style={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}
@@ -191,17 +191,15 @@ function ElemContent({ mode, theme }) {
                   <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
                 </Box>
               </TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
+              <TabPanel value='2'>Item Two</TabPanel>
+              <TabPanel value='3'>Item Three</TabPanel>
             </TabContext>
           </Box>
         </Box>
       </Box>
-      <Box>
+      <Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
         {/** OUTORGAS */}
-        <Box>
-          <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
-        </Box>
+        <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
       </Box>
     </Box>
   );

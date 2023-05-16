@@ -78,16 +78,16 @@ function ElemMapControllers({ data, setData }) {
 
   return (
     <FormControl style={{ display: "flex", flex: 1, flexDirection: 'column' }}>
-      <FormLabel id="demo-controlled-radio-buttons-group" >Shapes</FormLabel>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Shapes</FormLabel>
       <Paper elevation={3} style={{ padding: 1, margin: 1 }}>
-      <Box>
-        <Checkbox color="secondary" name="poroso" checked={checked[0]} onChange={handleChange1} />
-        <FormLabel color="secondary" id="demo-controlled-radio-buttons-group">Poroso</FormLabel>
-        <Checkbox color="secondary" name="fraturado" checked={checked[1]} onChange={handleChange2} />
-        <FormLabel id="demo-controlled-radio-buttons-group">Fraturado</FormLabel>
-        {/** limpar */}
-        <Button sx={{marginLeft: '1rem', marginRight: '1rem'}} onClick={handleChange3}><LayersClearIcon color="secondary"/></Button>
-      </Box>
+        <Box>
+          <Checkbox color="secondary" name="poroso" checked={checked[0]} onChange={handleChange1} />
+          <FormLabel color="secondary" id="demo-controlled-radio-buttons-group">Poroso</FormLabel>
+          <Checkbox color="secondary" name="fraturado" checked={checked[1]} onChange={handleChange2} />
+          <FormLabel id="demo-controlled-radio-buttons-group">Fraturado</FormLabel>
+          {/** limpar */}
+          <Button sx={{ marginLeft: '1rem', marginRight: '1rem' }} onClick={handleChange3}><LayersClearIcon color="secondary" /></Button>
+        </Box>
       </Paper>
     </FormControl>
   )
