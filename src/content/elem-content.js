@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     flexBasis: '60%',
     display: 'flex',
     flexDirection: 'column',
-    //overflowX: 'auto',
-
+    overflowX: 'hidden',
+    overflowY: 'hidden'
   },
 
 }));
@@ -118,11 +118,13 @@ function ElemContent({ mode, theme }) {
           () => { map.setCenter({ lat: parseFloat(user.int_latitude), lng: parseFloat(user.int_longitude) }) }
         )
     //.then(() => { setLoading(false); });
+
+    console.log(user)
   }, [user])
   /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
    * 
    */
-  const [grantedRows, setGrantedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const [value, setValue] = useState('1');
 
@@ -154,7 +156,8 @@ function ElemContent({ mode, theme }) {
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
                 <Box style={{ height: '75vh', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
-                  <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData} />
+                  <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData}
+                    selectedRows={selectedRows} />
                   <ElemMapControllers data={data} setData={setData} />
                 </Box>
               </TabPanel>
@@ -186,7 +189,7 @@ function ElemContent({ mode, theme }) {
                   <ElemWellType
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
-                  <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} grantedRows={grantedRows} />
+                  <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} selectedRows={selectedRows} />
                   {/** Barras */}
                   <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
                 </Box>
@@ -199,7 +202,7 @@ function ElemContent({ mode, theme }) {
       </Box>
       <Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
         {/** OUTORGAS */}
-        <ElemListGrants points={data.system.points} setGrantedRows={setGrantedRows} />
+        <ElemListGrants points={data.system.points} setSelectedRows={setSelectedRows} />
       </Box>
     </Box>
   );

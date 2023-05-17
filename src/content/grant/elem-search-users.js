@@ -31,7 +31,7 @@ function ElemSearchUsers({ map, search, setSearch, setUsers }) {
   * @param {string} doc_sei Documento no sistema SEI.
   * @param {string} prc_sei Processo.
   */
-  async function _searchUsers() {
+  async function searchUsers() {
     setLoading((prevLoading) => !prevLoading);
 
     await getUsers(search.us_nome,
@@ -84,8 +84,6 @@ function ElemSearchUsers({ map, search, setSearch, setUsers }) {
               label="Documento"
               variant="standard"
               onChange={handleUserChange} />
-
-
           </Box>
           <Box sx={{ marginLeft: '1rem', marginRight: '1rem' }}>
             <TextField id="proc_sei"
@@ -109,7 +107,7 @@ function ElemSearchUsers({ map, search, setSearch, setUsers }) {
                 <CircularProgress size={25} />
               </Fade>
               :
-              <IconButton color="secondary" size="large" onClick={() => {_searchUsers()}}>
+              <IconButton color="secondary" size="large" onClick={() => { searchUsers() }}>
                 <SearchIcon />
               </IconButton>}
           </Box>

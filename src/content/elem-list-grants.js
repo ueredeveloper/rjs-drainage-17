@@ -273,7 +273,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function ElemListGrants({ points, setGrantedRows }) {
+export default function ElemListGrants({ points, setSelectedRows }) {
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
@@ -298,26 +298,26 @@ export default function ElemListGrants({ points, setGrantedRows }) {
     );
 
     setVisibleRows(rowsOnMount);
+
+    // primeira renderização da tabela com todas as outorgas selecionadas
+    const newSelected = rows.map((n) => n.id);
+    setSelected(newSelected);
+
   }, [rows]);
 
 
   useEffect(() => {
     setRows(points)
-  }, [points])
 
-  /*
-    useEffect(()=>{
-      setRows(test_points)
-    }, [])
-    */
+    
+  }, [points])
 
   useEffect(() => {
 
-    let _rows = rows.filter(r => {
+    let _selectedRows = rows.filter(r => {
       return selected.includes(r.id)
     })
-
-    setGrantedRows(_rows);
+    setSelectedRows(_selectedRows);
 
   }, [selected, rows])
 
@@ -344,6 +344,7 @@ export default function ElemListGrants({ points, setGrantedRows }) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
+
       const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
@@ -437,6 +438,7 @@ export default function ElemListGrants({ points, setGrantedRows }) {
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
           >
+           
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}

@@ -93,6 +93,8 @@ Lembrete (12/04/2023):
         mapa: Colocar na posição parar de desenhar
         points.js: retirar este arquivo
 10. Atualizar os pontos no mapa, a análise de disponibilidade e o chart de balanço hídrico ao selecionar pontos na tabela pontos outorgados.
+    - 17/05/2023 - resolvido
+    O pontos estão aparecendo conforme seleção na tabela de pontos outorgados. Também foi adicionado de a tabela de outorgas inicializar com tudo selecionado, que é o habitual, em poucas vezes será retirado um ponto da tabela.
 
 11. Pesquisar pelo código do sistema a porcentagem utilizada, disponibilidade.
     - 15/05/2023 - Isto pode ser feito pesquisando uma coordenada. Ao pesquisar mostrará o subsistema, vazão utilizada neste subsistema etc...

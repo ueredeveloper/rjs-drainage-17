@@ -12,75 +12,73 @@ import ElemGrant from './grant';
 import { numberWithCommas } from '../tools';
 import { analyseItsAvaiable } from '../tools';
 import { makeStyles } from '@mui/styles';
-import { Paper } from '@mui/material';
+import { CssBaseline, Paper, ScopedCssBaseline } from '@mui/material';
 
 
 const useStyles = makeStyles(theme => ({
   table: {
-    minWidth: 650,
+    minWidth: 100,
     width: "100%",
   },
 }));
 
 
-function ElemAnalyse({ map, user, setUser, data, setData, grantedRows }) {
+function ElemAnalyse({ map, user, setUser, data, setData, selectedRows }) {
   /**
     * Dados sobre a disponibilidade.
     */
-  const [_hg_analyse, _setHGAnalyse] = useState(data.system.hg_analyse);
+  const [hg_analyse, setAnalyse] = useState(data.system.hg_analyse);
 
   /**
-   * Atualizar a variável _hg_analyse
+   * Atualizar a variável hg_analyse
    */
   useEffect(() => {
-    _setHGAnalyse(data.system.hg_analyse)
+    setAnalyse(data.system.hg_analyse)
   }, [data])
 
 
   useEffect(() => {
-    let __hg_analyse = analyseItsAvaiable(data.system.hg_info, grantedRows)
-    _setHGAnalyse(__hg_analyse)
+    let _hg_analyse = analyseItsAvaiable(data.system.hg_info, selectedRows)
+    setAnalyse(_hg_analyse)
 
-  }, [grantedRows]);
+  }, [selectedRows]);
 
   const classes = useStyles();
 
   return (
-    <Box style={{ display: "flex", flex: 1, flexDirection: 'column' }}>
+    <Box sx={{ display: "flex", flex: 1, flexDirection: 'column' }}>
       <FormControl >
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
-          <FormLabel id="demo-controlled-radio-buttons-group" sx={{my: 1}}>Análise</FormLabel>
+          <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Análise</FormLabel>
           <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
         </Box>
-        <Paper elevation={3} style={{ margin: 0 }}>
-          <Box style={{ overflowX: "auto" }}>
+        <Paper id="table-paper" elevation={3} sx={{ margin: 0, overflow: 'auto' }}>
             <Table className={classes.table} aria-label="simple table" size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>UH</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>Sistema</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>Código</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>Q Explotável (m³/ano)</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>N° Poços</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>Q Total Outorgada (m³/ano)</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>% UTILIZADA</TableCell>
-                  <TableCell align="center" sx={{ fontSize: 12 }}>Vol. Disponível (m³/ano)</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>UH</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>Sistema</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>Código</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>Q Explotável (m³/ano)</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>N° Poços</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>Q Total Outorgada (m³/ano)</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>% UTILIZADA</TableCell>
+                  <TableCell align="center" sx={{ p: 2, fontSize: 12 }}>Vol. Disponível (m³/ano)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  <TableCell align="center">{_hg_analyse.uh}</TableCell>
-                  <TableCell align="center">{_hg_analyse.sistema}</TableCell>
-                  <TableCell align="center">{_hg_analyse.cod_plan}</TableCell>
-                  <TableCell align="center">{numberWithCommas(_hg_analyse.q_ex)}</TableCell>
-                  <TableCell align="center">{_hg_analyse.n_points}</TableCell>
-                  <TableCell align="center">{numberWithCommas(_hg_analyse.q_points)}</TableCell>
-                  <TableCell align="center">{numberWithCommas(_hg_analyse.q_points_per)}</TableCell>
-                  <TableCell align="center">{numberWithCommas(_hg_analyse.vol_avaiable)}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{hg_analyse.uh}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{hg_analyse.sistema}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{hg_analyse.cod_plan}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{numberWithCommas(hg_analyse.q_ex)}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{hg_analyse.n_points}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{numberWithCommas(hg_analyse.q_points)}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{numberWithCommas(hg_analyse.q_points_per)}</TableCell>
+                  <TableCell align="center" sx={{ p: 2}}>{numberWithCommas(hg_analyse.vol_avaiable)}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
-          </Box>
         </Paper>
       </FormControl>
     </Box>
