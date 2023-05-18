@@ -94,17 +94,17 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   };
 
   return (
-    <Box style={{ display: "flex", flex: 2, flexDirection: 'column' }}>
+    <Box id="chart-box" sx={{ display: "flex", flex: 1, flexDirection: 'column' }}>
       <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Gráfico</FormLabel>
-      <Paper elevation={3} style={{ display: 'flex', flex: 1, padding: 1, margin: 0 }}>
-        <Box style={{ width: '100%', height: '100%' }}>
+      <Paper id="chart-paper" elevation={3} sx={{ flex: 1, m: 1, alignItems: 'stretch' }} >
+        <Box id="char-bar-box" sx={{ display: 'flex', mx: 2 }}>
           <Bar
             data={data}
             options={options}
-            style={{ display: 'inline', marginTop: 4, height: '13rem', minHeight: '13rem', maxHeight: '13rem', width: '100%', maxWidth: '100%' }}
-
+            style={{ height: '40%', width: '40%' }}
           />
         </Box>
+
         <Tooltip title="Escala logarítimica">
           <Switch
             checked={checked}
@@ -114,8 +114,8 @@ function ElemBarChart({ theme, user, hg_analyse }) {
             inputProps={{ 'aria-label': 'controlled' }}
           />
         </Tooltip>
-      </Paper>
 
+      </Paper>
     </Box>
   );
 }

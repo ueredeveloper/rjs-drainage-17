@@ -427,10 +427,13 @@ export default function ElemListGrants({ points, setSelectedRows }) {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-
-  return (
-    <Box sx={{ width: '95vw', marginTop: 5 }}>
+/*
+Box sx={{ width: '95vw', marginTop: 5 }}>
       <Paper elevation={3} sx={{ width: "100%", mb: 2 }}>
+      */
+  return (
+    <Box>
+      <Paper elevation={3} >
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer sx={{ maxHeight: 300 }}>
           <Table

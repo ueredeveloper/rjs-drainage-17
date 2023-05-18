@@ -98,8 +98,6 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
       }
     })
 
-    console.log('data1', data.overlays.marker)
-
   }, [data, setPolygons, _shapes])
 
   /**

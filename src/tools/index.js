@@ -91,7 +91,7 @@ function nFormatter(num, digits) {
  * Analisar se é possível outorgar a partir da vazão requerida, vazões outorgadas etc.
  */
 function analyseItsAvaiable(_info, _points) {
-
+  
   let _Q = 0;
   _points.map((_point) => {
  
@@ -116,8 +116,11 @@ function analyseItsAvaiable(_info, _points) {
 
   /* -----------------  retirar underlina das variaveis criadas */
   return {
+    bacia_nome: _info.bacia_nome,
     // Unidade Hidrográfica
-    uh: _info.uh_label,
+    uh_label: _info.uh_label,
+    // Nome da UH
+    uh_nome: _info.uh_nome,
     // Sitema (R3, P1)
     sistema: _info.sistema,
     // Código do Sitema

@@ -4,6 +4,7 @@ import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import colors from './colors';
 import { ElemTopBar } from './header';
 import { ElemContent } from './content';
+import ElemFooter from './footer';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
 
@@ -48,6 +49,7 @@ export default function App() {
         >
           <ElemTopBar ColorModeContext={ColorModeContext} />
           <ElemContent mode={mode} theme={theme} />
+          <ElemFooter/>
         </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>

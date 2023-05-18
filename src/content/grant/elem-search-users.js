@@ -54,7 +54,7 @@ function ElemSearchUsers({ map, search, setSearch, setUsers }) {
 
   return (
     <Box sx={{ pt: 0 }}>
-      <FormLabel id="demo-controlled-radio-buttons-group">Pesquisa</FormLabel>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Pesquisa</FormLabel>
       <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between', marginTop: 2, marginBottom: 2 }}>
         {/* Pesquisa de Usários*/}
         <Box sx={{ display: 'flex', flexDirection: 'flex-row' }}>

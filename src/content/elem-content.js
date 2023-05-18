@@ -20,6 +20,11 @@ import { orange } from '@mui/material/colors';
 const useStyles = makeStyles((theme) => ({
   content: {
     display: 'flex',
+    flexDirection: 'column',
+
+  },
+  box1: {
+    display: 'flex',
     flexDirection: 'row',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
@@ -27,13 +32,18 @@ const useStyles = makeStyles((theme) => ({
   },
   map: {
     flexBasis: '40%',
+    marginBottom: 5
   },
   info: {
     flexBasis: '60%',
     display: 'flex',
     flexDirection: 'column',
     overflowX: 'hidden',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
+    marginBottom: 15
+  },
+  box2: {
+
   },
 
 }));
@@ -119,7 +129,7 @@ function ElemContent({ mode, theme }) {
         )
     //.then(() => { setLoading(false); });
 
-    console.log(user)
+   //console.log(user)
   }, [user])
   /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
    * 
@@ -142,9 +152,9 @@ function ElemContent({ mode, theme }) {
   const classes = useStyles();
 
   return (
-    <Box>
-      <Box className={classes.content}>
-
+    <Box className={classes.content}>
+      {/** box 1 */}
+      <Box className={classes.box1}>
         {/** MAPA */}
         <Box className={classes.map}>
           <Box sx={{ typography: 'body1' }} >
@@ -155,7 +165,7 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
-                <Box style={{ height: '75vh', display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}>
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column'}}>
                   <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData}
                     selectedRows={selectedRows} />
                   <ElemMapControllers data={data} setData={setData} />
@@ -177,7 +187,7 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='1' style={{ margin: -10 }}>
-                <Box style={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto'}}>
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}
@@ -189,6 +199,7 @@ function ElemContent({ mode, theme }) {
                   <ElemWellType
                     tp_id={data.overlays.marker.info.tp_id}
                     setData={setData} />
+                  {/** Análise */}
                   <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} selectedRows={selectedRows} />
                   {/** Barras */}
                   <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
@@ -200,8 +211,9 @@ function ElemContent({ mode, theme }) {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
-        {/** OUTORGAS */}
+
+      {/** box 2 */}
+      <Box className={classes.box2}>
         <ElemListGrants points={data.system.points} setSelectedRows={setSelectedRows} />
       </Box>
     </Box>
@@ -209,3 +221,11 @@ function ElemContent({ mode, theme }) {
 }
 
 export default ElemContent;
+
+/* 
+
+<Box className={classes.box2} sx={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
+
+
+<Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
+*/

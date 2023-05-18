@@ -65,33 +65,37 @@ Verificar a tabela de vazões editável, está sendo aberto duas linhas (rows) c
 09/03/23
 
 1. Front 
- mudar nome site na tag head
+    mudar nome site na tag head
+    - 15/05/2023 resolvido.
+    Mudei para RJS SAD-DF
 
 2. Bar chart 
- retirar escala logaritma
+    retirar escala logaritma
+    18/05/2023 resolvido
+        adicionei botão de escolha, se logarítmica ou não.
 
 3. Calculos
- rever somatorio de vazoes dos usuario com as vazoes dos usuarios cadasrrados
+    rever somatorio de vazoes dos usuario com as vazoes dos usuarios cadastrados
+    18/05/2023 resolvido.
 
 4. Readme 
-  renomear readme
+    renomear readme
+        resolvido, criado reviews.md.
 
 5. Adicionar título na análise com o nome da bacia e sub-bacia (uh) e código.
     a. ex: Bacia  Paranoá, UH Riacho Fundo (056_18_R3/Q3)
+    -18/05/2023 resolvido.
 
 6. Verificar registros repetidos, a pesoa pesquisou um poço que já está na disponibilidade.
-
+    -18/05/2023
+        O próprio técnico pode verificar e retirar do cálculo algum registro.
 7.  Adicionar dois tipos de barra (normal e logarítima).
+    -17/05/2023 resolvido.
 
 8. Adicionar infowindow com informações da outorga.
 
 9. Poder selecionar várias demandas.
 
-Lembrete (12/04/2023): 
-    Retirar ao atualizar
-        busca de usuário: Retirar nome fictício, CIPLAN.
-        mapa: Colocar na posição parar de desenhar
-        points.js: retirar este arquivo
 10. Atualizar os pontos no mapa, a análise de disponibilidade e o chart de balanço hídrico ao selecionar pontos na tabela pontos outorgados.
     - 17/05/2023 - resolvido
     O pontos estão aparecendo conforme seleção na tabela de pontos outorgados. Também foi adicionado de a tabela de outorgas inicializar com tudo selecionado, que é o habitual, em poucas vezes será retirado um ponto da tabela.
@@ -103,3 +107,10 @@ Lembrete (12/04/2023):
     - 15/05/2023 - Solucionado.
 
 13. Voltar com o botão Fade - loading - ao inserir uma vazão
+
+
+Lembrete (12/04/2023): 
+    Retirar ao atualizar
+        busca de usuário: Retirar nome fictício, CIPLAN.
+        mapa: Colocar na posição parar de desenhar
+        points.js: retirar este arquivo

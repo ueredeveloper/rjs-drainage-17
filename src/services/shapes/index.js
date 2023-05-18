@@ -98,8 +98,7 @@ async function getUsers (us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
   return response;
 }
 
-async function getDemands (end_id) {
-
+async function findDemands (end_id) {
 
   let response = await fetch(njs_azure_url + `/getDemandas?end_id=${end_id}`, {
     method: 'GET',
@@ -116,4 +115,4 @@ async function getDemands (end_id) {
 }
 
 
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsers, getDemands }
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsers, findDemands }

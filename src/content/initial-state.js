@@ -22,7 +22,8 @@ const initialState = () => {
                     re_cm_ano: 0,
                     sistema: "",
                     uh_codigo: 0,
-                    uh_label: ""
+                    uh_label: "",
+                    uh_nome: ""
                 },
                 hg_analyse: {
                     uh: "",

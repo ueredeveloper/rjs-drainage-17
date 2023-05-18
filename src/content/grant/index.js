@@ -15,11 +15,12 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-import {ElemShowUser} from './elem-show-user';
+import { ElemShowUser } from './elem-show-user';
 import { ElemListFlow } from './elem-list-flow';
 import { ElemSearchUsers } from './elem-search-users';
 
 import './index.css';
+import { Tooltip } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -77,12 +78,14 @@ function ElemGrant({ map, user, setUser, data, setData }) {
 
     };
 
-    
+
 
     return (
         <Box>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end' }} >
-                <Button color="secondary" onClick={handleOpen}><PersonAddAltIcon /></Button>
+                <Tooltip title="Buscar usuário">
+                    <Button color="secondary" onClick={handleOpen}><PersonAddAltIcon /></Button>
+                </Tooltip>
             </Box>
 
             <Modal
@@ -99,7 +102,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                     <ElemSearchUsers map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
                     {/* Listar usuários */}
                     <Box>
-                        <FormLabel id="demo-controlled-radio-buttons-group">Usuário</FormLabel>
+                        <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Usuário</FormLabel>
                         {/** sx={{ height: 300, maxHeight: 300, marginTop: 2, marginBottom: 2 }}*/}
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                             <TableContainer sx={{ height: 300, maxHeight: 300 }}>
@@ -123,7 +126,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                                                 user={_user}
                                                 setUser={setUser}
                                                 setData={setData}
-                                                />
+                                            />
                                         ))}
                                     </TableBody>
                                 </Table>

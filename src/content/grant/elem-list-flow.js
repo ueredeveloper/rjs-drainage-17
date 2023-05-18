@@ -66,10 +66,10 @@ function ElemListFlow({ user, setUser }) {
 
 
   return (
-    <Box>
-      <FormLabel id="demo-controlled-radio-buttons-group">Vazão</FormLabel>
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ height: 250, maxHeight: 250 }}>
+    <Box sx={{display: 'flex', flexDirection: 'column', overflowX: 'auto'}}>
+      <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Vazão</FormLabel>
+      <Paper elevation={3} style={{ margin: 1 }} sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer sx={{ height: 170, maxHeight: 170 }}>
           <Table aria-label="caption table">
             <TableHead >
               <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
