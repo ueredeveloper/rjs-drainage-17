@@ -7,7 +7,10 @@ import { ElemContent } from './content';
 import ElemFooter from './footer';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
-
+ 
+/** 18 de maio 2023
+ * melhorado o css das lista de outorgas e adicionado alguns tolltips
+ */
 
 export default function App() {
 
