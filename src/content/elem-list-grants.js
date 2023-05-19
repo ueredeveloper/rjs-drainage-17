@@ -308,6 +308,7 @@ export default function ElemListGrants({ points, setSelectedRows }) {
 
   useEffect(() => {
     setRows(points)
+    console.log(points)
 
     
   }, [points])

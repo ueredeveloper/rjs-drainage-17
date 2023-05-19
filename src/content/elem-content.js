@@ -54,31 +54,21 @@ function ElemContent({ mode, theme }) {
   const [map, setMap] = useState();
 
   const [data, setData] = useState(initialState());
+
+   /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
+   * 
+   */
+   const [selectedRows, setSelectedRows] = useState([]);
+
+   const [value, setValue] = useState('1');
+ 
+   const center = { lat: -15.760780, lng: -47.815997 };
+   const zoom = 10;
+
   /**
    * Usuário solicitado.
    */
-  const [user, setUser] = useState(
-    {
-      'id': 0,
-      'us_id': 0,
-      'sub_tp_id': 0,
-      'us_nome': '',
-      'us_cpf_cnpj': '',
-      'us_doc_id': 0,
-      'doc_end': 0,
-      'doc_sei': '',
-      'proc_sei': '',
-      'end_id': 0,
-      'end_logradouro': '',
-      'int_latitude': '',
-      'int_longitude': '',
-      'dt_demanda': {
-        'demandas': [],
-        'vol_anual_ma': '0'
-      },
-      'int_shape': { 'coordinates': [] }
-
-    });
+  const [user, setUser] = useState(initialState.overlays.markers[0]);
 
   useEffect(() => {
 
@@ -131,16 +121,7 @@ function ElemContent({ mode, theme }) {
 
    //console.log(user)
   }, [user])
-  /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
-   * 
-   */
-  const [selectedRows, setSelectedRows] = useState([]);
-
-  const [value, setValue] = useState('1');
-
-  const center = { lat: -15.760780, lng: -47.815997 };
-  const zoom = 10;
-
+ 
   function onClick() {
     // console.log('on click')
   }
@@ -191,7 +172,7 @@ function ElemContent({ mode, theme }) {
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}
-                    tp_id={data.overlays.marker.info.tp_id}
+                    tp_id={user.tp_id}
                     position={data.overlays.marker.position}
                     setData={setData}
                   />

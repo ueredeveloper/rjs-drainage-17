@@ -2,13 +2,27 @@ const initialState = () => {
     return (
         {
             overlays: {
-                marker: {
-                    id: null,
-                    info: { id: null, tp_id: 1 },
-                    position: { lat: -15.7749874, lng: -47.9402802 },
-                    user: {},
-                },
-                markers: [],
+                markers: [{
+                    'id': 0,
+                    'us_id': 0,
+                    'sub_tp_id': 0,
+                    'us_nome': '',
+                    'us_cpf_cnpj': '',
+                    'us_doc_id': 0,
+                    'doc_end': 0,
+                    'doc_sei': '',
+                    'proc_sei': '',
+                    'end_id': 0,
+                    'end_logradouro': '',
+                    'int_latitude': '',
+                    'int_longitude': '',
+                    'dt_demanda': {
+                      'demandas': [],
+                      'vol_anual_ma': '0'
+                    },
+                    'int_shape': { 'coordinates': [] }
+              
+                  }],
                 circles: [],
                 polygons: [],
                 rectangles: []

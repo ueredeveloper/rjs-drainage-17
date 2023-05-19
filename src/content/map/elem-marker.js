@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 const ElemMarker = ({ info, options }) => {
 
+  console.log(info, options)
+
   const [marker, setMarker] = useState();
   /**
   * Setar o ícone do marcador.
