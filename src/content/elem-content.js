@@ -53,56 +53,58 @@ function ElemContent({ mode, theme }) {
 
   const [map, setMap] = useState();
 
-  const [data, setData] = useState(initialState());
+  const [data, setData] = useState(initialState);
 
-   /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
-   * 
-   */
-   const [selectedRows, setSelectedRows] = useState([]);
+  /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
+  * 
+  */
+  const [selectedRows, setSelectedRows] = useState([]);
 
-   const [value, setValue] = useState('1');
- 
-   const center = { lat: -15.760780, lng: -47.815997 };
-   const zoom = 10;
+  const [value, setValue] = useState('1');
+
+  const center = { lat: -15.760780, lng: -47.815997 };
+  const zoom = 10;
 
   /**
-   * Usuário solicitado.
+   * Usuário de recursos hídricos
    */
-  const [user, setUser] = useState(initialState.overlays.markers[0]);
+  const [marker, setmarker] = useState(initialState.system.markers[0]);
 
   useEffect(() => {
 
     // id do marcador
-    let id = Date.now();
-    if (user.sub_tp_id !== 0)
-      findPointsInASystem(user.sub_tp_id, user.int_latitude, user.int_longitude)
+    //let id = Date.now();
+    if (marker.tp_id !== 0)
+      findPointsInASystem(marker.tp_id, marker.int_latitude, marker.int_longitude)
         .then(points => {
 
           let _points = points._points;
+          
           // adicionar usuário na array de pontos outorgados no polígono.
-          let __points = [..._points, user]
-          // verificar disponibilidade com o ponto (user) adicionado.
+          let __points = [marker, ..._points]
+          // verificar disponibilidade com o ponto (marker) adicionado.
           let _hg_analyse = analyseItsAvaiable(points._hg_info, __points);
 
           setData(prev => {
             return {
               ...prev,
+              /*
               overlays: {
                 ...prev.overlays,
                 marker: {
                   ...prev.overlays.marker,
                   id: id,
                   position: {
-                    lat: user.int_latitude.toFixed(6),
-                    lng: user.int_longitude.toFixed(6)
+                    lat: marker.int_latitude.toFixed(6),
+                    lng: marker.int_longitude.toFixed(6)
 
                   },
                   info: {
                     ...prev.overlays.marker.info,
-                    tp_id: user.sub_tp_id
+                    tp_id: marker.sub_tp_id
                   }
                 }
-              },
+              },*/
               system: {
                 // adicionar todos os pontos, contendo também o usuário
                 points: __points,
@@ -115,16 +117,20 @@ function ElemContent({ mode, theme }) {
         })
         .then(
           // centralizar o mapa na nova coordenada
-          () => { map.setCenter({ lat: parseFloat(user.int_latitude), lng: parseFloat(user.int_longitude) }) }
+          () => { map.setCenter({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) }) }
         )
     //.then(() => { setLoading(false); });
 
-   //console.log(user)
-  }, [user])
- 
+    //console.log(marker)
+  }, [marker])
+
   function onClick() {
     // console.log('on click')
   }
+
+  useEffect(()=>{
+   // console.log('data', data)
+  }, [data])
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -146,7 +152,7 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column'}}>
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
                   <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData}
                     selectedRows={selectedRows} />
                   <ElemMapControllers data={data} setData={setData} />
@@ -168,22 +174,21 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='1' style={{ margin: -10 }}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto'}}>
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
                   {/** Latitude e Longitude */}
                   <ElemLatLng
                     map={map}
-                    tp_id={user.tp_id}
-                    position={data.overlays.marker.position}
+                    marker={marker}
                     setData={setData}
                   />
                   {/** Tipo de Poço */}
                   <ElemWellType
-                    tp_id={data.overlays.marker.info.tp_id}
+                    marker={marker}
                     setData={setData} />
                   {/** Análise */}
-                  <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} selectedRows={selectedRows} />
+                  <ElemAnalyse map={map} marker={marker} setmarker={setmarker} data={data} setData={setData} selectedRows={selectedRows} />
                   {/** Barras */}
-                  <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
+                  <ElemBarChart theme={theme} marker={marker} hg_analyse={data.system.hg_analyse} />
                 </Box>
               </TabPanel>
               <TabPanel value='2'>Item Two</TabPanel>
@@ -195,7 +200,7 @@ function ElemContent({ mode, theme }) {
 
       {/** box 2 */}
       <Box className={classes.box2}>
-        <ElemListGrants points={data.system.points} setSelectedRows={setSelectedRows} />
+        <ElemListGrants markers={data.system.markers} setSelectedRows={setSelectedRows} />
       </Box>
     </Box>
   );

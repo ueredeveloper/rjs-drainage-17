@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ElemOpenDemands } from './elem-open-demands';
 
-function ElemShowUser({ map, setData, user, setUser}) {
+function ElemShowUser ({ map, setData, marker, setMarker}) {
 
   //const { row } = props;
   const [open, setOpen] = useState(false);
@@ -28,18 +28,18 @@ function ElemShowUser({ map, setData, user, setUser}) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {user.name}
+          {marker.name}
         </TableCell>
 
-        <TableCell>{user.us_nome}</TableCell>
-        <TableCell>{user.us_cpf_cnpj}</TableCell>
-        <TableCell>{user.doc_sei}</TableCell>
-        <TableCell>{user.proc_sei}</TableCell>
-        <TableCell>{user.end_logradouro}</TableCell>
+        <TableCell>{marker.us_nome}</TableCell>
+        <TableCell>{marker.us_cpf_cnpj}</TableCell>
+        <TableCell>{marker.doc_sei}</TableCell>
+        <TableCell>{marker.proc_sei}</TableCell>
+        <TableCell>{marker.end_logradouro}</TableCell>
 
       </TableRow>
       {/** collpsible table */}
-      <ElemOpenDemands open={open}  map={map} user={user} setUser={setUser} setData={setData}/>
+      <ElemOpenDemands open={open}  map={map} marker={marker} setMarker={setMarker} setData={setData}/>
     </React.Fragment>
   );
 }

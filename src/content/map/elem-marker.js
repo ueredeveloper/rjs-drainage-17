@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const ElemMarker = ({ info, options }) => {
-
-  console.log(info, options)
+const ElemMarker = (props) => {
 
   const [marker, setMarker] = useState();
   /**
@@ -38,12 +36,20 @@ const ElemMarker = ({ info, options }) => {
 
 
   if (marker) {
+    //console.log('props ', props.marker)
+   // let [x, y] = props.marker.int_shape.coordinates;
+   let {int_latitude, int_longitude} = props.marker;
+    let position = {lat: parseFloat(int_latitude), lng: parseFloat(int_longitude)}
+
+    marker.setOptions({options:{position: position}, icon: `https://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png`})
+
+    /*
     if (info.id === null) {
       marker.setOptions({ ...options, icon: setIcon(3) });
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
     } else {
       marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
-    }
+    }*/
   }
 
   return null;

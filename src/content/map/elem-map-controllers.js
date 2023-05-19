@@ -68,9 +68,9 @@ function ElemMapControllers({ data, setData }) {
     setData(prev => {
       return {
         ...prev,
-        overlays: initialState().overlays,
-        system: initialState().system,
-        shapes: initialState().shapes,
+        overlays: initialState.overlays,
+        system: initialState.system,
+        shapes: initialState.shapes,
 
       }
     });

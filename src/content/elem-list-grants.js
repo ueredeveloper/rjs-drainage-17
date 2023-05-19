@@ -273,7 +273,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function ElemListGrants({ points, setSelectedRows }) {
+export default function ElemListGrants({ markers, setSelectedRows }) {
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
@@ -283,7 +283,7 @@ export default function ElemListGrants({ points, setSelectedRows }) {
   const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = useState(0);
 
-  const [rows, setRows] = useState(points);
+  const [rows, setRows] = useState(markers);
   const [_points, _setPoints] = useState();
 
   useEffect(() => {
@@ -307,11 +307,9 @@ export default function ElemListGrants({ points, setSelectedRows }) {
 
 
   useEffect(() => {
-    setRows(points)
-    console.log(points)
+    setRows(markers)
 
-    
-  }, [points])
+  }, [markers])
 
   useEffect(() => {
 
@@ -449,6 +447,7 @@ Box sx={{ width: '95vw', marginTop: 5 }}>
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
+              
               rowCount={rows.length}
             />
             <TableBody>

@@ -5,59 +5,65 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Paper, TableContainer } from '@mui/material';
+
 /**
-* Elemento de escolha do tipo de poço, se 1 - manual (poroso), ou 2 - tubular (fraturado).
-* @param tp_id Tipo de poço, se manual ou tubular.
-* @param setData Hooks de mudança de estado da variável inicial data.
-*/
-function ElemWellType({ tp_id, setData }) {
+ * Componente de seleção do tipo de poço: 1 - manual (poroso) ou 2 - tubular (fraturado).
+ * @param {object} marker - Dados do usuário.
+ * @param {function} setData - Hook para atualizar o estado da variável data.
+ */
+function ElemWellType({ marker, setData }) {
 
-  const [_tp_id, _setTpId] = useState(tp_id);
+  const [tp_id, setTPId] = useState(marker.tp_id);
 
+  /**
+   * Manipulador de evento para alterar o tipo de poço.
+   * @param {object} event - Objeto de evento.
+   */
   const handleChange = (event) => {
+    // event.target.value = 1 || 2
+    let { value } = event.target;
 
-    _setTpId(event.target.value);
+    setTPId(value);
+    let _marker = marker;
+    _marker.tp_id = value;
 
     setData(prev => {
       return {
         ...prev,
-        overlays: {
-          ...prev.overlays,
-          marker: {
-            ...prev.overlays.marker,
-            info: {
-              ...prev.overlays.marker.info,
-              tp_id: _tp_id
-            }
-          }
+        system: {
+          ...prev.system,
+          markers: [_marker, ...prev.system.markers.slice(1)]
         }
-      }
+      };
     });
+    
   };
 
+  /**
+   * Atualiza o tipo de poço (tp_id) no marcador principal (posição 0 da array de marcadores).
+   * 
+   */
   useEffect(() => {
+    let _marker = marker;
+    _marker.tp_id = tp_id;
+
     setData(prev => {
       return {
         ...prev,
-        overlays: {
-          ...prev.overlays,
-          marker: {
-            ...prev.overlays.marker,
-            info: {
-              ...prev.overlays.marker.info,
-              tp_id: _tp_id
-            }
-          }
+        system: {
+          ...prev.system,
+          markers: [_marker, ...prev.system.markers.slice(1)]
         }
-      }
+      };
     });
-  }, [_tp_id])
+  }, [tp_id]);
+
   /**
-   * Atualizar o tipo de poço.
+   * Atualiza o tipo de poço quando o usuário é alterado.
    */
   useEffect(() => {
-    _setTpId(tp_id);
-  }, [tp_id])
+    setTPId(marker.tp_id);
+  }, [marker]);
 
   return (
     <FormControl style={{ display: "flex", flexDirection: 'column' }}>
@@ -66,7 +72,7 @@ function ElemWellType({ tp_id, setData }) {
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
-          value={_tp_id}
+          value={tp_id}
           onChange={handleChange}
           sx={{ display: 'flex', flexFlow: 'row wrap', ml: 1, my: 1 }}
         >
@@ -83,7 +89,7 @@ function ElemWellType({ tp_id, setData }) {
         </RadioGroup>
       </Paper>
     </FormControl>
-  )
+  );
 }
 
 export default ElemWellType;

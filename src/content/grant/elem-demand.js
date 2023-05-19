@@ -5,7 +5,7 @@ import { findPointsInASystem } from '../../services';
 import { CircularProgress, Fade } from '@mui/material';
 import { analyseItsAvaiable } from '../../tools';
 
-export function ElemDemand({ demand, map, user, setUser, setData }) {
+export function ElemDemand({ demand, map, marker, setMarker, setData }) {
     // mostrar barra de progresso ao clicar
     const [loading, setLoading] = useState(false);
 
@@ -19,7 +19,7 @@ export function ElemDemand({ demand, map, user, setUser, setData }) {
         setLoading((prevLoading) => !prevLoading);
 
         // setar usuário
-        setUser(prev => {
+        setMarker(prev => {
             return {
                 ...prev,
                 us_nome: demand.us_nome,

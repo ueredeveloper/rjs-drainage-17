@@ -115,6 +115,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
  *
  * @returns {JSX.Element} O componente ElemMarker renderizado.
  */
+/*
   function renderMarker() {
 
     let { lat, lng } = data.overlays.marker.position;
@@ -125,7 +126,8 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
         options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
     )
 
-  }
+  }*/
+
   const [system_markers, setSystemMarkers] = useState([]);
   const [overlays_markers, setOverlaysMarkers] = useState([]);
 
@@ -145,6 +147,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
         <ElemDrawManager map={map} data={data} setData={setData} />
         {/*marcadores*/}
         {
+          /*
           overlays_markers.map(markers => {
             return markers.points.map((info, ii) => {
               // coordenadas da outorga em formato geometry
@@ -157,20 +160,22 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
                   // coordenada em formato gmaps
                   options={{ position: { lat: y, lng: x }, map: map }} />)
             })
-          })
+          })*/
         }
         {
-          system_markers.map((point, i) => {
-
+          system_markers.map((marker, i) => {
+          //  console.log(point)
             // capturar coordenadas
-            let [x, y] = point.int_shape.coordinates;
+          //  let [x, y] = point.int_shape.coordinates;
 
             return (
               <ElemMarker
                 key={i}
-                info={{ id: Date.now(), tp_id: point.tp_id }}
+                marker={marker}
+                //info={{ id: Date.now(), tp_id: point.tp_id }}
                 // coordenada em formato gmaps
-                options={{ position: { lat: y, lng: x }, map: map }} />)
+               // options={{ position: { lat: y, lng: x }, map: map }} 
+               />)
           })
         }
         {
@@ -192,7 +197,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
           })
         }
 
-        {renderMarker()}
+        {/*renderMarker()*/}
       </Wrapper>
     </Box>
   )

@@ -34,7 +34,9 @@ const style = {
     p: 4,
 };
 
-function ElemGrant({ map, user, setUser, data, setData }) {
+function ElemGrant({ map, marker, setMarker, data, setData }) {
+
+    console.log('elem grant', marker)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -69,7 +71,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
     ]);
 
     const handleUserChange = (event) => {
-        setUser(prev => {
+        setMarker(prev => {
             return {
                 ...prev,
                 [event.target.name]: event.target.value
@@ -119,12 +121,12 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                                             <TableCell>Endereço</TableCell></TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((_user, i) => (
+                                        {users.map((_marker, i) => (
                                             <ElemShowUser
                                                 key={'_' + i}
                                                 map={map}
-                                                user={_user}
-                                                setUser={setUser}
+                                                marker={_marker}
+                                                setMarker={setMarker}
                                                 setData={setData}
                                             />
                                         ))}
@@ -135,7 +137,7 @@ function ElemGrant({ map, user, setUser, data, setData }) {
 
                     </Box>
                     {/* Listar a vazão da demanda do usuário selecionado */}
-                    <ElemListFlow user={user} setUser={setUser} />
+                    <ElemListFlow marker={marker} setMarker={setMarker} />
                 </Box>
                 {/* fim Box Geral */}
 

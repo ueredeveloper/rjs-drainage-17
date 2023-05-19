@@ -35,7 +35,7 @@ const ElemDrawManager = ({ map, data, setData }) => {
       },
     });
 
-    window.google.maps.event.addListener(_draw, 'overlaycomplete', async function(event) {
+    window.google.maps.event.addListener(_draw, 'overlaycomplete', async function (event) {
 
       if (event.type === 'marker') {
 
@@ -43,8 +43,15 @@ const ElemDrawManager = ({ map, data, setData }) => {
 
         let id = Date.now();
         setData(prev => {
+          
+          let marker = prev.system.markers[0];
+          console.log(marker)
+          marker.int_latitude = parseFloat(position.lat());
+          marker.int_longitude = parseFloat(position.lng());
+
           return {
             ...prev,
+            /*
             overlays: {
               ...prev.overlays,
               marker: {
@@ -56,8 +63,19 @@ const ElemDrawManager = ({ map, data, setData }) => {
 
                 }
               }
-            },
-            //  system: { outorgas: points._outorgas, shp: points._shp }
+            },*/
+            system: {
+              ...prev.system,
+              markers: [marker, ...prev.system.markers.slice(1)]
+              /*
+              marker: {
+                ...prev.system.marker,
+                position: {
+                  ...prev.system.marker.position,
+                  [event.target.name]: event.target.value
+                }
+              }*/
+            }
           }
         });
         // retirar o marcador do mapa depois de capturar a coordenada
@@ -108,7 +126,7 @@ const ElemDrawManager = ({ map, data, setData }) => {
               ...prev.overlays,
               polygons: [...prev.overlays.polygons, {
                 id: id,
-                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } }),  draw: event.overlay
+                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } }), draw: event.overlay
               }],
               markers: [
                 ...prev.overlays.markers, {
@@ -141,7 +159,7 @@ const ElemDrawManager = ({ map, data, setData }) => {
             ...prev,
             overlays: {
               ...prev.overlays,
-              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW,  draw: event.overlay }],
+              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW, draw: event.overlay }],
               markers: [
                 ...prev.overlays.markers, {
                   id: id,

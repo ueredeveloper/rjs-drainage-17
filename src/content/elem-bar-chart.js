@@ -14,11 +14,11 @@ Chart.register(CategoryScale, LinearScale);
  *
  * @param {Object} props - Propriedades do componente.
  * @param {string} props.theme - Tema do gráfico.
- * @param {Object} props.user - Informações do usuário.
+ * @param {Object} props.marker - Informações do usuário.
  * @param {Object} props.hg_analyse - Dados sobre a disponibilidade.
  * @returns {JSX.Element} Elemento JSX que representa o gráfico de barras.
  */
-function ElemBarChart({ theme, user, hg_analyse }) {
+function ElemBarChart({ theme, marker, hg_analyse }) {
   // Define o estado interno _hg_analyse e a função para atualizá-lo
   const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
 
@@ -38,7 +38,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   useEffect(() => {
     _setHGAnalyse(hg_analyse);
 
-    //console.log(hg_analyse, user)
+    //console.log(hg_analyse, marker)
   }, [hg_analyse]);
 
   // Opções de configuração do gráfico
@@ -88,7 +88,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
       {
         label: 'Q Usuário',
         backgroundColor: '#76B7B2',
-        data: [user.dt_demanda.vol_anual_ma],
+        data: [marker.dt_demanda.vol_anual_ma],
       },
     ],
   };

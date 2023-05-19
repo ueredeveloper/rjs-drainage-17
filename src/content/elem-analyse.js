@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function ElemAnalyse({ map, user, setUser, data, setData, selectedRows }) {
+function ElemAnalyse({ map, marker, setMarker, data, setData, selectedRows }) {
   /**
     * Dados sobre a disponibilidade.
     */
@@ -50,9 +50,9 @@ function ElemAnalyse({ map, user, setUser, data, setData, selectedRows }) {
       <FormControl >
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
           <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Análise</FormLabel>
-        
-          <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
-        
+
+          <ElemGrant map={map} marker={marker} setMarker={setMarker} data={data} setData={setData} />
+
         </Box>
 
         <Paper id="table-paper" elevation={3} sx={{ margin: 1, overflow: 'auto' }}>

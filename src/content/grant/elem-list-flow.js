@@ -15,14 +15,14 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import DoDisturbOutlinedIcon from '@mui/icons-material/DoDisturbOutlined';
 
-function ElemListFlow({ user, setUser }) {
-
-  const [_demandas, _setDemandas] = useState(user.dt_demanda.demandas);
+function ElemListFlow({ marker, setMarker }) {
+  console.log(marker)
+  const [demands, setDemands] = useState(marker.dt_demanda.demandas);
 
   useEffect(() => {
-    let _demandas = user.dt_demanda.demandas
-    _setDemandas(_demandas)
-  }, [user]);
+    let demands = marker.dt_demanda.demandas
+    setDemands(demands)
+  }, [marker]);
 
 
   const [isEditable, setIsEditable] = useState({
@@ -44,15 +44,15 @@ function ElemListFlow({ user, setUser }) {
 
   const onChange = (e, index) => {
     const { name, value } = e.target;
-    let newDem = _demandas.map((_dem, i) => {
+    let newDem = demands.map((_dem, i) => {
       if (i === index) {
         return { ..._dem, [name]: value }
       }
       return _dem;
     })
-    _setDemandas(newDem);
+    setDemands(newDem);
 
-    setUser(prev => {
+    setMarker(prev => {
       return {
         ...prev,
         demandas: {
@@ -121,7 +121,7 @@ function ElemListFlow({ user, setUser }) {
                 </TableCell>
                 <TableCell>{'Vazão (l/h)'}</TableCell>
 
-                {_demandas.map((row, i) =>
+                {demands.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>
 
@@ -171,7 +171,7 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Tempo (h/dia)'}</TableCell>
-                {_demandas.map((row, i) =>
+                {demands.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>
                     {isEditable.tempo_h ? (
@@ -220,7 +220,7 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Período (dias/mês)'}</TableCell>
-                {_demandas.map((row, i) =>
+                {demands.map((row, i) =>
                 (
                   <TableCell key={'__' + i}>
                     {isEditable.periodo_d ? (

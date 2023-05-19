@@ -11,20 +11,23 @@ import { CircularProgress, Fade, Paper, TableContainer } from '@mui/material';
 import { analyseItsAvaiable } from '../tools';
 
 
-function ElemLatLng({ map, tp_id, position, setData }) {
+function ElemLatLng({ map, marker, setData }) {
 
   const [loading, setLoading] = useState(false);
 
-  const [_position, _setPosition] = useState(position);
-  const [_tp_id, _setTpId] = useState(tp_id);
+  const [position, setPosition] = useState({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) });
+  const [tp_id, setTpId] = useState(marker.tp_id);
   /**
    * Setar posição e tipo de poço - talves possa fazer os dois juntos em um só hooks.
    */
-  useEffect(() => {
-    _setPosition(position);
-    _setTpId(tp_id);
 
-  }, [position, tp_id]);
+  useEffect(() => {
+    setPosition({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) });
+    setTpId(marker.tp_id);
+    console.log(marker)
+  }, [marker]);
+
+
   /**
    * Mudar as coordenadas de cada caixa de texto.
    * @param {*} event 
@@ -34,19 +37,22 @@ function ElemLatLng({ map, tp_id, position, setData }) {
     setData(prev => {
       return {
         ...prev,
-        overlays: {
-          ...prev.overlays,
+        system: {
+          ...prev.system,
+          markers: [ marker, ...prev.system.markers.slice(1)]
+          /*
           marker: {
-            ...prev.overlays.marker,
+            ...prev.system.marker,
             position: {
-              ...prev.overlays.marker.position,
+              ...prev.system.marker.position,
               [event.target.name]: event.target.value
             }
-          }
+          }*/
         }
       }
     });
   };
+
   /**
    * Buscar pontos outorgados no sistema (Fraturado ou Poroso) e retornar dados como vazão outorgada, nº de poços etc.
    * @returns _q_ex - Vazão Explotável, _n_points - Número de pontos outorgados na área, etc...
@@ -55,16 +61,19 @@ function ElemLatLng({ map, tp_id, position, setData }) {
 
     setLoading((prevLoading) => !prevLoading);
 
-    let points = await findPointsInASystem(_tp_id, _position.lat, _position.lng);
+    console.log(tp_id, position)
 
-
+    let points = await findPointsInASystem(tp_id, position.lat, position.lng);
+ 
     let _hg_analyse = analyseItsAvaiable(points._hg_info, points._points)
 
     setData(prev => {
+    
       return {
         ...prev,
         system: {
-          points: points._points,
+          // guardar o primeiro ponto a adicionar os novos
+          markers: [prev.system.markers[0], ...points._points],
           hg_shape: points._hg_shape,
           hg_info: points._hg_info,
           hg_analyse: _hg_analyse
@@ -72,7 +81,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
       }
 
     });
-    map.setCenter({ lat: parseFloat(_position.lat), lng: parseFloat(_position.lng) })
+    map.setCenter({ lat: parseFloat(position.lat), lng: parseFloat(position.lng) })
   }
 
   return (
@@ -93,7 +102,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
               label="Latitude"
               color="secondary"
               name="lat"
-              value={_position.lat}
+              value={position.lat}
               onChange={handleChange}
               size="small"
             />
@@ -108,7 +117,7 @@ function ElemLatLng({ map, tp_id, position, setData }) {
               color="secondary"
               label="Longitude"
               name="lng"
-              value={_position.lng}
+              value={position.lng}
               onChange={handleChange}
               size="small"
             />
