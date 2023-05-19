@@ -68,7 +68,7 @@ function ElemContent({ mode, theme }) {
   /**
    * Usuário de recursos hídricos
    */
-  const [marker, setmarker] = useState(initialState.system.markers[0]);
+  const [marker, setMarker] = useState(initialState.system.markers[0]);
 
   useEffect(() => {
 
@@ -78,12 +78,12 @@ function ElemContent({ mode, theme }) {
       findPointsInASystem(marker.tp_id, marker.int_latitude, marker.int_longitude)
         .then(points => {
 
-          let _points = points._points;
+          let _markers = points._points;
           
           // adicionar usuário na array de pontos outorgados no polígono.
-          let __points = [marker, ..._points]
+          let __markers = [marker, ..._markers]
           // verificar disponibilidade com o ponto (marker) adicionado.
-          let _hg_analyse = analyseItsAvaiable(points._hg_info, __points);
+          let _hg_analyse = analyseItsAvaiable(points._hg_info, __markers);
 
           setData(prev => {
             return {
@@ -107,7 +107,7 @@ function ElemContent({ mode, theme }) {
               },*/
               system: {
                 // adicionar todos os pontos, contendo também o usuário
-                points: __points,
+                markers: __markers,
                 hg_shape: points._hg_shape,
                 hg_info: points._hg_info,
                 hg_analyse: _hg_analyse
@@ -121,7 +121,6 @@ function ElemContent({ mode, theme }) {
         )
     //.then(() => { setLoading(false); });
 
-    //console.log(marker)
   }, [marker])
 
   function onClick() {
@@ -184,9 +183,10 @@ function ElemContent({ mode, theme }) {
                   {/** Tipo de Poço */}
                   <ElemWellType
                     marker={marker}
+                    setMarker={setMarker}
                     setData={setData} />
                   {/** Análise */}
-                  <ElemAnalyse map={map} marker={marker} setmarker={setmarker} data={data} setData={setData} selectedRows={selectedRows} />
+                  <ElemAnalyse map={map} marker={marker} setMarker={setMarker} data={data} setData={setData} selectedRows={selectedRows} />
                   {/** Barras */}
                   <ElemBarChart theme={theme} marker={marker} hg_analyse={data.system.hg_analyse} />
                 </Box>

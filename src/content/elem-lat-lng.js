@@ -24,7 +24,7 @@ function ElemLatLng({ map, marker, setData }) {
   useEffect(() => {
     setPosition({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) });
     setTpId(marker.tp_id);
-    console.log(marker)
+   
   }, [marker]);
 
 
@@ -33,6 +33,9 @@ function ElemLatLng({ map, marker, setData }) {
    * @param {*} event 
    */
   const handleChange = (event) => {
+
+    // é preciso capturar o que a pessoa digita
+    console.log(event.target)
 
     setData(prev => {
       return {
@@ -61,7 +64,7 @@ function ElemLatLng({ map, marker, setData }) {
 
     setLoading((prevLoading) => !prevLoading);
 
-    console.log(tp_id, position)
+    console.log('tipo poço', tp_id, 'posição', position)
 
     let points = await findPointsInASystem(tp_id, position.lat, position.lng);
  

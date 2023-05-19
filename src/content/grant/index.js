@@ -36,7 +36,6 @@ const style = {
 
 function ElemGrant({ map, marker, setMarker, data, setData }) {
 
-    console.log('elem grant', marker)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

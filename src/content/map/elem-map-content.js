@@ -167,11 +167,13 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
           //  console.log(point)
             // capturar coordenadas
           //  let [x, y] = point.int_shape.coordinates;
-
+            
             return (
               <ElemMarker
                 key={i}
                 marker={marker}
+                map={map}
+                icon={i===0? 0: marker.tp_id}
                 //info={{ id: Date.now(), tp_id: point.tp_id }}
                 // coordenada em formato gmaps
                // options={{ position: { lat: y, lng: x }, map: map }} 

@@ -16,7 +16,7 @@ import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import DoDisturbOutlinedIcon from '@mui/icons-material/DoDisturbOutlined';
 
 function ElemListFlow({ marker, setMarker }) {
-  console.log(marker)
+
   const [demands, setDemands] = useState(marker.dt_demanda.demandas);
 
   useEffect(() => {

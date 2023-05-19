@@ -11,7 +11,7 @@ import { Paper, TableContainer } from '@mui/material';
  * @param {object} marker - Dados do usuário.
  * @param {function} setData - Hook para atualizar o estado da variável data.
  */
-function ElemWellType({ marker, setData }) {
+function ElemWellType({ marker, setMarker, setData }) {
 
   const [tp_id, setTPId] = useState(marker.tp_id);
 
@@ -21,7 +21,7 @@ function ElemWellType({ marker, setData }) {
    */
   const handleChange = (event) => {
     // event.target.value = 1 || 2
-    let { value } = event.target;
+    let value = Number(event.target.value);
 
     setTPId(value);
     let _marker = marker;
@@ -36,7 +36,14 @@ function ElemWellType({ marker, setData }) {
         }
       };
     });
-    
+
+    setMarker(prev => {
+      return {
+        ...prev,
+        tp_id: value
+      }
+    })
+
   };
 
   /**
@@ -63,6 +70,7 @@ function ElemWellType({ marker, setData }) {
    */
   useEffect(() => {
     setTPId(marker.tp_id);
+  
   }, [marker]);
 
   return (

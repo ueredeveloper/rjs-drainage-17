@@ -6,7 +6,7 @@ const initialState = {
                 /* id do usuário na tabela usuário */
                 "us_id": 0,
                 /* tipo de poço */
-                "tp_id": 1,
+                "tp_id": 0,
                 "us_nome": "",
                 "us_cpf_cnpj": "",
                 /* id do documento na tabela documento */

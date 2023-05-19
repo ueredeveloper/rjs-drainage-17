@@ -38,7 +38,6 @@ function ElemBarChart({ theme, marker, hg_analyse }) {
   useEffect(() => {
     _setHGAnalyse(hg_analyse);
 
-    //console.log(hg_analyse, marker)
   }, [hg_analyse]);
 
   // Opções de configuração do gráfico

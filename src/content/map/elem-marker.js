@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * Componente que representa um marcador no mapa.
+ * @param {Object} props - Propriedades do componente.
+ * @param {Object} props.marker - Objeto contendo as informações do marcador.
+ * @param {number} props.marker.int_latitude - Latitude do marcador.
+ * @param {number} props.marker.int_longitude - Longitude do marcador.
+ * @param {number} props.icon - Ícone do marcador.
+ * @param {Object} props.map - Objeto do mapa onde o marcador será exibido.
+ * @returns {null}
+ */
 const ElemMarker = (props) => {
 
   const [marker, setMarker] = useState();
+
   /**
-  * Setar o ícone do marcador.
-  * @param {integer} tp_id Tipo do poço, tp_id = 1, poço manual - verde, tp_id = 2, poço tubular - azul. Se nulo, é um ponto clicado pelo usuário.
-  */
+   * Retorna o caminho do ícone com base no tipo de identificação.
+   * @param {number} tp_id - Tipo de identificação.
+   * @returns {string} - Caminho do ícone.
+   */
   function setIcon(tp_id) {
-    // yellow red
-    if (tp_id === 1) {
-      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`
+    if (tp_id === 0) {
+      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png`;
+    } else if (tp_id === 1) {
+      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/green-dot.png`;
     } else if (tp_id === 2) {
-      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png`
-    } else if (tp_id === 3) {
-      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png`
-    }
-    else {
-      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/yellow-dot.png`
+      return `https://www.google.com/intl/en_us/mapfiles/ms/micons/blue-dot.png`;
     }
   }
 
   useEffect(() => {
-
     if (!marker) {
       setMarker(new window.google.maps.Marker());
     }
-    // remove marker from map on unmount
+
     return () => {
       if (marker) {
         marker.setMap(null);
@@ -34,26 +41,22 @@ const ElemMarker = (props) => {
     };
   }, [marker]);
 
-
   if (marker) {
-    //console.log('props ', props.marker)
-   // let [x, y] = props.marker.int_shape.coordinates;
-   let {int_latitude, int_longitude} = props.marker;
-    let position = {lat: parseFloat(int_latitude), lng: parseFloat(int_longitude)}
+    let { int_latitude, int_longitude } = props.marker;
+    let icon = props.icon;
 
-    marker.setOptions({options:{position: position}, icon: `https://www.google.com/intl/en_us/mapfiles/ms/micons/red-dot.png`})
+    marker.setOptions({
+      icon: setIcon(icon),
+      position: { lat: parseFloat(int_latitude), lng: parseFloat(int_longitude) },
+      map: props.map
+    });
 
-    /*
-    if (info.id === null) {
-      marker.setOptions({ ...options, icon: setIcon(3) });
+    if (icon === 0) {
       marker.setAnimation(window.google.maps.Animation.BOUNCE);
-    } else {
-      marker.setOptions({ ...options, icon: setIcon(info.tp_id) });
-    }*/
+    }
   }
 
   return null;
-
 };
 
 export default ElemMarker;
