@@ -35,7 +35,10 @@ function ElemLatLng({ map, marker, setData }) {
   const handleChange = (event) => {
 
     // é preciso capturar o que a pessoa digita
-    console.log(event.target)
+
+    let {name, value} = event.target;
+
+    console.log(name, value)
 
     setData(prev => {
       return {

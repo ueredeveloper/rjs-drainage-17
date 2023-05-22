@@ -70,6 +70,8 @@ function ElemContent({ mode, theme }) {
    */
   const [marker, setMarker] = useState(initialState.system.markers[0]);
 
+  
+
   useEffect(() => {
 
     // id do marcador
