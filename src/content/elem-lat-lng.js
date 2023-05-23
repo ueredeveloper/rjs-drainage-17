@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,92 +9,81 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { CircularProgress, Fade, Paper, TableContainer } from '@mui/material';
 import { analyseItsAvaiable } from '../tools';
+import { SystemContext } from './elem-content';
 
+/**
+ * Componente para entrada de coordenadas latitude e longitude.
+ * @returns {JSX.Element} O componente de coordenadas latitude e longitude.
+ */
+export default function ElemLatLng() {
 
-function ElemLatLng({ map, marker, setData }) {
-
+  // Variável de estado para controlar o status de carregamento
   const [loading, setLoading] = useState(false);
-
-  const [position, setPosition] = useState({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) });
-  const [tp_id, setTpId] = useState(marker.tp_id);
-  /**
-   * Setar posição e tipo de poço - talves possa fazer os dois juntos em um só hooks.
-   */
+  // Contexto do hooks system (elem-content.js)
+  const [context, setContext, map] = useContext(SystemContext);
 
   useEffect(() => {
-    setPosition({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) });
-    setTpId(marker.tp_id);
-   
-  }, [marker]);
-
+    console.log(context);
+  }, [context]);
 
   /**
-   * Mudar as coordenadas de cada caixa de texto.
-   * @param {*} event 
+   * Manipulador de evento chamado quando o valor do campo de entrada muda.
+   * @param {Object} event O evento de mudança.
    */
   const handleChange = (event) => {
+    let { name, value } = event.target;
 
-    // é preciso capturar o que a pessoa digita
-
-    let {name, value} = event.target;
-
-    console.log(name, value)
-
-    setData(prev => {
+    // Atualiza o contexto com os novos valores de latitude e longitude
+    setContext((prev) => {
       return {
         ...prev,
-        system: {
-          ...prev.system,
-          markers: [ marker, ...prev.system.markers.slice(1)]
-          /*
-          marker: {
-            ...prev.system.marker,
-            position: {
-              ...prev.system.marker.position,
-              [event.target.name]: event.target.value
-            }
-          }*/
-        }
-      }
+        point: {
+          ...prev.point,
+          [name]: value,
+        },
+      };
     });
+
+
   };
 
   /**
-   * Buscar pontos outorgados no sistema (Fraturado ou Poroso) e retornar dados como vazão outorgada, nº de poços etc.
-   * @returns _q_ex - Vazão Explotável, _n_points - Número de pontos outorgados na área, etc...
+   * Manipulador de evento chamado quando o botão de busca de pontos no sistema é clicado.
+   * Realiza uma busca assíncrona de pontos no sistema com base nos valores de tipo de poço, latitude e longitude.
+   * Atualiza o contexto com os novos pontos encontrados e informações relacionadas.
    */
-  async function _findPointsInASystem() {
-
+  async function handleFindPointsInASystem() {
     setLoading((prevLoading) => !prevLoading);
+    let { tp_id, lat, lng } = context.point;
 
-    console.log('tipo poço', tp_id, 'posição', position)
-
-    let points = await findPointsInASystem(tp_id, position.lat, position.lng);
- 
-    let _hg_analyse = analyseItsAvaiable(points._hg_info, points._points)
-
-    setData(prev => {
-    
-      return {
-        ...prev,
-        system: {
-          // guardar o primeiro ponto a adicionar os novos
-          markers: [prev.system.markers[0], ...points._points],
-          hg_shape: points._hg_shape,
-          hg_info: points._hg_info,
-          hg_analyse: _hg_analyse
-        }
-      }
-
-    });
-    map.setCenter({ lat: parseFloat(position.lat), lng: parseFloat(position.lng) })
+    await findPointsInASystem(tp_id, lat, lng)
+      .then(points => {
+        let markers = [context.markers[0], ...points._points];
+        // verificar disponibilidade com o ponto (marker) adicionado.
+        let _hg_analyse = analyseItsAvaiable(points._hg_info, markers);
+        // Atualiza o contexto com os novos pontos encontrados, informações do hg_info, hg_shape e hg_analyse
+        setContext((prev) => {
+          return {
+            ...prev,
+            markers: markers,
+            hg_shape: points._hg_shape,
+            hg_info: points._hg_info,
+            hg_analyse: _hg_analyse,
+          };
+        });
+      })
+      .then(
+        // centralizar o mapa na nova coordenada
+        () => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+      )
+      .then(() => { setLoading(false); });
   }
 
   return (
     <FormControl style={{ display: "flex", flexDirection: 'column' }}>
       <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 0 }}>Coordenadas</FormLabel>
       <Paper elevation={3} style={{ margin: 3 }}>
-        {/* entradas latitude e longitude */}
+        {/* Caixas de entrada: latitude e longitude */}
         <Box sx={{ display: 'flex', flexFlow: 'row wrap' }}
         >
           <Box sx={{ display: 'flex', flex: 4, flexDirection: 'row' }}>
@@ -108,7 +97,7 @@ function ElemLatLng({ map, marker, setData }) {
               label="Latitude"
               color="secondary"
               name="lat"
-              value={position.lat}
+              value={context.point.lat}
               onChange={handleChange}
               size="small"
             />
@@ -123,12 +112,12 @@ function ElemLatLng({ map, marker, setData }) {
               color="secondary"
               label="Longitude"
               name="lng"
-              value={position.lng}
+              value={context.point.lng}
               onChange={handleChange}
               size="small"
             />
           </Box>
-          {/* botôes de manipulação */}
+          {/* Botões de Manipulação */}
           <Box sx={{ display: 'flex', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             {
               loading ?
@@ -143,13 +132,10 @@ function ElemLatLng({ map, marker, setData }) {
                   <CircularProgress size={25} />
                 </Fade>
                 :
-                <IconButton color="secondary" size="large" onClick={() => { _findPointsInASystem().then(() => { setLoading(false); }); }}>
+                <IconButton color="secondary" size="large" onClick={() => { handleFindPointsInASystem().then(() => { setLoading(false); }); }}>
                   <SearchIcon />
                 </IconButton>
-
             }
-
-
             <IconButton color="secondary" size="large">
               <ContentCopyIcon />
             </IconButton>
@@ -160,5 +146,3 @@ function ElemLatLng({ map, marker, setData }) {
 
   )
 }
-
-export default ElemLatLng;

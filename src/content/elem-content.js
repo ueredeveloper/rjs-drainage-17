@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import ElemMapContent from './map/elem-map-content';
 import ElemWellType from './elem-well-type';
 import ElemAnalyse from './elem-analyse';
@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
+export const SystemContext = createContext({})
 
 
 function ElemContent({ mode, theme }) {
@@ -69,7 +70,8 @@ function ElemContent({ mode, theme }) {
    * Usuário de recursos hídricos
    */
   const [marker, setMarker] = useState(initialState.system.markers[0]);
-
+  const [system, setSystem] = useState(initialState.system);
+ 
   
 
   useEffect(() => {
@@ -129,10 +131,6 @@ function ElemContent({ mode, theme }) {
     // console.log('on click')
   }
 
-  useEffect(()=>{
-   // console.log('data', data)
-  }, [data])
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -176,21 +174,18 @@ function ElemContent({ mode, theme }) {
               </Box>
               <TabPanel value='1' style={{ margin: -10 }}>
                 <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
+                  <SystemContext.Provider value={[system, setSystem, map]}>
                   {/** Latitude e Longitude */}
                   <ElemLatLng
-                    map={map}
-                    marker={marker}
-                    setData={setData}
+                    
                   />
                   {/** Tipo de Poço */}
-                  <ElemWellType
-                    marker={marker}
-                    setMarker={setMarker}
-                    setData={setData} />
+                  <ElemWellType />
                   {/** Análise */}
                   <ElemAnalyse map={map} marker={marker} setMarker={setMarker} data={data} setData={setData} selectedRows={selectedRows} />
                   {/** Barras */}
                   <ElemBarChart theme={theme} marker={marker} hg_analyse={data.system.hg_analyse} />
+                  </SystemContext.Provider>
                 </Box>
               </TabPanel>
               <TabPanel value='2'>Item Two</TabPanel>
@@ -209,11 +204,3 @@ function ElemContent({ mode, theme }) {
 }
 
 export default ElemContent;
-
-/* 
-
-<Box className={classes.box2} sx={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-
-
-<Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
-*/
