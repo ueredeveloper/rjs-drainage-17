@@ -6,13 +6,32 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ElemOpenDemands } from './elem-open-demands';
 
-function ElemShowUser ({ map, setData, marker, setMarker}) {
+function ElemShowUser({ user, setUser }) {
 
   //const { row } = props;
   const [open, setOpen] = useState(false);
+  console.log(user)
 
-  
- 
+  /*
+  {
+    "us_id": 2040,
+    "us_nome": "Pedro José Martins Salgado",
+    "us_cpf_cnpj": "28100336172",
+    "us_doc_id": 6050,
+    "doc_end": 1979,
+    "doc_sei": "108675701",
+    "proc_sei": "00197-00001118/2023-91",
+    "end_id": 1979,
+    "end_logradouro": "Área Rural do Paranoá, Fazenda Santo Antônio, Gleba A",
+    "dt_demanda": {
+        "demandas": [],
+        "vol_anual_ma": "0"
+    }
+}
+*/
+
+
+
   return (
     <React.Fragment>
       {/** main table */}
@@ -28,18 +47,18 @@ function ElemShowUser ({ map, setData, marker, setMarker}) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {marker.name}
+          {user.name}
         </TableCell>
 
-        <TableCell>{marker.us_nome}</TableCell>
-        <TableCell>{marker.us_cpf_cnpj}</TableCell>
-        <TableCell>{marker.doc_sei}</TableCell>
-        <TableCell>{marker.proc_sei}</TableCell>
-        <TableCell>{marker.end_logradouro}</TableCell>
+        <TableCell>{user.us_nome}</TableCell>
+        <TableCell>{user.us_cpf_cnpj}</TableCell>
+        <TableCell>{user.doc_sei}</TableCell>
+        <TableCell>{user.proc_sei}</TableCell>
+        <TableCell>{user.end_logradouro}</TableCell>
 
       </TableRow>
       {/** collpsible table */}
-      <ElemOpenDemands open={open}  map={map} marker={marker} setMarker={setMarker} setData={setData}/>
+      <ElemOpenDemands open={open} user={user} setUser={setUser} />
     </React.Fragment>
   );
 }

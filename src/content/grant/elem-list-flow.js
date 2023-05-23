@@ -15,14 +15,14 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import DoneAllOutlinedIcon from '@mui/icons-material/DoneAllOutlined';
 import DoDisturbOutlinedIcon from '@mui/icons-material/DoDisturbOutlined';
 
-function ElemListFlow({ marker, setMarker }) {
+function ElemListFlow({ user, setUser }) {
 
-  const [demands, setDemands] = useState(marker.dt_demanda.demandas);
+  const [demands, setDemands] = useState(user.dt_demanda.demandas);
 
   useEffect(() => {
-    let demands = marker.dt_demanda.demandas
+    let demands = user.dt_demanda.demandas
     setDemands(demands)
-  }, [marker]);
+  }, [user]);
 
 
   const [isEditable, setIsEditable] = useState({
@@ -52,7 +52,7 @@ function ElemListFlow({ marker, setMarker }) {
     })
     setDemands(newDem);
 
-    setMarker(prev => {
+    setUser(prev => {
       return {
         ...prev,
         demandas: {

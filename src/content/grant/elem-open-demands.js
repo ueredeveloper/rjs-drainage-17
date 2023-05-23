@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { ElemDemand } from './elem-demand';
 import { findDemands } from '../../services/shapes';
 
-function ElemOpenDemands({ open, marker, setMarker, map, setData }) {
+function ElemOpenDemands({ open, user, setUser }) {
 
   const [demands, setDemands] = useState([{ dt_demanda: { demandas: [] } }]);
 
@@ -24,7 +24,7 @@ function ElemOpenDemands({ open, marker, setMarker, map, setData }) {
   useEffect(() => {
 
     if (open) {
-      updateDemands(marker.end_id)
+      updateDemands(user.end_id)
     }
   }, [open]);
 
@@ -51,7 +51,7 @@ function ElemOpenDemands({ open, marker, setMarker, map, setData }) {
               <TableBody>
                 {
                   demands.map((demand, i) => (
-                    <ElemDemand key={"elem_demand_" + i} demand={demand} map={map} marker={marker} setMarker={setMarker} setData={setData} />)
+                    <ElemDemand key={"elem_demand_" + i} demand={demand} setUser={setUser} />)
                   )
                 }
               </TableBody>

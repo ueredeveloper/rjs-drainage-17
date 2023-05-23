@@ -10,6 +10,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { CircularProgress, Fade, Paper, TableContainer } from '@mui/material';
 import { analyseItsAvaiable } from '../tools';
 import { SystemContext } from './elem-content';
+import { initialState } from './initial-state';
 
 /**
  * Componente para entrada de coordenadas latitude e longitude.
@@ -21,10 +22,6 @@ export default function ElemLatLng() {
   const [loading, setLoading] = useState(false);
   // Contexto do hooks system (elem-content.js)
   const [context, setContext, map] = useContext(SystemContext);
-
-  useEffect(() => {
-    console.log(context);
-  }, [context]);
 
   /**
    * Manipulador de evento chamado quando o valor do campo de entrada muda.
@@ -44,7 +41,6 @@ export default function ElemLatLng() {
       };
     });
 
-
   };
 
   /**
@@ -52,13 +48,13 @@ export default function ElemLatLng() {
    * Realiza uma busca assíncrona de pontos no sistema com base nos valores de tipo de poço, latitude e longitude.
    * Atualiza o contexto com os novos pontos encontrados e informações relacionadas.
    */
-  async function handleFindPointsInASystem() {
+  async function handle() {
     setLoading((prevLoading) => !prevLoading);
     let { tp_id, lat, lng } = context.point;
 
     await findPointsInASystem(tp_id, lat, lng)
       .then(points => {
-        let markers = [context.markers[0], ...points._points];
+        let markers = [initialState.system.markers[0], ...points._points];
         // verificar disponibilidade com o ponto (marker) adicionado.
         let _hg_analyse = analyseItsAvaiable(points._hg_info, markers);
         // Atualiza o contexto com os novos pontos encontrados, informações do hg_info, hg_shape e hg_analyse
@@ -132,7 +128,7 @@ export default function ElemLatLng() {
                   <CircularProgress size={25} />
                 </Fade>
                 :
-                <IconButton color="secondary" size="large" onClick={() => { handleFindPointsInASystem().then(() => { setLoading(false); }); }}>
+                <IconButton color="secondary" size="large" onClick={() => { handle().then(() => { setLoading(false); }); }}>
                   <SearchIcon />
                 </IconButton>
             }

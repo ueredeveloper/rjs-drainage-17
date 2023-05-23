@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -21,6 +21,8 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
+import { SystemContext } from "./elem-content";
+import { analyseItsAvaiable } from "../tools";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -273,7 +275,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function ElemListGrants({ markers, setSelectedRows }) {
+export default function ElemListGrants() {
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
@@ -282,6 +284,8 @@ export default function ElemListGrants({ markers, setSelectedRows }) {
   const [visibleRows, setVisibleRows] = useState(null);
   const [rowsPerPage, setRowsPerPage] = useState(DEFAULT_ROWS_PER_PAGE);
   const [paddingHeight, setPaddingHeight] = useState(0);
+
+  const [{ markers, hg_info }, setContext] = useContext(SystemContext);
 
   const [rows, setRows] = useState(markers);
   const [_points, _setPoints] = useState();
@@ -316,7 +320,16 @@ export default function ElemListGrants({ markers, setSelectedRows }) {
     let _selectedRows = rows.filter(r => {
       return selected.includes(r.id)
     })
-    setSelectedRows(_selectedRows);
+
+    let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
+
+    setContext((prev) => {
+      return {
+        ...prev,
+
+        hg_analyse: _hg_analyse,
+      };
+    });
 
   }, [selected, rows])
 
@@ -426,10 +439,7 @@ export default function ElemListGrants({ markers, setSelectedRows }) {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-/*
-Box sx={{ width: '95vw', marginTop: 5 }}>
-      <Paper elevation={3} sx={{ width: "100%", mb: 2 }}>
-      */
+
   return (
     <Box>
       <Paper elevation={3} >
@@ -440,14 +450,14 @@ Box sx={{ width: '95vw', marginTop: 5 }}>
             aria-labelledby="tableTitle"
             size={dense ? "small" : "medium"}
           >
-           
+
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              
+
               rowCount={rows.length}
             />
             <TableBody>

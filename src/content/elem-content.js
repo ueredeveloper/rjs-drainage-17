@@ -71,8 +71,9 @@ function ElemContent({ mode, theme }) {
    */
   const [marker, setMarker] = useState(initialState.system.markers[0]);
   const [system, setSystem] = useState(initialState.system);
- 
-  
+  //const [selectedMarkers, setSelectedMarkers] = useState([])
+
+
 
   useEffect(() => {
 
@@ -83,7 +84,7 @@ function ElemContent({ mode, theme }) {
         .then(points => {
 
           let _markers = points._points;
-          
+
           // adicionar usuário na array de pontos outorgados no polígono.
           let __markers = [marker, ..._markers]
           // verificar disponibilidade com o ponto (marker) adicionado.
@@ -175,16 +176,14 @@ function ElemContent({ mode, theme }) {
               <TabPanel value='1' style={{ margin: -10 }}>
                 <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
                   <SystemContext.Provider value={[system, setSystem, map]}>
-                  {/** Latitude e Longitude */}
-                  <ElemLatLng
-                    
-                  />
-                  {/** Tipo de Poço */}
-                  <ElemWellType />
-                  {/** Análise */}
-                  <ElemAnalyse map={map} marker={marker} setMarker={setMarker} data={data} setData={setData} selectedRows={selectedRows} />
-                  {/** Barras */}
-                  <ElemBarChart theme={theme} marker={marker} hg_analyse={data.system.hg_analyse} />
+                    {/** Latitude e Longitude */}
+                    <ElemLatLng />
+                    {/** Tipo de Poço */}
+                    <ElemWellType />
+                    {/** Análise */}
+                    <ElemAnalyse />
+                    {/** Barras */}
+                    <ElemBarChart />
                   </SystemContext.Provider>
                 </Box>
               </TabPanel>
@@ -197,7 +196,10 @@ function ElemContent({ mode, theme }) {
 
       {/** box 2 */}
       <Box className={classes.box2}>
-        <ElemListGrants markers={data.system.markers} setSelectedRows={setSelectedRows} />
+        <SystemContext.Provider value={[system, setSystem]}>
+          <ElemListGrants/>
+        </SystemContext.Provider>
+
       </Box>
     </Box>
   );

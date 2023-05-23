@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -21,6 +21,7 @@ import { ElemSearchUsers } from './elem-search-users';
 
 import './index.css';
 import { Tooltip } from '@mui/material';
+import { SystemContext } from '../elem-content';
 
 const style = {
     position: 'absolute',
@@ -34,11 +35,13 @@ const style = {
     p: 4,
 };
 
-function ElemGrant({ map, marker, setMarker, data, setData }) {
+function ElemGrant() {
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [context, setContext]= useContext(SystemContext)
 
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
@@ -69,13 +72,38 @@ function ElemGrant({ map, marker, setMarker, data, setData }) {
         }
     ]);
 
+    const [user, setUser] = useState(
+        {
+          'id': 0,
+          'us_id': 0,
+          'sub_tp_id': 0,
+          'us_nome': '',
+          'us_cpf_cnpj': '',
+          'us_doc_id': 0,
+          'doc_end': 0,
+          'doc_sei': '',
+          'proc_sei': '',
+          'end_id': 0,
+          'end_logradouro': '',
+          'int_latitude': '',
+          'int_longitude': '',
+          'dt_demanda': {
+            'demandas': [],
+            'vol_anual_ma': '0'
+          },
+          'int_shape': { 'coordinates': [] }
+    
+        });
+    
+
     const handleUserChange = (event) => {
+        /*
         setMarker(prev => {
             return {
                 ...prev,
                 [event.target.name]: event.target.value
             }
-        });
+        });*/
 
     };
 
@@ -100,11 +128,11 @@ function ElemGrant({ map, marker, setMarker, data, setData }) {
                 <Box sx={style}>
 
                     {/** Pesquisar usuários */}
-                    <ElemSearchUsers map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
+                    {<ElemSearchUsers search={search} setSearch={setSearch} setUsers={setUsers} />}
                     {/* Listar usuários */}
                     <Box>
                         <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Usuário</FormLabel>
-                        {/** sx={{ height: 300, maxHeight: 300, marginTop: 2, marginBottom: 2 }}*/}
+                        
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                             <TableContainer sx={{ height: 300, maxHeight: 300 }}>
 
@@ -120,13 +148,11 @@ function ElemGrant({ map, marker, setMarker, data, setData }) {
                                             <TableCell>Endereço</TableCell></TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((_marker, i) => (
+                                        {users.map((user, i) => (
                                             <ElemShowUser
                                                 key={'_' + i}
-                                                map={map}
-                                                marker={_marker}
-                                                setMarker={setMarker}
-                                                setData={setData}
+                                                user={user}
+                                                setUser={setUser}
                                             />
                                         ))}
                                     </TableBody>
@@ -136,7 +162,7 @@ function ElemGrant({ map, marker, setMarker, data, setData }) {
 
                     </Box>
                     {/* Listar a vazão da demanda do usuário selecionado */}
-                    <ElemListFlow marker={marker} setMarker={setMarker} />
+                    <ElemListFlow user={user} setUser={setUser}/>
                 </Box>
                 {/* fim Box Geral */}
 
