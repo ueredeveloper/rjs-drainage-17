@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { initialState } from '../initial-state'
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
@@ -7,9 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Box from '@mui/material/Box';
 import { Paper } from '@mui/material';
+import { SystemContext } from '../elem-content';
 
 
-function ElemMapControllers({ data, setData }) {
+function ElemMapControllers() {
+
+  const [system, setSystem, overlays, setOverlays ] = useContext(SystemContext)
 
   const [checked, setChecked] = useState([false, false]);
 
@@ -33,6 +36,7 @@ function ElemMapControllers({ data, setData }) {
    *
    */
   function _setDataChecked(shape, checked) {
+    /*
     setData(prev => {
       return checked ? {
         ...prev,
@@ -50,11 +54,13 @@ function ElemMapControllers({ data, setData }) {
       }
     }
 
-    )
+    )*/
   }
 
   function _setMapNull() {
     /* retirar figuras desenhadas no mapa */
+
+    /*
     data.overlays.circles.forEach(c => {
       c.draw.setMap(null);
     });
@@ -64,7 +70,7 @@ function ElemMapControllers({ data, setData }) {
     data.overlays.rectangles.forEach(c => {
       c.draw.setMap(null);
     });
-    /* limpar objetos */
+    //limpar objetos 
     setData(prev => {
       return {
         ...prev,
@@ -73,7 +79,7 @@ function ElemMapControllers({ data, setData }) {
         shapes: initialState.shapes,
 
       }
-    });
+    });*/
   }
 
   return (

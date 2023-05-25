@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import ElemMap from './elem-map';
@@ -7,6 +7,7 @@ import ElemMarker from './elem-marker';
 import ElemPolygon from './elem-polygon';
 import ElemPolyline from './elem-polyline';
 import { getShape } from '../../services';
+import { SystemContext } from '../elem-content';
 
 /**
  * Componente para exibir um mapa com conteúdo.
@@ -23,15 +24,28 @@ import { getShape } from '../../services';
  * @param {Array} props.selectedRows - As linhas selecionadas.
  * @returns {JSX.Element} O componente ElemMapContent.
  */
-function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setData, selectedRows }) {
-  const [points, setPoints] = useState()
+//{ mode, center, zoom, onClick, map, setMap, data, setData, selectedRows }
+function ElemMapContent({tab, mode}) {
+  //const [points, setPoints] = useState()
+
+  const [system, setSystem, overlays, setOverlays ] = useContext(SystemContext)
+
+  const [map, setMap] = useState();
+  const center = { lat: -15.760780, lng: -47.815997 };
+  const zoom = 10;
+
+  function onClick (){
+    console.log('on click')
+  }
+  
+
 
   /**
   * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
   */
   const [_shapes, _setShapes] = useState({
-    fraturado: { polygons: [] },
-    poroso: { polygons: [] }
+   // fraturado: { polygons: [] },
+    //poroso: { polygons: [] }
   })
 
   /**
@@ -41,6 +55,8 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     * @param {Array} polygons - Os polígonos da forma.
     */
   function setPolygons(shape, polygons) {
+
+    /*
     setData(prev => {
       return {
         ...prev,
@@ -48,7 +64,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
           ...prev.shapes, ...prev.shapes[shape].shapes = polygons
         }
       }
-    });
+    });*/
 
   }
   /**
@@ -76,6 +92,8 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
   /**
    * Busca os polígonos no servidor ou utiliza os dados já salvos.
    */
+
+  /*
   useEffect(() => {
 
     ['poroso', 'fraturado'].forEach(system => {
@@ -99,6 +117,7 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     })
 
   }, [data, setPolygons, _shapes])
+  */
 
   /**
  * Função assíncrona que busca a forma (shape) no servidor
@@ -128,23 +147,29 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
 
   }*/
 
-  const [system_markers, setSystemMarkers] = useState([]);
-  const [overlays_markers, setOverlaysMarkers] = useState([]);
+ // const [system_markers, setSystemMarkers] = useState([]);
+//  const [overlays_markers, setOverlaysMarkers] = useState([]);
 
+  useEffect(()=>{
+    //console.log(system.markers.length, overlays.markers.length)
+  })
+
+  /*
   useEffect(() => {
     setSystemMarkers(selectedRows)
-  }, [selectedRows]);
+  }, [selectedRows]);*/
 
+  /*
   useEffect(() => {
     setOverlaysMarkers(data.overlays.markers)
-  }, [data]);
+  }, [data]);*/
 
   return (
     <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
         {/* Desenhar círculos, polígonos etc */}
-        <ElemDrawManager map={map} data={data} setData={setData} />
+        {/*<ElemDrawManager map={map} />*/}
         {/*marcadores*/}
         {
           /*
@@ -163,8 +188,8 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
           })*/
         }
         {
-          system_markers.map((marker, i) => {
-          //  console.log(point)
+          system.markers.map((marker, i) => {
+       
             // capturar coordenadas
           //  let [x, y] = point.int_shape.coordinates;
             
@@ -182,21 +207,21 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
         }
         {
 
-          renderPolylines(data.system.hg_shape)}
+          /*renderPolylines(data.system.hg_shape)   */}
 
         {
-          data.shapes.fraturado.shapes.map((shape, i) => {
+          /*data.shapes.fraturado.shapes.map((shape, i) => {
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
-          })
+          })*/
         }
-        {
+        {/*
           data.shapes.poroso.shapes.map((shape, i) => {
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
-          })
+          })*/
         }
 
         {/*renderMarker()*/}

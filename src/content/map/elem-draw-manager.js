@@ -45,7 +45,7 @@ const ElemDrawManager = ({ map, data, setData }) => {
         setData(prev => {
           
           let marker = prev.system.markers[0];
-          console.log(marker)
+          //console.log(marker)
           marker.int_latitude = parseFloat(position.lat());
           marker.int_longitude = parseFloat(position.lng());
 

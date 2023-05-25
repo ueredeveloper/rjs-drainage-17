@@ -23,6 +23,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { SystemContext } from "./elem-content";
 import { analyseItsAvaiable } from "../tools";
+import { initialState } from "./initial-state";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -287,12 +288,12 @@ export default function ElemListGrants() {
 
   const [{ markers, hg_info }, setContext] = useContext(SystemContext);
 
-  const [rows, setRows] = useState(markers);
-  const [_points, _setPoints] = useState();
+  //const [rows, setRows] = useState(markers);
+ // const [_points, _setPoints] = useState();
 
   useEffect(() => {
     let rowsOnMount = stableSort(
-      rows,
+      markers,
       getComparator(DEFAULT_ORDER, DEFAULT_ORDER_BY)
     );
 
@@ -304,34 +305,47 @@ export default function ElemListGrants() {
     setVisibleRows(rowsOnMount);
 
     // primeira renderização da tabela com todas as outorgas selecionadas
-    const newSelected = rows.map((n) => n.id);
+    const newSelected = markers.map((n) => n.id);
     setSelected(newSelected);
 
-  }, [rows]);
+    console.log('markers', markers.length)
+
+  }, [markers]);
 
 
+  /*
   useEffect(() => {
     setRows(markers)
 
-  }, [markers])
+  }, [markers])*/
 
   useEffect(() => {
 
-    let _selectedRows = rows.filter(r => {
+    let _selectedRows = markers.filter(r => {
       return selected.includes(r.id)
     })
+    
+    if (_selectedRows.length!==0) {
 
-    let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
+      let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
 
-    setContext((prev) => {
-      return {
-        ...prev,
+      setContext((prev) => {
+        return {
+          ...prev,
+      //markers: _selectedRows,
+          hg_analyse: _hg_analyse,
+        };
+      });
 
-        hg_analyse: _hg_analyse,
-      };
-    });
+     
+    }
 
-  }, [selected, rows])
+   
+   
+
+  
+
+  }, [selected])
 
   const handleRequestSort = useCallback(
     (event, newOrderBy) => {
@@ -341,7 +355,7 @@ export default function ElemListGrants() {
       setOrderBy(newOrderBy);
 
       const sortedRows = stableSort(
-        rows,
+        markers,
         getComparator(toggledOrder, newOrderBy)
       );
       const updatedRows = sortedRows.slice(
@@ -351,17 +365,38 @@ export default function ElemListGrants() {
 
       setVisibleRows(updatedRows);
     },
-    [order, orderBy, page, rowsPerPage, rows]
+    [order, orderBy, page, rowsPerPage, markers]
   );
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
 
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = markers.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
+
+    let _selectedRows = markers.filter(r => {
+      return selected.includes(r.id)
+    })
+
+      let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
+
+      
+      console.log( 'all click', _selectedRows.length)
+
+      setContext((prev) => {
+        return {
+          ...prev,
+      //markers: _selectedRows,
+          hg_analyse: _hg_analyse,
+        };
+      });
+
+    
+
+
   };
 
   const handleClick = (event, id) => {
@@ -387,13 +422,15 @@ export default function ElemListGrants() {
     }
 
     setSelected(newSelected);
+
+    console.log('click handle')
   };
 
   const handleChangePage = useCallback(
     (event, newPage) => {
       setPage(newPage);
 
-      const sortedRows = stableSort(rows, getComparator(order, orderBy));
+      const sortedRows = stableSort(markers, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         newPage * rowsPerPage,
         newPage * rowsPerPage + rowsPerPage
@@ -404,7 +441,7 @@ export default function ElemListGrants() {
       // Avoid a layout jump when reaching the last page with empty rows.
       const numEmptyRows =
         newPage > 0
-          ? Math.max(0, (1 + newPage) * rowsPerPage - rows.length)
+          ? Math.max(0, (1 + newPage) * rowsPerPage - markers.length)
           : 0;
 
       const newPaddingHeight = (dense ? 33 : 53) * numEmptyRows;
@@ -420,7 +457,7 @@ export default function ElemListGrants() {
 
       setPage(0);
 
-      const sortedRows = stableSort(rows, getComparator(order, orderBy));
+      const sortedRows = stableSort(markers, getComparator(order, orderBy));
       const updatedRows = sortedRows.slice(
         0 * updatedRowsPerPage,
         0 * updatedRowsPerPage + updatedRowsPerPage
@@ -458,7 +495,7 @@ export default function ElemListGrants() {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
 
-              rowCount={rows.length}
+              rowCount={markers.length}
             />
             <TableBody>
               {visibleRows
@@ -517,7 +554,7 @@ export default function ElemListGrants() {
         <TablePagination
           rowsPerPageOptions={[50, 100, 150, 300, 350, 400]}
           component="div"
-          count={rows.length}
+          count={markers.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

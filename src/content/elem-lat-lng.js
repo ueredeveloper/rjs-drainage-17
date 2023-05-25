@@ -70,7 +70,7 @@ export default function ElemLatLng() {
       })
       .then(
         // centralizar o mapa na nova coordenada
-        () => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+        //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
       )
       .then(() => { setLoading(false); });
   }

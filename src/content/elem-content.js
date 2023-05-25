@@ -52,6 +52,7 @@ export const SystemContext = createContext({})
 
 function ElemContent({ mode, theme }) {
 
+    // retirar
   const [map, setMap] = useState();
 
   const [data, setData] = useState(initialState);
@@ -63,14 +64,15 @@ function ElemContent({ mode, theme }) {
 
   const [value, setValue] = useState('1');
 
-  const center = { lat: -15.760780, lng: -47.815997 };
-  const zoom = 10;
+  //const center = { lat: -15.760780, lng: -47.815997 };
+  //const zoom = 10;
 
   /**
    * Usuário de recursos hídricos
    */
   const [marker, setMarker] = useState(initialState.system.markers[0]);
   const [system, setSystem] = useState(initialState.system);
+  const [overlays, setOverlays] = useState(initialState.overlays)
   //const [selectedMarkers, setSelectedMarkers] = useState([])
 
 
@@ -79,7 +81,7 @@ function ElemContent({ mode, theme }) {
 
     // id do marcador
     //let id = Date.now();
-    if (marker.tp_id !== 0)
+    if (system.markers.length>0 && system.markers[0].tp_id !== 0)
       findPointsInASystem(marker.tp_id, marker.int_latitude, marker.int_longitude)
         .then(points => {
 
@@ -152,11 +154,13 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
+              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays]}>
                 <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
-                  <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData}
+                  <ElemMapContent tab={value} mode={mode}
                     selectedRows={selectedRows} />
                   <ElemMapControllers data={data} setData={setData} />
                 </Box>
+                </SystemContext.Provider>
               </TabPanel>
             </TabContext>
           </Box>

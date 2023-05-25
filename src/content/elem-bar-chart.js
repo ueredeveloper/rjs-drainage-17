@@ -27,6 +27,7 @@ function ElemBarChart() {
   // Define o estado interno checked e a função para atualizá-lo. Se true, escala logarítimica, se false, linear.
   const [checked, setChecked] = useState(false);
 
+
   /**
    * Função chamada quando o valor do Switch é alterado.
    *
@@ -35,8 +36,6 @@ function ElemBarChart() {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-
-  
 
   // Opções de configuração do gráfico
   const options = {
@@ -85,7 +84,8 @@ function ElemBarChart() {
       {
         label: 'Q Usuário',
         backgroundColor: '#76B7B2',
-        data: [context.markers[0].dt_demanda.vol_anual_ma],
+        // se não há cadastros preencha com zero
+        data: [context.markers.length!==0? context.markers[0].dt_demanda.vol_anual_ma: 0],
       },
     ],
   };
