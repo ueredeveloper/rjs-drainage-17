@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import ElemGrant from './grant';
+import ElemGrant from './grant/elem-grant';
 import { numberWithCommas } from '../tools';
 import { analyseItsAvaiable } from '../tools';
 import { makeStyles } from '@mui/styles';

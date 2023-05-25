@@ -184,6 +184,8 @@ const initialState = {
             lng: -47.939599
         },
         "markers": [],
+        // selected markers
+        "sel_markers": [],
         "hg_shape": {
             "type": null,
             "coordinates": []

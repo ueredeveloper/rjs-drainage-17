@@ -8,8 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { ElemDemand } from './elem-demand';
-import { findDemands } from '../../services/shapes';
+import { ElemDemand } from './demand/elem-demand';
+import { findDemands } from '../../../../../services/shapes';
 
 function ElemOpenDemands({ open, user, setUser }) {
 
@@ -51,7 +51,7 @@ function ElemOpenDemands({ open, user, setUser }) {
               <TableBody>
                 {
                   demands.map((demand, i) => (
-                    <ElemDemand key={"elem_demand_" + i} demand={demand} setUser={setUser} />)
+                    <ElemDemand key={"elem_demand_" + i} demand={demand} user={user} setUser={setUser} />)
                   )
                 }
               </TableBody>

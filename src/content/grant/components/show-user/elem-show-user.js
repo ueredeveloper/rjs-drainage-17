@@ -4,7 +4,7 @@ import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { ElemOpenDemands } from './elem-open-demands';
+import { ElemOpenDemands } from './open-demands/elem-open-demands';
 
 function ElemShowUser({ user, setUser }) {
 

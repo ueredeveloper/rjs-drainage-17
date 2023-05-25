@@ -15,11 +15,11 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-import { ElemShowUser } from './elem-show-user';
-import { ElemListFlow } from './elem-list-flow';
-import { ElemSearchUsers } from './elem-search-users';
+import { ElemShowUser } from './components/show-user/elem-show-user';
+import { ElemListFlow } from './components/list-flow/elem-list-flow';
+import { ElemSearchUsers } from './components/search-user/elem-search-users';
 
-import './index.css';
+import './elem-grant.css';
 import { Tooltip } from '@mui/material';
 import { SystemContext } from '../elem-content';
 
@@ -41,7 +41,7 @@ function ElemGrant() {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const [context, setContext]= useContext(SystemContext)
+    const [context, setContext] = useContext(SystemContext)
 
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
@@ -74,27 +74,26 @@ function ElemGrant() {
 
     const [user, setUser] = useState(
         {
-          'id': 0,
-          'us_id': 0,
-          'sub_tp_id': 0,
-          'us_nome': '',
-          'us_cpf_cnpj': '',
-          'us_doc_id': 0,
-          'doc_end': 0,
-          'doc_sei': '',
-          'proc_sei': '',
-          'end_id': 0,
-          'end_logradouro': '',
-          'int_latitude': '',
-          'int_longitude': '',
-          'dt_demanda': {
-            'demandas': [],
-            'vol_anual_ma': '0'
-          },
-          'int_shape': { 'coordinates': [] }
-    
+            'id': 0,
+            'us_id': 0,
+            'sub_tp_id': 0,
+            'us_nome': '',
+            'us_cpf_cnpj': '',
+            'us_doc_id': 0,
+            'doc_end': 0,
+            'doc_sei': '',
+            'proc_sei': '',
+            'end_id': 0,
+            'end_logradouro': '',
+            'int_latitude': '',
+            'int_longitude': '',
+            'dt_demanda': {
+                'demandas': [],
+                'vol_anual_ma': '0'
+            },
+            'int_shape': { 'coordinates': [] }
+
         });
-    
 
     const handleUserChange = (event) => {
         /*
@@ -132,7 +131,7 @@ function ElemGrant() {
                     {/* Listar usuários */}
                     <Box>
                         <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Usuário</FormLabel>
-                        
+
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                             <TableContainer sx={{ height: 300, maxHeight: 300 }}>
 
@@ -162,7 +161,7 @@ function ElemGrant() {
 
                     </Box>
                     {/* Listar a vazão da demanda do usuário selecionado */}
-                    <ElemListFlow user={user} setUser={setUser}/>
+                    <ElemListFlow user={user} setUser={setUser} />
                 </Box>
                 {/* fim Box Geral */}
 

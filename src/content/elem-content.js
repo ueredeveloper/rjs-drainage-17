@@ -70,65 +70,14 @@ function ElemContent({ mode, theme }) {
   /**
    * Usuário de recursos hídricos
    */
-  const [marker, setMarker] = useState(initialState.system.markers[0]);
+  //const [marker, setMarker] = useState(initialState.system.markers[0]);
   const [system, setSystem] = useState(initialState.system);
   const [overlays, setOverlays] = useState(initialState.overlays)
   //const [selectedMarkers, setSelectedMarkers] = useState([])
 
 
 
-  useEffect(() => {
-
-    // id do marcador
-    //let id = Date.now();
-    if (system.markers.length>0 && system.markers[0].tp_id !== 0)
-      findPointsInASystem(marker.tp_id, marker.int_latitude, marker.int_longitude)
-        .then(points => {
-
-          let _markers = points._points;
-
-          // adicionar usuário na array de pontos outorgados no polígono.
-          let __markers = [marker, ..._markers]
-          // verificar disponibilidade com o ponto (marker) adicionado.
-          let _hg_analyse = analyseItsAvaiable(points._hg_info, __markers);
-
-          setData(prev => {
-            return {
-              ...prev,
-              /*
-              overlays: {
-                ...prev.overlays,
-                marker: {
-                  ...prev.overlays.marker,
-                  id: id,
-                  position: {
-                    lat: marker.int_latitude.toFixed(6),
-                    lng: marker.int_longitude.toFixed(6)
-
-                  },
-                  info: {
-                    ...prev.overlays.marker.info,
-                    tp_id: marker.sub_tp_id
-                  }
-                }
-              },*/
-              system: {
-                // adicionar todos os pontos, contendo também o usuário
-                markers: __markers,
-                hg_shape: points._hg_shape,
-                hg_info: points._hg_info,
-                hg_analyse: _hg_analyse
-              }
-            }
-          });
-        })
-        .then(
-          // centralizar o mapa na nova coordenada
-          () => { map.setCenter({ lat: parseFloat(marker.int_latitude), lng: parseFloat(marker.int_longitude) }) }
-        )
-    //.then(() => { setLoading(false); });
-
-  }, [marker])
+  
 
   function onClick() {
     // console.log('on click')

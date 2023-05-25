@@ -288,9 +288,6 @@ export default function ElemListGrants() {
 
   const [{ markers, hg_info }, setContext] = useContext(SystemContext);
 
-  //const [rows, setRows] = useState(markers);
- // const [_points, _setPoints] = useState();
-
   useEffect(() => {
     let rowsOnMount = stableSort(
       markers,
@@ -308,42 +305,23 @@ export default function ElemListGrants() {
     const newSelected = markers.map((n) => n.id);
     setSelected(newSelected);
 
-    console.log('markers', markers.length)
-
   }, [markers]);
 
-
-  /*
-  useEffect(() => {
-    setRows(markers)
-
-  }, [markers])*/
-
   useEffect(() => {
 
-    let _selectedRows = markers.filter(r => {
+    let _sel_markers = markers.filter(r => {
       return selected.includes(r.id)
-    })
-    
-    if (_selectedRows.length!==0) {
+    });
 
-      let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
+    let _hg_analyse = analyseItsAvaiable(hg_info, _sel_markers);
 
-      setContext((prev) => {
-        return {
-          ...prev,
-      //markers: _selectedRows,
-          hg_analyse: _hg_analyse,
-        };
-      });
-
-     
-    }
-
-   
-   
-
-  
+    setContext((prev) => {
+      return {
+        ...prev,
+        sel_markers: _sel_markers,
+        hg_analyse: _hg_analyse,
+      };
+    });
 
   }, [selected])
 
@@ -376,27 +354,6 @@ export default function ElemListGrants() {
       return;
     }
     setSelected([]);
-
-    let _selectedRows = markers.filter(r => {
-      return selected.includes(r.id)
-    })
-
-      let _hg_analyse = analyseItsAvaiable(hg_info, _selectedRows)
-
-      
-      console.log( 'all click', _selectedRows.length)
-
-      setContext((prev) => {
-        return {
-          ...prev,
-      //markers: _selectedRows,
-          hg_analyse: _hg_analyse,
-        };
-      });
-
-    
-
-
   };
 
   const handleClick = (event, id) => {
@@ -423,7 +380,6 @@ export default function ElemListGrants() {
 
     setSelected(newSelected);
 
-    console.log('click handle')
   };
 
   const handleChangePage = useCallback(

@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, TableCell, TableRow } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import { findPointsInASystem } from '../../services';
+import { findPointsInASystem } from '../../../../../../services';
 import { CircularProgress, Fade } from '@mui/material';
-import { analyseItsAvaiable } from '../../tools';
+import { analyseItsAvaiable } from '../../../../../../tools';
+import { SystemContext } from '../../../../../elem-content';
 
-export function ElemDemand({ demand, setUser }) {
+export function ElemDemand({ demand, user, setUser }) {
     // mostrar barra de progresso ao clicar
     const [loading, setLoading] = useState(false);
+
+    const [system, setSystem] = useContext(SystemContext)
 
     const [age, setAge] = React.useState(1);
 
@@ -34,8 +37,34 @@ export function ElemDemand({ demand, setUser }) {
             }
         });
 
-        setLoading(false);
 
+        let { sub_tp_id, int_latitude, int_longitude } = demand;
+        console.log(sub_tp_id, int_latitude, int_longitude)
+
+        findPointsInASystem(sub_tp_id, int_latitude, int_longitude)
+            .then(points => {
+
+                console.log(points)
+
+                let _markers = [user, ...points._points]
+                let { _hg_info } = points
+                // verificar disponibilidade com o ponto (user) adicionado.
+                let _hg_analyse = analyseItsAvaiable(_hg_info, _markers);
+
+                setSystem(prev => {
+                    return {
+                        ...prev,
+                        point: {
+                            tp_id: sub_tp_id,
+                            lat: int_latitude,
+                            lng: int_longitude
+                        },
+                        markers: _markers,
+                        _hg_analyse: _hg_analyse
+                    }
+                })
+            })
+            .then(() => { setLoading(false); })
     }
 
     return (

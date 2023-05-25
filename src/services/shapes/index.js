@@ -1,5 +1,5 @@
-// mudar para https://njs-adasa-postgres.ueredeveloper.repl.co
-const url = 'https://adasa-postgres.ueredeveloper.repl.co';
+
+const url = 'https://njs-drainage.ueredeveloper.repl.co';
 
 async function findPointsInsidePolygon(polygon) {
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 //import { createCircleRings } from '../tools';
-import { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle } from '../../services';
+import { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle } from '../../../services';
 /**
 * Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
   * @param {Object} map Map inicializado gmaps api.

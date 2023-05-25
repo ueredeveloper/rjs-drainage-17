@@ -114,7 +114,6 @@ function analyseItsAvaiable(_info, _points) {
     _q_points_per = 0;
   }
 
-  /* -----------------  retirar underlina das variaveis criadas */
   return {
     bacia_nome: _info.bacia_nome,
     // Unidade Hidrográfica

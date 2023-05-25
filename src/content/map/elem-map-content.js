@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import ElemMap from './elem-map';
-import ElemDrawManager from './elem-draw-manager';
-import ElemMarker from './elem-marker';
-import ElemPolygon from './elem-polygon';
-import ElemPolyline from './elem-polyline';
+import ElemMap from './components/elem-map/elem-map';
+import ElemDrawManager from './components/elem-draw-manager';
+import ElemMarker from './components/elem-marker';
+import ElemPolygon from './components/elem-polygon';
+import ElemPolyline from './components/elem-polyline';
 import { getShape } from '../../services';
 import { SystemContext } from '../elem-content';
 
@@ -24,27 +24,40 @@ import { SystemContext } from '../elem-content';
  * @param {Array} props.selectedRows - As linhas selecionadas.
  * @returns {JSX.Element} O componente ElemMapContent.
  */
-//{ mode, center, zoom, onClick, map, setMap, data, setData, selectedRows }
-function ElemMapContent({tab, mode}) {
-  //const [points, setPoints] = useState()
 
-  const [system, setSystem, overlays, setOverlays ] = useContext(SystemContext)
+function ElemMapContent({ tab, mode }) {
 
+  /**
+   * Map
+   */
   const [map, setMap] = useState();
-  const center = { lat: -15.760780, lng: -47.815997 };
-  const zoom = 10;
+  /**
+   * Map controls
+   */
+  const [controls, setControls] = useState({
+    center: { lat: -15.760780, lng: -47.815997 },
+    
+  })
+  const [system, setSystem, overlays, setOverlays] = useContext(SystemContext);
+  /**
+   * Markers
+   */
+  const [system_markers, setSystemMarkers] = useState([]);
 
-  function onClick (){
-    console.log('on click')
-  }
-  
+  useEffect(() => {
+    setSystemMarkers(system.markers)
+   
+  }, [system.markers]);
 
+  useEffect(() => {
+    setSystemMarkers(system.sel_markers)
+  }, [system.sel_markers]);
 
   /**
   * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
   */
   const [_shapes, _setShapes] = useState({
-   // fraturado: { polygons: [] },
+    // fraturado: { polygons: [] },
     //poroso: { polygons: [] }
   })
 
@@ -134,23 +147,23 @@ function ElemMapContent({tab, mode}) {
  *
  * @returns {JSX.Element} O componente ElemMarker renderizado.
  */
-/*
-  function renderMarker() {
+  /*
+    function renderMarker() {
+  
+      let { lat, lng } = data.overlays.marker.position;
+      let { info } = data.overlays.marker;
+      return (
+        <ElemMarker
+          info={info}
+          options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
+      )
+  
+    }*/
 
-    let { lat, lng } = data.overlays.marker.position;
-    let { info } = data.overlays.marker;
-    return (
-      <ElemMarker
-        info={info}
-        options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
-    )
+  // const [system_markers, setSystemMarkers] = useState([]);
+  //  const [overlays_markers, setOverlaysMarkers] = useState([]);
 
-  }*/
-
- // const [system_markers, setSystemMarkers] = useState([]);
-//  const [overlays_markers, setOverlaysMarkers] = useState([]);
-
-  useEffect(()=>{
+  useEffect(() => {
     //console.log(system.markers.length, overlays.markers.length)
   })
 
@@ -167,7 +180,7 @@ function ElemMapContent({tab, mode}) {
   return (
     <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
-        <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
+        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{lat: system.point.lat, lng: system.point.lng}} />
         {/* Desenhar círculos, polígonos etc */}
         {/*<ElemDrawManager map={map} />*/}
         {/*marcadores*/}
@@ -188,21 +201,21 @@ function ElemMapContent({tab, mode}) {
           })*/
         }
         {
-          system.markers.map((marker, i) => {
-       
+          system_markers.map((marker, i) => {
+
             // capturar coordenadas
-          //  let [x, y] = point.int_shape.coordinates;
-            
+            //  let [x, y] = point.int_shape.coordinates;
+
             return (
               <ElemMarker
                 key={i}
                 marker={marker}
                 map={map}
-                icon={i===0? 0: marker.tp_id}
-                //info={{ id: Date.now(), tp_id: point.tp_id }}
-                // coordenada em formato gmaps
-               // options={{ position: { lat: y, lng: x }, map: map }} 
-               />)
+                icon={i === 0 ? 0 : marker.tp_id}
+              //info={{ id: Date.now(), tp_id: point.tp_id }}
+              // coordenada em formato gmaps
+              // options={{ position: { lat: y, lng: x }, map: map }} 
+              />)
           })
         }
         {

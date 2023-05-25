@@ -54,7 +54,16 @@ export default function ElemLatLng() {
 
     await findPointsInASystem(tp_id, lat, lng)
       .then(points => {
-        let markers = [initialState.system.markers[0], ...points._points];
+        let markers = [
+          // cria o primeiro marcador que não tem vazão pois buscou-se apenas uma coordenada
+          {
+            int_latitude: context.point.lat,
+            int_longitude: context.point.lng,
+            dt_demanda: { demandas: [] }
+          },
+          // adiciona os pontos buscados no servidor após o primeiro marcador
+          ...points._points
+        ];
         // verificar disponibilidade com o ponto (marker) adicionado.
         let _hg_analyse = analyseItsAvaiable(points._hg_info, markers);
         // Atualiza o contexto com os novos pontos encontrados, informações do hg_info, hg_shape e hg_analyse
@@ -69,9 +78,9 @@ export default function ElemLatLng() {
         });
       })
       .then(
-        // centralizar o mapa na nova coordenada
-        //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
-      )
+      // centralizar o mapa na nova coordenada
+      //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+    )
       .then(() => { setLoading(false); });
   }
 
