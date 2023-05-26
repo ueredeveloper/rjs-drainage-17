@@ -183,7 +183,11 @@ const initialState = {
             lat: -15.775139,
             lng: -47.939599
         },
-        "markers": [],
+        "markers": [{
+            int_latitude: -15.775139,
+            int_longitude: -47.939599,
+            dt_demanda: { demandas: [] }
+          }],
         // selected markers
         "sel_markers": [],
         "hg_shape": {

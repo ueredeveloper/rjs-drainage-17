@@ -51,7 +51,12 @@ const ElemDrawManager = ({ map }) => {
               ...prev.point,
               lat: parseFloat(position.lat()),
               lng: parseFloat(position.lng())
-            }
+            },
+            markers: [{
+              int_latitude: parseFloat(position.lat()),
+              int_longitude: parseFloat(position.lng()),
+              dt_demanda: { demandas: [] }
+            }]
           }
         })
 

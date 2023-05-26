@@ -8,6 +8,7 @@ import ElemPolygon from './components/elem-polygon';
 import ElemPolyline from './components/elem-polyline';
 import { fetchShape } from '../../services';
 import { SystemContext } from '../elem-content';
+import { initialState } from '../initial-state';
 
 /**
  * Componente para exibir um mapa com conteúdo.
@@ -152,17 +153,13 @@ function ElemMapContent({ tab, mode }) {
   }, [data, setPolygons, _shapes])
   */
 
- /**
-  * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
-  */
- const [_shapes, _setShapes] = useState({
-  fraturado: { polygons: [] },
-  poroso: { polygons: [] }
-})
-
-useEffect(()=> {
-  console.log(_shapes.fraturado.polygons.length, shapes.fraturado.polygons.length)
-}, [_shapes, shapes])
+  /**
+   * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
+   */
+  const [_shapes, _setShapes] = useState({
+    fraturado: { polygons: [] },
+    poroso: { polygons: [] }
+  })
 
   useEffect(() => {
 
@@ -181,7 +178,7 @@ useEffect(()=> {
             }
           })
 
-          
+
           /*
     setData(prev => {
       return {
@@ -190,12 +187,12 @@ useEffect(()=> {
           ...prev.shapes, ...prev.shapes[shape].shapes = polygons
         }
       }
-    });*/ 
+    });*/
 
           _setShapes(prev => {
             return {
               ...prev,
-              [shape]: { polygons : _polygons }
+              [shape]: { polygons: _polygons }
             }
           })
 
@@ -214,46 +211,10 @@ useEffect(()=> {
 
   }, [shapes])
 
-
-  /**
- * Renderiza um marcador no mapa.
- *
- * @returns {JSX.Element} O componente ElemMarker renderizado.
- */
-  /*
-    function renderMarker() {
-  
-      let { lat, lng } = data.overlays.marker.position;
-      let { info } = data.overlays.marker;
-      return (
-        <ElemMarker
-          info={info}
-          options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
-      )
-  
-    }*/
-
-  // const [system_markers, setSystemMarkers] = useState([]);
-  //  const [overlays_markers, setOverlaysMarkers] = useState([]);
-
-  useEffect(() => {
-    //console.log(system.markers.length, overlays.markers.length)
-  })
-
-  /*
-  useEffect(() => {
-    setSystemMarkers(selectedRows)
-  }, [selectedRows]);*/
-
-  /*
-  useEffect(() => {
-    setOverlaysMarkers(data.overlays.markers)
-  }, [data]);*/
-
   return (
     <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
-        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{ lat: system.point.lat, lng: system.point.lng }} />
+        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{ lat: -15.764514558482336, lng: -47.76491209127806 }} />
         {/* Desenhar círculos, polígonos etc */}
         {<ElemDrawManager map={map} />}
         {/*marcadores*/}
@@ -286,7 +247,7 @@ useEffect(()=> {
 
         {
           shapes.fraturado.polygons.map((shape, i) => {
-console.log('render polygon fraturado')
+            console.log('render polygon fraturado')
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
