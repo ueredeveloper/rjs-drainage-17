@@ -35,35 +35,48 @@ export function ElemDemand({ demand, user, setUser }) {
                 int_latitude: demand.int_latitude,
                 int_longitude: demand.int_longitude
             }
-        });
-
+        })
 
         let { sub_tp_id, int_latitude, int_longitude } = demand;
-        console.log(sub_tp_id, int_latitude, int_longitude)
 
         findPointsInASystem(sub_tp_id, int_latitude, int_longitude)
-            .then(points => {
 
-                console.log(points)
+            .then(
+                points => {
 
-                let _markers = [user, ...points._points]
-                let { _hg_info } = points
-                // verificar disponibilidade com o ponto (user) adicionado.
-                let _hg_analyse = analyseItsAvaiable(_hg_info, _markers);
-
-                setSystem(prev => {
-                    return {
-                        ...prev,
-                        point: {
-                            tp_id: sub_tp_id,
-                            lat: int_latitude,
-                            lng: int_longitude
+                    let marker = {
+                        us_nome: demand.us_nome,
+                        sub_tp_id: demand.sub_tp_id,
+                        tp_id: demand.sub_tp_id,
+                        dt_demanda: demand.dt_demanda,
+                        int_shape: {
+                            coordinates: [demand.int_longitude, demand.int_latitude],
                         },
-                        markers: _markers,
-                        _hg_analyse: _hg_analyse
+                        int_latitude: demand.int_latitude,
+                        int_longitude: demand.int_longitude
                     }
-                })
-            })
+
+                    let _markers = [marker, ...points._points]
+                    let { _hg_info, _hg_shape } = points
+                    // verificar disponibilidade com o ponto (user) adicionado.
+                    let _hg_analyse = analyseItsAvaiable(_hg_info, _markers);
+
+                    setSystem(prev => {
+                        return {
+                            ...prev,
+                            point: {
+                                tp_id: sub_tp_id,
+                                lat: int_latitude,
+                                lng: int_longitude
+                            },
+                            markers: _markers,
+                            hg_shape: _hg_shape,
+                            hg_info: _hg_info,
+                            hg_analyse: _hg_analyse,
+                        }
+                    })
+                }
+            )
             .then(() => { setLoading(false); })
     }
 

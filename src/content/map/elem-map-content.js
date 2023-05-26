@@ -6,7 +6,7 @@ import ElemDrawManager from './components/elem-draw-manager';
 import ElemMarker from './components/elem-marker';
 import ElemPolygon from './components/elem-polygon';
 import ElemPolyline from './components/elem-polyline';
-import { getShape } from '../../services';
+import { fetchShape } from '../../services';
 import { SystemContext } from '../elem-content';
 
 /**
@@ -36,9 +36,9 @@ function ElemMapContent({ tab, mode }) {
    */
   const [controls, setControls] = useState({
     center: { lat: -15.760780, lng: -47.815997 },
-    
+
   })
-  const [system, setSystem, overlays, setOverlays] = useContext(SystemContext);
+  const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext);
   /**
    * Markers
    */
@@ -46,7 +46,7 @@ function ElemMapContent({ tab, mode }) {
 
   useEffect(() => {
     setSystemMarkers(system.markers)
-   
+
   }, [system.markers]);
 
   useEffect(() => {
@@ -56,10 +56,12 @@ function ElemMapContent({ tab, mode }) {
   /**
   * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
   */
+
+  /*
   const [_shapes, _setShapes] = useState({
     // fraturado: { polygons: [] },
     //poroso: { polygons: [] }
-  })
+  })*/
 
   /**
     * Define os polígonos da forma (shape) do fraturado ou poroso.
@@ -78,6 +80,13 @@ function ElemMapContent({ tab, mode }) {
         }
       }
     });*/
+
+    setShapes(prev => {
+      return {
+        ...prev,
+        [shape]: { ...prev[shape], polygons: polygons }
+      }
+    })
 
   }
   /**
@@ -101,6 +110,17 @@ function ElemMapContent({ tab, mode }) {
       })
     }
 
+  }
+
+  /**
+* Função assíncrona que busca a forma (shape) no servidor
+*
+* @param {string} shape - O nome da forma (shape).
+* @returns {polygon} Retorna polígonos que compôes o domínio fraturado ou poroso.
+*/
+  async function getShape(shape) {
+    let _shape = await fetchShape(`hidrogeo_${shape}`);
+    return _shape;
   }
   /**
    * Busca os polígonos no servidor ou utiliza os dados já salvos.
@@ -132,16 +152,69 @@ function ElemMapContent({ tab, mode }) {
   }, [data, setPolygons, _shapes])
   */
 
-  /**
- * Função assíncrona que busca a forma (shape) no servidor
- *
- * @param {string} shape - O nome da forma (shape).
- * @returns {polygon} Retorna polígonos que compôes o domínio fraturado ou poroso.
- */
-  async function _getShape(shape) {
-    let _shape = await getShape(`hidrogeo_${shape}`);
-    return _shape;
-  }
+ /**
+  * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
+  */
+ const [_shapes, _setShapes] = useState({
+  fraturado: { polygons: [] },
+  poroso: { polygons: [] }
+})
+
+useEffect(()=> {
+  console.log(_shapes.fraturado.polygons.length, shapes.fraturado.polygons.length)
+}, [_shapes, shapes])
+
+  useEffect(() => {
+
+    ['poroso', 'fraturado'].forEach(shape => {
+      let { checked, polygons } = shapes[shape];
+
+      if (checked && polygons.length === 0 && _shapes[shape].polygons.length === 0) {
+
+        getShape(shape).then(_polygons => {
+          console.log('servidor')
+
+          setShapes(prev => {
+            return {
+              ...prev,
+              [shape]: { ...prev[shape], ...prev[shape].polygons = _polygons }
+            }
+          })
+
+          
+          /*
+    setData(prev => {
+      return {
+        ...prev,
+        shapes: {
+          ...prev.shapes, ...prev.shapes[shape].shapes = polygons
+        }
+      }
+    });*/ 
+
+          _setShapes(prev => {
+            return {
+              ...prev,
+              [shape]: { polygons : _polygons }
+            }
+          })
+
+        });
+
+      } else if (checked && polygons.length === 0 && _shapes[shape].polygons.length > 0) {
+        //setPolygons(system, _shapes[shape].polygons);
+        setShapes(prev => {
+          return {
+            ...prev,
+            [shape]: { ...prev[shape], ...prev[shape].polygons = _shapes[shape].polygons }
+          }
+        })
+      }
+    });
+
+  }, [shapes])
+
+
   /**
  * Renderiza um marcador no mapa.
  *
@@ -180,61 +253,51 @@ function ElemMapContent({ tab, mode }) {
   return (
     <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
-        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{lat: system.point.lat, lng: system.point.lng}} />
+        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{ lat: system.point.lat, lng: system.point.lng }} />
         {/* Desenhar círculos, polígonos etc */}
-        {/*<ElemDrawManager map={map} />*/}
+        {<ElemDrawManager map={map} />}
         {/*marcadores*/}
         {
-          /*
-          overlays_markers.map(markers => {
-            return markers.points.map((info, ii) => {
-              // coordenadas da outorga em formato geometry
+          overlays.markers.map(markers => {
+            return markers.points.map((m, ii) => {
 
-              let [x, y] = info.int_shape.coordinates;
               return (
                 <ElemMarker
-                  key={'_' + ii}
-                  info={info}
-                  // coordenada em formato gmaps
-                  options={{ position: { lat: y, lng: x }, map: map }} />)
+                  key={ii}
+                  marker={m}
+                  map={map}
+                  icon={m.tp_id}
+                />)
             })
-          })*/
+          })
         }
         {
           system_markers.map((marker, i) => {
-
-            // capturar coordenadas
-            //  let [x, y] = point.int_shape.coordinates;
-
             return (
               <ElemMarker
                 key={i}
                 marker={marker}
                 map={map}
                 icon={i === 0 ? 0 : marker.tp_id}
-              //info={{ id: Date.now(), tp_id: point.tp_id }}
-              // coordenada em formato gmaps
-              // options={{ position: { lat: y, lng: x }, map: map }} 
               />)
           })
         }
-        {
-
-          /*renderPolylines(data.system.hg_shape)   */}
+        {renderPolylines(system.hg_shape)}
 
         {
-          /*data.shapes.fraturado.shapes.map((shape, i) => {
+          shapes.fraturado.polygons.map((shape, i) => {
+console.log('render polygon fraturado')
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
-          })*/
+          })
         }
-        {/*
-          data.shapes.poroso.shapes.map((shape, i) => {
-            return (
-              <ElemPolygon key={i} shape={shape} map={map} />
-            )
-          })*/
+        {shapes.poroso.polygons.map((shape, i) => {
+          console.log('render polygon poroso')
+          return (
+            <ElemPolygon key={i} shape={shape} map={map} />
+          )
+        })
         }
 
         {/*renderMarker()*/}

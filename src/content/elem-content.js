@@ -72,12 +72,14 @@ function ElemContent({ mode, theme }) {
    */
   //const [marker, setMarker] = useState(initialState.system.markers[0]);
   const [system, setSystem] = useState(initialState.system);
-  const [overlays, setOverlays] = useState(initialState.overlays)
+  const [overlays, setOverlays] = useState(initialState.overlays);
+  const [shapes, setShapes] = useState(initialState.shapes)
   //const [selectedMarkers, setSelectedMarkers] = useState([])
 
 
-
-  
+  useEffect(()=>{
+    console.log(system.point)
+  }, [system])
 
   function onClick() {
     // console.log('on click')
@@ -103,7 +105,7 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
-              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays]}>
+              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays, shapes, setShapes]}>
                 <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
                   <ElemMapContent tab={value} mode={mode}
                     selectedRows={selectedRows} />

@@ -98,7 +98,7 @@ function ElemBarChart() {
           <Bar
             data={data}
             options={options}
-            style={{ height: '40%', width: '40%' }}
+            style={{ minHeight: 130, height: '40%', width: '40%' }}
           />
         </Box>
 

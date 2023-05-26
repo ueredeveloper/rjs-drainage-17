@@ -213,11 +213,11 @@ const initialState = {
     "shapes": {
         "fraturado": {
             "checked": false,
-            "shapes": []
+            "polygons": []
         },
         "poroso": {
             "checked": false,
-            "shapes": []
+            "polygons": []
         }
     }
 }

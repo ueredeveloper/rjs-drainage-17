@@ -12,7 +12,7 @@ import { SystemContext } from '../elem-content';
 
 function ElemMapControllers() {
 
-  const [system, setSystem, overlays, setOverlays ] = useContext(SystemContext)
+  const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext)
 
   const [checked, setChecked] = useState([false, false]);
 
@@ -55,22 +55,38 @@ function ElemMapControllers() {
     }
 
     )*/
+
+    setShapes(prev => {
+      return checked ? {
+        ...prev,
+        [shape]: {
+          ...prev[shape],
+          checked: checked
+        }
+      } : {
+        ...prev,
+        [shape]: { checked: checked, polygons: [] }
+      }
+
+    })
   }
 
   function _setMapNull() {
     /* retirar figuras desenhadas no mapa */
 
-    /*
-    data.overlays.circles.forEach(c => {
+
+    overlays.circles.forEach(c => {
       c.draw.setMap(null);
     });
-    data.overlays.polygons.forEach(c => {
+    overlays.polygons.forEach(c => {
       c.draw.setMap(null);
     });
-    data.overlays.rectangles.forEach(c => {
+    overlays.rectangles.forEach(c => {
       c.draw.setMap(null);
     });
     //limpar objetos 
+
+    /*
     setData(prev => {
       return {
         ...prev,
@@ -80,6 +96,9 @@ function ElemMapControllers() {
 
       }
     });*/
+    setSystem(initialState.system)
+    setOverlays(initialState.overlays)
+    setShapes(initialState.shapes)
   }
 
   return (

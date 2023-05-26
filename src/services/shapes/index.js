@@ -2,7 +2,6 @@
 const url = 'https://njs-drainage.ueredeveloper.repl.co';
 
 async function findPointsInsidePolygon(polygon) {
-
   let points = await fetch(url + '/findPointsInsidePolygon', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -41,7 +40,7 @@ async function findPointsInsideRectangle(rectangle) {
 * @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
 *
   */
-async function getShape(shape) {
+async function fetchShape(shape) {
 
   let response = await fetch(url + `/getShape?shape=${shape}`, {
     method: 'GET',
@@ -115,4 +114,4 @@ async function findDemands(end_id) {
 }
 
 
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, getShape, findPointsInASystem, getUsers, findDemands }
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem, getUsers, findDemands, fetchShape}

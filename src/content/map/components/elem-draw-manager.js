@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 //import { createCircleRings } from '../tools';
 import { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle } from '../../../services';
+import { SystemContext } from '../../elem-content';
 /**
 * Adiciona marcador, círculo, polígono, poliline e retângulo ao mapa.
   * @param {Object} map Map inicializado gmaps api.
   * @param {function} setData Função de adição de objectos geométricos à variável `data`.
   */
-const ElemDrawManager = ({ map, data, setData }) => {
+const ElemDrawManager = ({ map }) => {
+
+  const [system, setSystem, overlays, setOverlays] = useContext(SystemContext)
 
   useEffect(() => {
 
@@ -41,43 +44,17 @@ const ElemDrawManager = ({ map, data, setData }) => {
 
         let position = event.overlay.position
 
-        let id = Date.now();
-        setData(prev => {
-          
-          let marker = prev.system.markers[0];
-          //console.log(marker)
-          marker.int_latitude = parseFloat(position.lat());
-          marker.int_longitude = parseFloat(position.lng());
-
+        setSystem(prev => {
           return {
             ...prev,
-            /*
-            overlays: {
-              ...prev.overlays,
-              marker: {
-                ...prev.overlays.marker,
-                id: id,
-                position: {
-                  lat: position.lat().toFixed(6),
-                  lng: position.lng().toFixed(6)
-
-                }
-              }
-            },*/
-            system: {
-              ...prev.system,
-              markers: [marker, ...prev.system.markers.slice(1)]
-              /*
-              marker: {
-                ...prev.system.marker,
-                position: {
-                  ...prev.system.marker.position,
-                  [event.target.name]: event.target.value
-                }
-              }*/
+            point: {
+              ...prev.point,
+              lat: parseFloat(position.lat()),
+              lng: parseFloat(position.lng())
             }
           }
-        });
+        })
+
         // retirar o marcador do mapa depois de capturar a coordenada
         event.overlay.setMap(null);
 
@@ -92,21 +69,19 @@ const ElemDrawManager = ({ map, data, setData }) => {
         );
         let id = Date.now();
 
-        setData(prev => {
+        setOverlays(prev => {
           return {
             ...prev,
-            overlays: {
-              ...prev.overlays,
-              circles: [
-                ...prev.overlays.circles, { id: id, center: center, radius: radius, draw: event.overlay }],
-              markers: [
-                ...prev.overlays.markers, {
-                  id: id,
-                  points: points
-                }]
-            },
+            circles: [
+              ...prev.circles, { id: id, center: center, radius: radius, draw: event.overlay }],
+            markers: [
+              ...prev.markers,
+              { points: points }
+            ]
+
           }
-        });
+        })
+
       }
       if (event.type === 'polygon') {
         // retorna array de coordenada no formato gmaps, ex: [{lat: -15, lng: -47}, ...]   
@@ -119,23 +94,22 @@ const ElemDrawManager = ({ map, data, setData }) => {
 
         let points = await findPointsInsidePolygon(polygon);
         let id = Date.now();
-        setData(prev => {
+
+        setOverlays(prev => {
           return {
             ...prev,
-            overlays: {
-              ...prev.overlays,
-              polygons: [...prev.overlays.polygons, {
-                id: id,
-                rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } }), draw: event.overlay
-              }],
-              markers: [
-                ...prev.overlays.markers, {
-                  id: id,
-                  points: points
-                }]
-            },
+            polygons: [...prev.polygons, {
+              id: id,
+              rings: event.overlay.getPath().getArray().map(ll => { return { lat: ll.lat(), lng: ll.lng() } }), draw: event.overlay
+            }],
+            markers: [
+              ...prev.markers,
+              { points: points }
+            ]
           }
-        });
+        })
+
+
       }
       /* Criação de um polígono a partir de um retângulo gmaps api
       */
@@ -154,22 +128,21 @@ const ElemDrawManager = ({ map, data, setData }) => {
         let rectangle = { nex: NE.lng(), ney: NE.lat(), swx: SW.lng(), swy: SW.lat() }
         let points = await findPointsInsideRectangle(rectangle);
         let id = Date.now();
-        setData(prev => {
+
+        setOverlays(prev => {
           return {
             ...prev,
-            overlays: {
-              ...prev.overlays,
-              rectangles: [...prev.overlays.rectangles, { id: id, ne: NE, sw: SW, draw: event.overlay }],
-              markers: [
-                ...prev.overlays.markers, {
-                  id: id,
-                  points: points
-                }]
-            },
+            rectangles: [...prev.rectangles, { id: id, ne: NE, sw: SW, draw: event.overlay }],
+            markers: [
+              ...prev.markers,
+              { points: points }
+            ]
           }
-        });
+        })
+
       }
-    });
+    })
+
     _draw.setMap(map);
 
   }, [map]);

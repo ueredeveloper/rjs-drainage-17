@@ -21,7 +21,7 @@ export default function ElemLatLng() {
   // Variável de estado para controlar o status de carregamento
   const [loading, setLoading] = useState(false);
   // Contexto do hooks system (elem-content.js)
-  const [context, setContext, map] = useContext(SystemContext);
+  const [system, setSystem, map] = useContext(SystemContext);
 
   /**
    * Manipulador de evento chamado quando o valor do campo de entrada muda.
@@ -31,7 +31,7 @@ export default function ElemLatLng() {
     let { name, value } = event.target;
 
     // Atualiza o contexto com os novos valores de latitude e longitude
-    setContext((prev) => {
+    setSystem((prev) => {
       return {
         ...prev,
         point: {
@@ -49,16 +49,19 @@ export default function ElemLatLng() {
    * Atualiza o contexto com os novos pontos encontrados e informações relacionadas.
    */
   async function handle() {
+
     setLoading((prevLoading) => !prevLoading);
-    let { tp_id, lat, lng } = context.point;
+
+    let { tp_id, lat, lng } = system.point;
 
     await findPointsInASystem(tp_id, lat, lng)
       .then(points => {
+
         let markers = [
           // cria o primeiro marcador que não tem vazão pois buscou-se apenas uma coordenada
           {
-            int_latitude: context.point.lat,
-            int_longitude: context.point.lng,
+            int_latitude: system.point.lat,
+            int_longitude: system.point.lng,
             dt_demanda: { demandas: [] }
           },
           // adiciona os pontos buscados no servidor após o primeiro marcador
@@ -67,7 +70,7 @@ export default function ElemLatLng() {
         // verificar disponibilidade com o ponto (marker) adicionado.
         let _hg_analyse = analyseItsAvaiable(points._hg_info, markers);
         // Atualiza o contexto com os novos pontos encontrados, informações do hg_info, hg_shape e hg_analyse
-        setContext((prev) => {
+        setSystem((prev) => {
           return {
             ...prev,
             markers: markers,
@@ -102,7 +105,7 @@ export default function ElemLatLng() {
               label="Latitude"
               color="secondary"
               name="lat"
-              value={context.point.lat}
+              value={system.point.lat}
               onChange={handleChange}
               size="small"
             />
@@ -117,7 +120,7 @@ export default function ElemLatLng() {
               color="secondary"
               label="Longitude"
               name="lng"
-              value={context.point.lng}
+              value={system.point.lng}
               onChange={handleChange}
               size="small"
             />
