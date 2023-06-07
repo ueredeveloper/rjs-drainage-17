@@ -18,12 +18,12 @@ import { analyseItsAvaiable } from '../tools';
 import { orange } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
-  content: {
+  container: {
     display: 'flex',
     flexDirection: 'column',
 
   },
-  box1: {
+  content: {
     display: 'flex',
     flexDirection: 'row',
     [theme.breakpoints.down('sm')]: {
@@ -31,19 +31,26 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   map: {
-    flexBasis: '40%',
-    marginBottom: 5
+    flexBasis: '50%',
+    display: 'flex',
+    minHeight: 300,
+    margin: 10,
+    backgroundColor: 'green'
   },
   info: {
-    flexBasis: '60%',
+    flexBasis: '50%',
     display: 'flex',
-    flexDirection: 'column',
+    minHeight: 300,
+    margin: 10,
     overflowX: 'hidden',
     overflowY: 'hidden',
-    marginBottom: 15
-  },
-  box2: {
 
+    backgroundColor: 'red'
+  },
+  bottom: {
+    minHeight: 300,
+    margin: 10,
+    backgroundColor: 'orange'
   },
 
 }));
@@ -52,7 +59,7 @@ export const SystemContext = createContext({})
 
 function ElemContent({ mode, theme }) {
 
-    // retirar
+  // retirar
   const [map, setMap] = useState();
 
   const [data, setData] = useState(initialState);
@@ -87,32 +94,14 @@ function ElemContent({ mode, theme }) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.content}>
+    <Box className={classes.container}>
       {/** box 1 */}
-      <Box className={classes.box1}>
+      <Box className={classes.content}>
         {/** MAPA */}
         <Box className={classes.map}>
-          <Box sx={{ typography: 'body1' }} >
-            <TabContext value={'0'}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList textColor='secondary' indicatorColor='secondary'>
-                  <Tab label='Mapa' value='0' />
-                </TabList>
-              </Box>
-              <TabPanel value='0' style={{ margin: -10 }}>
-              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays, shapes, setShapes]}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
-                  <ElemMapContent tab={value} mode={mode}
-                    selectedRows={selectedRows} />
-                  <ElemMapControllers data={data} setData={setData} />
-                </Box>
-                </SystemContext.Provider>
-              </TabPanel>
-            </TabContext>
-          </Box>
+          <Box> Mapa</Box>
         </Box>
 
-        {/** INFO */}
         <Box className={classes.info}>
           <Box sx={{ typography: 'body1' }}>
             <TabContext value={value}>
@@ -123,8 +112,8 @@ function ElemContent({ mode, theme }) {
                   <Tab label='Subterrâneo' value='3' />
                 </TabList>
               </Box>
-              <TabPanel value='1' style={{ margin: -10 }}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
+              <TabPanel value='1'>
+                <Box >
                   <SystemContext.Provider value={[system, setSystem, map]}>
                     {/** Latitude e Longitude */}
                     <ElemLatLng />
@@ -145,9 +134,9 @@ function ElemContent({ mode, theme }) {
       </Box>
 
       {/** box 2 */}
-      <Box className={classes.box2}>
+      <Box className={classes.bottom}>
         <SystemContext.Provider value={[system, setSystem]}>
-          <ElemListGrants/>
+          <Box> Outorgas</Box>
         </SystemContext.Provider>
 
       </Box>
