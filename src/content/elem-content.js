@@ -33,19 +33,19 @@ const useStyles = makeStyles((theme) => ({
   map: {
     flexBasis: '50%',
     display: 'flex',
-    minHeight: 300,
+    alignItems: 'stretch',
+
     margin: 10,
     backgroundColor: 'green'
   },
   info: {
     flexBasis: '50%',
-    display: 'flex',
-    minHeight: 300,
+
     margin: 10,
     overflowX: 'hidden',
     overflowY: 'hidden',
+    backgroundColor: 'yellow'
 
-    backgroundColor: 'red'
   },
   bottom: {
     minHeight: 300,
@@ -99,7 +99,24 @@ function ElemContent({ mode, theme }) {
       <Box className={classes.content}>
         {/** MAPA */}
         <Box className={classes.map}>
-          <Box> Mapa</Box>
+          <Box sx={{ typography: 'body1' }} >
+            <TabContext value={'0'}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList textColor='secondary' indicatorColor='secondary'>
+                  <Tab label='Mapa' value='0' />
+                </TabList>
+              </Box>
+              <TabPanel value='0'>
+              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays, shapes, setShapes]}>
+                <Box>
+                  <ElemMapContent tab={value} mode={mode}
+                    selectedRows={selectedRows} />
+                  <ElemMapControllers data={data} setData={setData} />
+                </Box>
+                </SystemContext.Provider>
+              </TabPanel>
+            </TabContext>
+          </Box>
         </Box>
 
         <Box className={classes.info}>
@@ -115,14 +132,12 @@ function ElemContent({ mode, theme }) {
               <TabPanel value='1'>
                 <Box >
                   <SystemContext.Provider value={[system, setSystem, map]}>
-                    {/** Latitude e Longitude */}
+
                     <ElemLatLng />
-                    {/** Tipo de Poço */}
-                    <ElemWellType />
-                    {/** Análise */}
+                    <ElemWellType/>
                     <ElemAnalyse />
-                    {/** Barras */}
-                    <ElemBarChart />
+                    <ElemBarChart/>
+
                   </SystemContext.Provider>
                 </Box>
               </TabPanel>

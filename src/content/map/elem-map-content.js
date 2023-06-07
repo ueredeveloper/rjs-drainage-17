@@ -40,7 +40,7 @@ function ElemMapContent({ tab, mode }) {
 
   })
   const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext);
- 
+
   const [system_markers, setSystemMarkers] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function ElemMapContent({ tab, mode }) {
     })
 
   }
-  
+
   function renderPolylines(shape) {
 
     if (shape.type === 'MultiPolygon') {
@@ -83,7 +83,7 @@ function ElemMapContent({ tab, mode }) {
     let _shape = await fetchShape(`hidrogeo_${shape}`);
     return _shape;
   }
-  
+
   const [_shapes, _setShapes] = useState({
     fraturado: { polygons: [] },
     poroso: { polygons: [] }
@@ -128,7 +128,7 @@ function ElemMapContent({ tab, mode }) {
   }, [shapes])
 
   return (
-    <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
+    <Box id="map-box" sx={{ display: "flex", alignSelf: 'stretch', backgroundColor: 'orange', flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
         <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{ lat: -15.764514558482336, lng: -47.76491209127806 }} />
         {/* Desenhar círculos, polígonos etc */}
@@ -177,6 +177,7 @@ function ElemMapContent({ tab, mode }) {
         })
         }
       </Wrapper>
+
     </Box>
   )
 }
