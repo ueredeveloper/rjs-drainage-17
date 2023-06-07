@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, TableCell, TableRow } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
-import { findPointsInASystem } from '../../services';
+import { findPointsInASystem } from '../../../../../../services';
 import { CircularProgress, Fade } from '@mui/material';
-import { analyseItsAvaiable } from '../../tools';
+import { analyseItsAvaiable } from '../../../../../../tools';
+import { SystemContext } from '../../../../../elem-content';
 
-export function ElemDemand({ demand, map, user, setUser, setData }) {
+export function ElemDemand({ demand, user, setUser }) {
     // mostrar barra de progresso ao clicar
     const [loading, setLoading] = useState(false);
+
+    const [system, setSystem] = useContext(SystemContext)
 
     const [age, setAge] = React.useState(1);
 
@@ -32,10 +35,49 @@ export function ElemDemand({ demand, map, user, setUser, setData }) {
                 int_latitude: demand.int_latitude,
                 int_longitude: demand.int_longitude
             }
-        });
+        })
 
-        setLoading(false);
+        let { sub_tp_id, int_latitude, int_longitude } = demand;
 
+        findPointsInASystem(sub_tp_id, int_latitude, int_longitude)
+
+            .then(
+                points => {
+
+                    let marker = {
+                        us_nome: demand.us_nome,
+                        sub_tp_id: demand.sub_tp_id,
+                        tp_id: demand.sub_tp_id,
+                        dt_demanda: demand.dt_demanda,
+                        int_shape: {
+                            coordinates: [demand.int_longitude, demand.int_latitude],
+                        },
+                        int_latitude: demand.int_latitude,
+                        int_longitude: demand.int_longitude
+                    }
+
+                    let _markers = [marker, ...points._points]
+                    let { _hg_info, _hg_shape } = points
+                    // verificar disponibilidade com o ponto (user) adicionado.
+                    let _hg_analyse = analyseItsAvaiable(_hg_info, _markers);
+
+                    setSystem(prev => {
+                        return {
+                            ...prev,
+                            point: {
+                                tp_id: sub_tp_id,
+                                lat: int_latitude,
+                                lng: int_longitude
+                            },
+                            markers: _markers,
+                            hg_shape: _hg_shape,
+                            hg_info: _hg_info,
+                            hg_analyse: _hg_analyse,
+                        }
+                    })
+                }
+            )
+            .then(() => { setLoading(false); })
     }
 
     return (

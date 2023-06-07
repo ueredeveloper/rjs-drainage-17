@@ -5,11 +5,11 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
-import { getUsers } from '../../services/search';
+import { getUsers } from '../../../../services/search';
 import { blue } from '@mui/material/colors';
 import { CircularProgress, Fade } from '@mui/material';
 
-function ElemSearchUsers({ map, search, setSearch, setUsers }) {
+function ElemSearchUsers({ search, setSearch, setUsers }) {
 
   // mostrar barra de progresso ao clicar
   const [loading, setLoading] = useState(false);

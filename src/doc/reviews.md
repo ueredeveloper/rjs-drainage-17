@@ -114,3 +114,8 @@ Lembrete (12/04/2023):
         busca de usuário: Retirar nome fictício, CIPLAN.
         mapa: Colocar na posição parar de desenhar
         points.js: retirar este arquivo
+
+
+14. Total outorgada ao ano
+    - Valor com muitas casas decimais, ex: 850.618,9789999999
+        - Rever função numberWithCommas

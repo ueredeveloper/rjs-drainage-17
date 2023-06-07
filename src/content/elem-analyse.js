@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,11 +8,12 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import ElemGrant from './grant';
+import ElemGrant from './grant/elem-grant';
 import { numberWithCommas } from '../tools';
 import { analyseItsAvaiable } from '../tools';
 import { makeStyles } from '@mui/styles';
 import { CssBaseline, Paper, ScopedCssBaseline, Tooltip, Typography } from '@mui/material';
+import { SystemContext } from './elem-content';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,25 +24,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-function ElemAnalyse({ map, user, setUser, data, setData, selectedRows }) {
+function ElemAnalyse() {
   /**
     * Dados sobre a disponibilidade.
     */
-  const [hg_analyse, setAnalyse] = useState(data.system.hg_analyse);
+  const [{ hg_analyse }] = useContext(SystemContext);
 
-  /**
-   * Atualizar a variável hg_analyse
-   */
-  useEffect(() => {
-    setAnalyse(data.system.hg_analyse)
-  }, [data])
-
-
-  useEffect(() => {
-    let _hg_analyse = analyseItsAvaiable(data.system.hg_info, selectedRows)
-    setAnalyse(_hg_analyse)
-
-  }, [selectedRows]);
 
   const classes = useStyles();
 
@@ -50,9 +38,9 @@ function ElemAnalyse({ map, user, setUser, data, setData, selectedRows }) {
       <FormControl >
         <Box sx={{ display: 'flex', flexDirection: 'flex-row', justifyContent: 'space-between' }}>
           <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Análise</FormLabel>
-        
-          <ElemGrant map={map} user={user} setUser={setUser} data={data} setData={setData} />
-        
+          {
+          <ElemGrant/>
+  }
         </Box>
 
         <Paper id="table-paper" elevation={3} sx={{ margin: 1, overflow: 'auto' }}>

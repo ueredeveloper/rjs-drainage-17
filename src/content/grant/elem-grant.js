@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -15,12 +15,13 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
-import { ElemShowUser } from './elem-show-user';
-import { ElemListFlow } from './elem-list-flow';
-import { ElemSearchUsers } from './elem-search-users';
+import { ElemShowUser } from './components/show-user/elem-show-user';
+import { ElemListFlow } from './components/list-flow/elem-list-flow';
+import { ElemSearchUsers } from './components/search-user/elem-search-users';
 
-import './index.css';
+import './elem-grant.css';
 import { Tooltip } from '@mui/material';
+import { SystemContext } from '../elem-content';
 
 const style = {
     position: 'absolute',
@@ -34,10 +35,13 @@ const style = {
     p: 4,
 };
 
-function ElemGrant({ map, user, setUser, data, setData }) {
+function ElemGrant() {
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const [context, setContext] = useContext(SystemContext)
 
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
@@ -68,13 +72,37 @@ function ElemGrant({ map, user, setUser, data, setData }) {
         }
     ]);
 
+    const [user, setUser] = useState(
+        {
+            'id': 0,
+            'us_id': 0,
+            'sub_tp_id': 0,
+            'us_nome': '',
+            'us_cpf_cnpj': '',
+            'us_doc_id': 0,
+            'doc_end': 0,
+            'doc_sei': '',
+            'proc_sei': '',
+            'end_id': 0,
+            'end_logradouro': '',
+            'int_latitude': '',
+            'int_longitude': '',
+            'dt_demanda': {
+                'demandas': [],
+                'vol_anual_ma': '0'
+            },
+            'int_shape': { 'coordinates': [] }
+
+        });
+
     const handleUserChange = (event) => {
-        setUser(prev => {
+        /*
+        setMarker(prev => {
             return {
                 ...prev,
                 [event.target.name]: event.target.value
             }
-        });
+        });*/
 
     };
 
@@ -99,11 +127,11 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                 <Box sx={style}>
 
                     {/** Pesquisar usuários */}
-                    <ElemSearchUsers map={map} search={search} setSearch={setSearch} setUsers={setUsers} />
+                    {<ElemSearchUsers search={search} setSearch={setSearch} setUsers={setUsers} />}
                     {/* Listar usuários */}
                     <Box>
                         <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Usuário</FormLabel>
-                        {/** sx={{ height: 300, maxHeight: 300, marginTop: 2, marginBottom: 2 }}*/}
+
                         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                             <TableContainer sx={{ height: 300, maxHeight: 300 }}>
 
@@ -119,13 +147,11 @@ function ElemGrant({ map, user, setUser, data, setData }) {
                                             <TableCell>Endereço</TableCell></TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((_user, i) => (
+                                        {users.map((user, i) => (
                                             <ElemShowUser
                                                 key={'_' + i}
-                                                map={map}
-                                                user={_user}
+                                                user={user}
                                                 setUser={setUser}
-                                                setData={setData}
                                             />
                                         ))}
                                     </TableBody>

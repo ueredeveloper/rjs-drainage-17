@@ -91,10 +91,10 @@ function nFormatter(num, digits) {
  * Analisar se é possível outorgar a partir da vazão requerida, vazões outorgadas etc.
  */
 function analyseItsAvaiable(_info, _points) {
-  
+
   let _Q = 0;
   _points.map((_point) => {
- 
+
     if (typeof _point.dt_demanda.vol_anual_ma === 'undefined') {
       return _Q += 0;
     } else {
@@ -108,13 +108,12 @@ function analyseItsAvaiable(_info, _points) {
   // somatório de vazão anual
   let _q_points = _Q;
   // percentual de vazão utilizada
-  let _q_points_per = (Number(_Q) * 100/Number(_q_ex)).toFixed(4);
+  let _q_points_per = (Number(_Q) * 100 / Number(_q_ex)).toFixed(4);
   if (isNaN(_q_points_per)) {
     console.log('análise, porcentagem, NaN')
     _q_points_per = 0;
   }
 
-  /* -----------------  retirar underlina das variaveis criadas */
   return {
     bacia_nome: _info.bacia_nome,
     // Unidade Hidrográfica
@@ -143,6 +142,9 @@ function analyseItsAvaiable(_info, _points) {
  * @returns 
  */
 function numberWithCommas(x) {
+  // converte para float
+  x = parseFloat(x).toFixed(4)
+  // adiciona as pontuaçõas 2000000 => 2.000.000 e vírgula das casas decimais
   var parts = x.toString().split(".");
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   return parts.join(",");

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import ElemMapContent from './map/elem-map-content';
 import ElemWellType from './elem-well-type';
 import ElemAnalyse from './elem-analyse';
@@ -47,99 +47,34 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
+export const SystemContext = createContext({})
 
 
 function ElemContent({ mode, theme }) {
 
+    // retirar
   const [map, setMap] = useState();
 
-  const [data, setData] = useState(initialState());
-  /**
-   * Usuário solicitado.
-   */
-  const [user, setUser] = useState(
-    {
-      'id': 0,
-      'us_id': 0,
-      'sub_tp_id': 0,
-      'us_nome': '',
-      'us_cpf_cnpj': '',
-      'us_doc_id': 0,
-      'doc_end': 0,
-      'doc_sei': '',
-      'proc_sei': '',
-      'end_id': 0,
-      'end_logradouro': '',
-      'int_latitude': '',
-      'int_longitude': '',
-      'dt_demanda': {
-        'demandas': [],
-        'vol_anual_ma': '0'
-      },
-      'int_shape': { 'coordinates': [] }
+  const [data, setData] = useState(initialState);
 
-    });
-
-  useEffect(() => {
-
-    // id do marcador
-    let id = Date.now();
-    if (user.sub_tp_id !== 0)
-      findPointsInASystem(user.sub_tp_id, user.int_latitude, user.int_longitude)
-        .then(points => {
-
-          let _points = points._points;
-          // adicionar usuário na array de pontos outorgados no polígono.
-          let __points = [..._points, user]
-          // verificar disponibilidade com o ponto (user) adicionado.
-          let _hg_analyse = analyseItsAvaiable(points._hg_info, __points);
-
-          setData(prev => {
-            return {
-              ...prev,
-              overlays: {
-                ...prev.overlays,
-                marker: {
-                  ...prev.overlays.marker,
-                  id: id,
-                  position: {
-                    lat: user.int_latitude.toFixed(6),
-                    lng: user.int_longitude.toFixed(6)
-
-                  },
-                  info: {
-                    ...prev.overlays.marker.info,
-                    tp_id: user.sub_tp_id
-                  }
-                }
-              },
-              system: {
-                // adicionar todos os pontos, contendo também o usuário
-                points: __points,
-                hg_shape: points._hg_shape,
-                hg_info: points._hg_info,
-                hg_analyse: _hg_analyse
-              }
-            }
-          });
-        })
-        .then(
-          // centralizar o mapa na nova coordenada
-          () => { map.setCenter({ lat: parseFloat(user.int_latitude), lng: parseFloat(user.int_longitude) }) }
-        )
-    //.then(() => { setLoading(false); });
-
-   //console.log(user)
-  }, [user])
   /** Manipulador para a tabela de outorgas, adicionando ou retirando usuário do cálculo de disponibilidade.
-   * 
-   */
+  * 
+  */
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [value, setValue] = useState('1');
 
-  const center = { lat: -15.760780, lng: -47.815997 };
-  const zoom = 10;
+  //const center = { lat: -15.760780, lng: -47.815997 };
+  //const zoom = 10;
+
+  /**
+   * Usuário de recursos hídricos
+   */
+  //const [marker, setMarker] = useState(initialState.system.markers[0]);
+  const [system, setSystem] = useState(initialState.system);
+  const [overlays, setOverlays] = useState(initialState.overlays);
+  const [shapes, setShapes] = useState(initialState.shapes)
+
 
   function onClick() {
     // console.log('on click')
@@ -165,11 +100,13 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='0' style={{ margin: -10 }}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column'}}>
-                  <ElemMapContent tab={value} mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} data={data} setData={setData}
+              <SystemContext.Provider value={[system, setSystem, overlays, setOverlays, shapes, setShapes]}>
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column' }}>
+                  <ElemMapContent tab={value} mode={mode}
                     selectedRows={selectedRows} />
                   <ElemMapControllers data={data} setData={setData} />
                 </Box>
+                </SystemContext.Provider>
               </TabPanel>
             </TabContext>
           </Box>
@@ -187,22 +124,17 @@ function ElemContent({ mode, theme }) {
                 </TabList>
               </Box>
               <TabPanel value='1' style={{ margin: -10 }}>
-                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto'}}>
-                  {/** Latitude e Longitude */}
-                  <ElemLatLng
-                    map={map}
-                    tp_id={data.overlays.marker.info.tp_id}
-                    position={data.overlays.marker.position}
-                    setData={setData}
-                  />
-                  {/** Tipo de Poço */}
-                  <ElemWellType
-                    tp_id={data.overlays.marker.info.tp_id}
-                    setData={setData} />
-                  {/** Análise */}
-                  <ElemAnalyse map={map} user={user} setUser={setUser} data={data} setData={setData} selectedRows={selectedRows} />
-                  {/** Barras */}
-                  <ElemBarChart theme={theme} user={user} hg_analyse={data.system.hg_analyse} />
+                <Box sx={{ height: '75vh', display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
+                  <SystemContext.Provider value={[system, setSystem, map]}>
+                    {/** Latitude e Longitude */}
+                    <ElemLatLng />
+                    {/** Tipo de Poço */}
+                    <ElemWellType />
+                    {/** Análise */}
+                    <ElemAnalyse />
+                    {/** Barras */}
+                    <ElemBarChart />
+                  </SystemContext.Provider>
                 </Box>
               </TabPanel>
               <TabPanel value='2'>Item Two</TabPanel>
@@ -214,18 +146,13 @@ function ElemContent({ mode, theme }) {
 
       {/** box 2 */}
       <Box className={classes.box2}>
-        <ElemListGrants points={data.system.points} setSelectedRows={setSelectedRows} />
+        <SystemContext.Provider value={[system, setSystem]}>
+          <ElemListGrants/>
+        </SystemContext.Provider>
+
       </Box>
     </Box>
   );
 }
 
 export default ElemContent;
-
-/* 
-
-<Box className={classes.box2} sx={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-
-
-<Box sx={{ display: 'flex', flex: 1, width: '100%', justifyContent: 'center' }}>
-*/

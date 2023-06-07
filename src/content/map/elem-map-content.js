@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box } from '@mui/system';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import ElemMap from './elem-map';
-import ElemDrawManager from './elem-draw-manager';
-import ElemMarker from './elem-marker';
-import ElemPolygon from './elem-polygon';
-import ElemPolyline from './elem-polyline';
-import { getShape } from '../../services';
+import ElemMap from './components/elem-map/elem-map';
+import ElemDrawManager from './components/elem-draw-manager';
+import ElemMarker from './components/elem-marker';
+import ElemPolygon from './components/elem-polygon';
+import ElemPolyline from './components/elem-polyline';
+import { fetchShape } from '../../services';
+import { SystemContext } from '../elem-content';
+import { initialState } from '../initial-state';
 
 /**
  * Componente para exibir um mapa com conteúdo.
@@ -23,40 +25,43 @@ import { getShape } from '../../services';
  * @param {Array} props.selectedRows - As linhas selecionadas.
  * @returns {JSX.Element} O componente ElemMapContent.
  */
-function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setData, selectedRows }) {
-  const [points, setPoints] = useState()
+
+function ElemMapContent({ tab, mode }) {
 
   /**
-  * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
-  */
-  const [_shapes, _setShapes] = useState({
-    fraturado: { polygons: [] },
-    poroso: { polygons: [] }
+   * Map
+   */
+  const [map, setMap] = useState();
+  /**
+   * Map controls
+   */
+  const [controls, setControls] = useState({
+    center: { lat: -15.760780, lng: -47.815997 },
+
   })
+  const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext);
+ 
+  const [system_markers, setSystemMarkers] = useState([]);
 
-  /**
-    * Define os polígonos da forma (shape) do fraturado ou poroso.
-    *
-    * @param {string} shape - O nome da forma (shape).
-    * @param {Array} polygons - Os polígonos da forma.
-    */
+  useEffect(() => {
+    setSystemMarkers(system.markers)
+
+  }, [system.markers]);
+
+  useEffect(() => {
+    setSystemMarkers(system.sel_markers)
+  }, [system.sel_markers]);
+
   function setPolygons(shape, polygons) {
-    setData(prev => {
+    setShapes(prev => {
       return {
         ...prev,
-        shapes: {
-          ...prev.shapes, ...prev.shapes[shape].shapes = polygons
-        }
+        [shape]: { ...prev[shape], polygons: polygons }
       }
-    });
+    })
 
   }
-  /**
-  * Renderiza as polilinhas do subsistema.
-  *
-  * @param {Object} shape - A forma do subsistema.
-  * @returns {Array} As polilinhas renderizadas.
-  */
+  
   function renderPolylines(shape) {
 
     if (shape.type === 'MultiPolygon') {
@@ -73,126 +78,104 @@ function ElemMapContent({ mode, center, zoom, onClick, map, setMap, data, setDat
     }
 
   }
-  /**
-   * Busca os polígonos no servidor ou utiliza os dados já salvos.
-   */
+
+  async function getShape(shape) {
+    let _shape = await fetchShape(`hidrogeo_${shape}`);
+    return _shape;
+  }
+  
+  const [_shapes, _setShapes] = useState({
+    fraturado: { polygons: [] },
+    poroso: { polygons: [] }
+  })
+
   useEffect(() => {
 
-    ['poroso', 'fraturado'].forEach(system => {
-      let { checked, shapes } = data.shapes[system];
+    ['poroso', 'fraturado'].forEach(shape => {
+      let { checked, polygons } = shapes[shape];
 
-      if (checked && shapes.length === 0 && _shapes[system].polygons.length === 0) {
+      if (checked && polygons.length === 0 && _shapes[shape].polygons.length === 0) {
 
-        _getShape(system).then(_polygons => {
+        getShape(shape).then(_polygons => {
+          console.log('servidor')
 
-          setPolygons(system, _polygons)
+          setShapes(prev => {
+            return {
+              ...prev,
+              [shape]: { ...prev[shape], ...prev[shape].polygons = _polygons }
+            }
+          })
+
           _setShapes(prev => {
             return {
               ...prev,
-              [system]: { polygons: _polygons }
+              [shape]: { polygons: _polygons }
             }
           })
+
         });
-      } else if (checked && shapes.length === 0 && _shapes[system].polygons.length > 0) {
-        setPolygons(system, _shapes[system].polygons);
+
+      } else if (checked && polygons.length === 0 && _shapes[shape].polygons.length > 0) {
+        setShapes(prev => {
+          return {
+            ...prev,
+            [shape]: { ...prev[shape], ...prev[shape].polygons = _shapes[shape].polygons }
+          }
+        })
       }
-    })
+    });
 
-  }, [data, setPolygons, _shapes])
-
-  /**
- * Função assíncrona que busca a forma (shape) no servidor
- *
- * @param {string} shape - O nome da forma (shape).
- * @returns {polygon} Retorna polígonos que compôes o domínio fraturado ou poroso.
- */
-  async function _getShape(shape) {
-    let _shape = await getShape(`hidrogeo_${shape}`);
-    return _shape;
-  }
-  /**
- * Renderiza um marcador no mapa.
- *
- * @returns {JSX.Element} O componente ElemMarker renderizado.
- */
-  function renderMarker() {
-
-    let { lat, lng } = data.overlays.marker.position;
-    let { info } = data.overlays.marker;
-    return (
-      <ElemMarker
-        info={info}
-        options={{ position: { lat: parseFloat(lat), lng: parseFloat(lng) }, map: map }} />
-    )
-
-  }
-  const [system_markers, setSystemMarkers] = useState([]);
-  const [overlays_markers, setOverlaysMarkers] = useState([]);
-
-  useEffect(() => {
-    setSystemMarkers(selectedRows)
-  }, [selectedRows]);
-
-  useEffect(() => {
-    setOverlaysMarkers(data.overlays.markers)
-  }, [data]);
+  }, [shapes])
 
   return (
     <Box style={{ display: "flex", flex: 6, flexDirection: 'column' }} >
       <Wrapper apiKey={"AIzaSyDELUXEV5kZ2MNn47NVRgCcDX-96Vtyj0w"} libraries={["drawing"]}>
-        <ElemMap mode={mode} center={center} zoom={zoom} onClick={onClick} map={map} setMap={setMap} />
+        <ElemMap mode={mode} map={map} setMap={setMap} zoom={10} center={{ lat: -15.764514558482336, lng: -47.76491209127806 }} />
         {/* Desenhar círculos, polígonos etc */}
-        <ElemDrawManager map={map} data={data} setData={setData} />
+        {<ElemDrawManager map={map} />}
         {/*marcadores*/}
         {
-          overlays_markers.map(markers => {
-            return markers.points.map((info, ii) => {
-              // coordenadas da outorga em formato geometry
+          overlays.markers.map(markers => {
+            return markers.points.map((m, ii) => {
 
-              let [x, y] = info.int_shape.coordinates;
               return (
                 <ElemMarker
-                  key={'_' + ii}
-                  info={info}
-                  // coordenada em formato gmaps
-                  options={{ position: { lat: y, lng: x }, map: map }} />)
+                  key={ii}
+                  marker={m}
+                  map={map}
+                  icon={m.tp_id}
+                />)
             })
           })
         }
         {
-          system_markers.map((point, i) => {
-
-            // capturar coordenadas
-            let [x, y] = point.int_shape.coordinates;
-
+          system_markers.map((marker, i) => {
             return (
               <ElemMarker
                 key={i}
-                info={{ id: Date.now(), tp_id: point.tp_id }}
-                // coordenada em formato gmaps
-                options={{ position: { lat: y, lng: x }, map: map }} />)
+                marker={marker}
+                map={map}
+                icon={i === 0 ? 0 : marker.tp_id}
+              />)
           })
         }
-        {
-
-          renderPolylines(data.system.hg_shape)}
+        {renderPolylines(system.hg_shape)}
 
         {
-          data.shapes.fraturado.shapes.map((shape, i) => {
+          shapes.fraturado.polygons.map((shape, i) => {
+            console.log('render polygon fraturado')
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
           })
         }
-        {
-          data.shapes.poroso.shapes.map((shape, i) => {
-            return (
-              <ElemPolygon key={i} shape={shape} map={map} />
-            )
-          })
+        {shapes.poroso.polygons.map((shape, i) => {
+          console.log('render polygon poroso')
+          return (
+            <ElemPolygon key={i} shape={shape} map={map} />
+          )
+        })
         }
-
-        {renderMarker()}
       </Wrapper>
     </Box>
   )

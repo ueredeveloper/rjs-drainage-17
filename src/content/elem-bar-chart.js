@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import { Bar } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import { CategoryScale, LinearScale } from 'chart.js';
 import { Box, FormControl, FormLabel, Paper, Switch, Tooltip, Typography } from '@mui/material';
 import { nFormatter } from '../tools';
+import { SystemContext } from './elem-content';
 
 // Registra as escalas de categoria e linear para uso no gráfico
 Chart.register(CategoryScale, LinearScale);
@@ -14,16 +15,18 @@ Chart.register(CategoryScale, LinearScale);
  *
  * @param {Object} props - Propriedades do componente.
  * @param {string} props.theme - Tema do gráfico.
- * @param {Object} props.user - Informações do usuário.
+ * @param {Object} props.marker - Informações do usuário.
  * @param {Object} props.hg_analyse - Dados sobre a disponibilidade.
  * @returns {JSX.Element} Elemento JSX que representa o gráfico de barras.
  */
-function ElemBarChart({ theme, user, hg_analyse }) {
-  // Define o estado interno _hg_analyse e a função para atualizá-lo
-  const [_hg_analyse, _setHGAnalyse] = useState(hg_analyse);
+function ElemBarChart() {
+  // Define o estado interno hg_analyse e a função para atualizá-lo
+  //const [hg_analyse, _setHGAnalyse] = useState(hg_analyse);
+  const [context] = useContext(SystemContext);
 
   // Define o estado interno checked e a função para atualizá-lo. Se true, escala logarítimica, se false, linear.
   const [checked, setChecked] = useState(false);
+
 
   /**
    * Função chamada quando o valor do Switch é alterado.
@@ -33,13 +36,6 @@ function ElemBarChart({ theme, user, hg_analyse }) {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-
-  // Efeito executado quando hg_analyse é atualizado
-  useEffect(() => {
-    _setHGAnalyse(hg_analyse);
-
-    //console.log(hg_analyse, user)
-  }, [hg_analyse]);
 
   // Opções de configuração do gráfico
   const options = {
@@ -71,24 +67,25 @@ function ElemBarChart({ theme, user, hg_analyse }) {
     datasets: [
       {
         label: 'Q Explotável',
-        data: [hg_analyse.q_ex],
+        data: [context.hg_analyse.q_ex],
         backgroundColor: '#4E79A7',
         borderWidth: 1,
       },
       {
         label: 'Q Outorgada',
         backgroundColor: '#F28E2B',
-        data: [hg_analyse.q_points],
+        data: [context.hg_analyse.q_points],
       },
       {
         label: 'Q Disponível',
         backgroundColor: '#E15759',
-        data: [hg_analyse.q_ex - hg_analyse.q_points],
+        data: [context.hg_analyse.q_ex - context.hg_analyse.q_points],
       },
       {
         label: 'Q Usuário',
         backgroundColor: '#76B7B2',
-        data: [user.dt_demanda.vol_anual_ma],
+        // se não há cadastros preencha com zero
+        data: [context.markers.length!==0? context.markers[0].dt_demanda.vol_anual_ma: 0],
       },
     ],
   };
@@ -101,7 +98,7 @@ function ElemBarChart({ theme, user, hg_analyse }) {
           <Bar
             data={data}
             options={options}
-            style={{ height: '40%', width: '40%' }}
+            style={{ minHeight: 130, height: '40%', width: '40%' }}
           />
         </Box>
 

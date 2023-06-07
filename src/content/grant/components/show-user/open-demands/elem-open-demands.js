@@ -8,10 +8,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
-import { ElemDemand } from './elem-demand';
-import { findDemands } from '../../services/shapes';
+import { ElemDemand } from './demand/elem-demand';
+import { findDemands } from '../../../../../services/shapes';
 
-function ElemOpenDemands({ open, user, setUser, map, setData }) {
+function ElemOpenDemands({ open, user, setUser }) {
 
   const [demands, setDemands] = useState([{ dt_demanda: { demandas: [] } }]);
 
@@ -22,6 +22,7 @@ function ElemOpenDemands({ open, user, setUser, map, setData }) {
   }
 
   useEffect(() => {
+
     if (open) {
       updateDemands(user.end_id)
     }
@@ -50,7 +51,7 @@ function ElemOpenDemands({ open, user, setUser, map, setData }) {
               <TableBody>
                 {
                   demands.map((demand, i) => (
-                    <ElemDemand key={"elem_demand_" + i} demand={demand} map={map} user={user} setUser={setUser} setData={setData} />)
+                    <ElemDemand key={"elem_demand_" + i} demand={demand} user={user} setUser={setUser} />)
                   )
                 }
               </TableBody>

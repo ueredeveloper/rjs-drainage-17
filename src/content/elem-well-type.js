@@ -1,63 +1,39 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { Paper, TableContainer } from '@mui/material';
+import { SystemContext } from './elem-content';
+
 /**
-* Elemento de escolha do tipo de poço, se 1 - manual (poroso), ou 2 - tubular (fraturado).
-* @param tp_id Tipo de poço, se manual ou tubular.
-* @param setData Hooks de mudança de estado da variável inicial data.
-*/
-function ElemWellType({ tp_id, setData }) {
-
-  const [_tp_id, _setTpId] = useState(tp_id);
-
-  const handleChange = (event) => {
-
-    _setTpId(event.target.value);
-
-    setData(prev => {
-      return {
-        ...prev,
-        overlays: {
-          ...prev.overlays,
-          marker: {
-            ...prev.overlays.marker,
-            info: {
-              ...prev.overlays.marker.info,
-              tp_id: _tp_id
-            }
-          }
-        }
-      }
-    });
-  };
-
-  useEffect(() => {
-    setData(prev => {
-      return {
-        ...prev,
-        overlays: {
-          ...prev.overlays,
-          marker: {
-            ...prev.overlays.marker,
-            info: {
-              ...prev.overlays.marker.info,
-              tp_id: _tp_id
-            }
-          }
-        }
-      }
-    });
-  }, [_tp_id])
+ * Componente para selecionar o tipo de poço.
+ * @returns {JSX.Element} O componente de tipo de poço.
+ */
+function ElemWellType() {
+  // Obtém o contexto do sistema
+  const [context, setContext] = useContext(SystemContext);
+  
   /**
-   * Atualizar o tipo de poço.
+   * Manipulador de evento chamado quando o valor do rádio muda.
+   * @param {Object} event O evento de mudança.
    */
-  useEffect(() => {
-    _setTpId(tp_id);
-  }, [tp_id])
+  const handleChange = (event) => {
+    // event.target.value = 1 || 2
+    let value = Number(event.target.value);
+
+    // Atualiza o contexto com o novo tipo de poço selecionado
+    setContext(prev => {
+      return {
+        ...prev,
+        point: {
+          ...prev.point,
+          tp_id: value
+        }
+      }
+    })
+  };
 
   return (
     <FormControl style={{ display: "flex", flexDirection: 'column' }}>
@@ -66,9 +42,9 @@ function ElemWellType({ tp_id, setData }) {
         <RadioGroup
           aria-labelledby="demo-controlled-radio-buttons-group"
           name="controlled-radio-buttons-group"
-          value={_tp_id}
+          value={context.point.tp_id}
           onChange={handleChange}
-          sx={{ display: 'flex', flexFlow: 'row wrap', ml: 1, my: 1 }}
+          sx={{ display: 'flex', flexFlow: 'row wrap', ml: 2, my: 1 }}
         >
           <FormControlLabel value="1" control={<Radio sx={{
             '& .MuiSvgIcon-root': {
@@ -83,7 +59,7 @@ function ElemWellType({ tp_id, setData }) {
         </RadioGroup>
       </Paper>
     </FormControl>
-  )
+  );
 }
 
 export default ElemWellType;
