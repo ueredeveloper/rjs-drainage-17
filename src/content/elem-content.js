@@ -74,12 +74,7 @@ function ElemContent({ mode, theme }) {
   const [system, setSystem] = useState(initialState.system);
   const [overlays, setOverlays] = useState(initialState.overlays);
   const [shapes, setShapes] = useState(initialState.shapes)
-  //const [selectedMarkers, setSelectedMarkers] = useState([])
 
-
-  useEffect(()=>{
-    console.log(system.point)
-  }, [system])
 
   function onClick() {
     // console.log('on click')

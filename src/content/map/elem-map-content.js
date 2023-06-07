@@ -40,9 +40,7 @@ function ElemMapContent({ tab, mode }) {
 
   })
   const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext);
-  /**
-   * Markers
-   */
+ 
   const [system_markers, setSystemMarkers] = useState([]);
 
   useEffect(() => {
@@ -54,34 +52,7 @@ function ElemMapContent({ tab, mode }) {
     setSystemMarkers(system.sel_markers)
   }, [system.sel_markers]);
 
-  /**
-  * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
-  */
-
-  /*
-  const [_shapes, _setShapes] = useState({
-    // fraturado: { polygons: [] },
-    //poroso: { polygons: [] }
-  })*/
-
-  /**
-    * Define os polígonos da forma (shape) do fraturado ou poroso.
-    *
-    * @param {string} shape - O nome da forma (shape).
-    * @param {Array} polygons - Os polígonos da forma.
-    */
   function setPolygons(shape, polygons) {
-
-    /*
-    setData(prev => {
-      return {
-        ...prev,
-        shapes: {
-          ...prev.shapes, ...prev.shapes[shape].shapes = polygons
-        }
-      }
-    });*/
-
     setShapes(prev => {
       return {
         ...prev,
@@ -90,12 +61,7 @@ function ElemMapContent({ tab, mode }) {
     })
 
   }
-  /**
-  * Renderiza as polilinhas do subsistema.
-  *
-  * @param {Object} shape - A forma do subsistema.
-  * @returns {Array} As polilinhas renderizadas.
-  */
+  
   function renderPolylines(shape) {
 
     if (shape.type === 'MultiPolygon') {
@@ -113,49 +79,11 @@ function ElemMapContent({ tab, mode }) {
 
   }
 
-  /**
-* Função assíncrona que busca a forma (shape) no servidor
-*
-* @param {string} shape - O nome da forma (shape).
-* @returns {polygon} Retorna polígonos que compôes o domínio fraturado ou poroso.
-*/
   async function getShape(shape) {
     let _shape = await fetchShape(`hidrogeo_${shape}`);
     return _shape;
   }
-  /**
-   * Busca os polígonos no servidor ou utiliza os dados já salvos.
-   */
-
-  /*
-  useEffect(() => {
-
-    ['poroso', 'fraturado'].forEach(system => {
-      let { checked, shapes } = data.shapes[system];
-
-      if (checked && shapes.length === 0 && _shapes[system].polygons.length === 0) {
-
-        _getShape(system).then(_polygons => {
-
-          setPolygons(system, _polygons)
-          _setShapes(prev => {
-            return {
-              ...prev,
-              [system]: { polygons: _polygons }
-            }
-          })
-        });
-      } else if (checked && shapes.length === 0 && _shapes[system].polygons.length > 0) {
-        setPolygons(system, _shapes[system].polygons);
-      }
-    })
-
-  }, [data, setPolygons, _shapes])
-  */
-
-  /**
-   * Salvar os polígonso solicitados no servidor em uma variável para uso frequente.
-   */
+  
   const [_shapes, _setShapes] = useState({
     fraturado: { polygons: [] },
     poroso: { polygons: [] }
@@ -178,17 +106,6 @@ function ElemMapContent({ tab, mode }) {
             }
           })
 
-
-          /*
-    setData(prev => {
-      return {
-        ...prev,
-        shapes: {
-          ...prev.shapes, ...prev.shapes[shape].shapes = polygons
-        }
-      }
-    });*/
-
           _setShapes(prev => {
             return {
               ...prev,
@@ -199,7 +116,6 @@ function ElemMapContent({ tab, mode }) {
         });
 
       } else if (checked && polygons.length === 0 && _shapes[shape].polygons.length > 0) {
-        //setPolygons(system, _shapes[shape].polygons);
         setShapes(prev => {
           return {
             ...prev,
@@ -260,8 +176,6 @@ function ElemMapContent({ tab, mode }) {
           )
         })
         }
-
-        {/*renderMarker()*/}
       </Wrapper>
     </Box>
   )
