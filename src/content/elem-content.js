@@ -80,7 +80,7 @@ function ElemContent({ mode, theme }) {
   //const [marker, setMarker] = useState(initialState.system.markers[0]);
   const [system, setSystem] = useState(initialState.system);
   const [overlays, setOverlays] = useState(initialState.overlays);
-  const [shapes, setShapes] = useState(initialState.shapes)
+  const [shapes, setShapes] = useState(initialState.shapes);
 
 
   function onClick() {

@@ -60,7 +60,7 @@ function ElemMapContent({ tab, mode }) {
       }
     })
 
-  }
+  }meta
 
   function renderPolylines(shape) {
 
