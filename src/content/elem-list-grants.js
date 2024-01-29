@@ -303,6 +303,7 @@ export default function ElemListGrants() {
 
     // primeira renderização da tabela com todas as outorgas selecionadas
     const newSelected = markers.map((n) => n.id);
+    console.log('primeira renderização todos', newSelected, 'markers', markers)
     setSelected(newSelected);
 
   }, [markers]);

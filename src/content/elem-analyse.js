@@ -30,6 +30,8 @@ function ElemAnalyse() {
     */
   const [{ hg_analyse }] = useContext(SystemContext);
 
+  console.log(hg_analyse)
+
 
   const classes = useStyles();
 

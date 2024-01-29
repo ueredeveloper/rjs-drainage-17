@@ -49,8 +49,10 @@ function ElemMapContent({ tab, mode }) {
   }, [system.markers]);
 
   useEffect(() => {
+    console.log(system)
     setSystemMarkers(system.sel_markers)
   }, [system.sel_markers]);
+
 
   function setPolygons(shape, polygons) {
     setShapes(prev => {
@@ -62,6 +64,8 @@ function ElemMapContent({ tab, mode }) {
 
   }
   
+
+
   function renderPolylines(shape) {
 
     if (shape.type === 'MultiPolygon') {
