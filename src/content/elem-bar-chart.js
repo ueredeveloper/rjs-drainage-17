@@ -38,7 +38,6 @@ function ElemBarChart() {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-
   // Opções de configuração do gráfico
   const options = {
     responsive: true,

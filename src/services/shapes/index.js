@@ -1,6 +1,11 @@
+const url = 'https://njs-drainage-ueredeveloper.replit.app';
 
-const url = 'https://njs-drainage.ueredeveloper.repl.co';
 
+/**
+ * Função assíncrona que encontra pontos dentro de um polígono.
+ * @param {Object} polygon - Objeto representando um polígono.
+ * @returns {Promise<Array>} - Uma Promise que resolve para uma matriz de pontos dentro do polígono.
+ */
 async function findPointsInsidePolygon(polygon) {
   let points = await fetch(url + '/findPointsInsidePolygon', {
     method: 'POST',
@@ -12,6 +17,11 @@ async function findPointsInsidePolygon(polygon) {
 
   return points;
 }
+/**
+ * Função assíncrona que encontra pontos dentro de um círculo.
+ * @param {Object} circle - Objeto representando um círculo.
+ * @returns {Promise<Array>} - Uma Promise que resolve para uma matriz de pontos dentro do círculo.
+ */
 async function findPointsInsideCircle(circle) {
 
   let points = await fetch(url + '/findPointsInsideCircle', {
@@ -24,6 +34,11 @@ async function findPointsInsideCircle(circle) {
 
   return points;
 }
+/**
+ * Função assíncrona que encontra pontos dentro de um retângulo.
+ * @param {Object} rectangle - Objeto representando um retângulo.
+ * @returns {Promise<Array>} - Uma Promise que resolve para uma matriz de pontos dentro do retângulo.
+ */
 async function findPointsInsideRectangle(rectangle) {
   let points = await fetch(url + '/findPointsInsideRectangle', {
     method: 'POST',
@@ -55,7 +70,7 @@ async function fetchShape(shape) {
   return response;
 }
 /**
-* Através de uma coordenada buscar todos os pontos no sistema ao qual pertence a coordenada. url eg: `https://njs-adasa-postgres.ueredeveloper.repl.co/findPointsInASystem?tp_id=1&lat=-15.5334786&lng=-48.1537762`.
+* Através de uma coordenada buscar todos os pontos no sistema (fraturado ou poroso) ao qual pertence a coordenada. 
 * @param {integer} tp_id Tipo de poço em análise, se tubular ou manual.
 * @param {float} lat Latitude.
 * @para {float} lng Longitue.
@@ -75,8 +90,6 @@ async function findPointsInASystem(tp_id, lat, lng) {
   })
   return response;
 }
-
-const njs_azure_url = `https://njs-azure.ueredeveloper.repl.co`;
 /**
 * Buscar a shape solicitada no servidor
 * @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
@@ -84,8 +97,10 @@ const njs_azure_url = `https://njs-azure.ueredeveloper.repl.co`;
   */
 async function getUsers(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
-  let response = await fetch(njs_azure_url + `/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
+  let response = await fetch(url
+    + `/azure/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
     method: 'GET',
+    mode: "cors",
     headers: {
       Accept: 'application/JSON',
       'Content-Type': 'application/JSON',
@@ -96,10 +111,12 @@ async function getUsers(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
   })
   return response;
 }
-
+/** 
+* Buscar as demandas de vazões de acordo com o usuário solicitado.
+*/
 async function findDemands(end_id) {
 
-  let response = await fetch(njs_azure_url + `/getDemandas?end_id=${end_id}`, {
+  let response = await fetch(url + `/azure/getDemandas?end_id=${end_id}`, {
     method: 'GET',
     headers: {
       Accept: 'application/JSON',
