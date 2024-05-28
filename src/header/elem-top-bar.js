@@ -23,7 +23,7 @@ export default function ElemTopBar ({ColorModeContext}) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SAD - DF
+              SAD - DF (Sistema de Apoio à Decisão)
           </Typography>
           <Button color="inherit">Login</Button>
           <ElemIconMode ColorModeContext={ColorModeContext}/>

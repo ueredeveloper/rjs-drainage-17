@@ -1,6 +1,5 @@
 const url = 'https://njs-drainage-ueredeveloper.replit.app';
 
-
 /**
  * Função assíncrona que encontra pontos dentro de um polígono.
  * @param {Object} polygon - Objeto representando um polígono.
@@ -97,6 +96,7 @@ async function findPointsInASystem(tp_id, lat, lng) {
   */
 async function getUsers(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
+  console.log('getUsuarios')
   let response = await fetch(url
     + `/azure/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
     method: 'GET',

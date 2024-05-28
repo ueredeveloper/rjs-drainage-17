@@ -35,6 +35,7 @@ function descendingComparator(a, b, orderBy) {
   return 0;
 }
 
+
 function getComparator(order, orderBy) {
   return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -276,7 +277,14 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function ElemListGrants() {
+
+/* ElemContent
+      - import ElemListGrants
+      */
+export default function ElemListGrants({ points, setSelectedRows }) {
+
+  console.log(points)
+
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
