@@ -81,6 +81,8 @@ export default function ElemLatLng() {
         });
       })
       .then(
+
+        console.log(system)
       // centralizar o mapa na nova coordenada
       //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
     )

@@ -464,7 +464,10 @@ export default function ElemListGrants({ points, setSelectedRows }) {
             />
             <TableBody>
               {visibleRows
-                ? visibleRows.map((row, index) => {
+                ? visibleRows
+                  // retira os valores nulos
+                  .filter(row => row.emp_endereco !== null)
+                  .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -493,13 +496,17 @@ export default function ElemListGrants({ points, setSelectedRows }) {
                       <TableCell align="right">{row.int_processo}</TableCell>
                       <TableCell align="right">{row.emp_endereco}</TableCell>
                       {
+                        // Verifica se o valor é nulo
+                        row.dt_demanda && row.dt_demanda.demandas
+                        ?
                         row.dt_demanda.demandas.map((dem, i) => {
                           return (
                             <TableCell key={i}>
                               {parseFloat(dem.vol_mensal_mm).toFixed(2)}
                             </TableCell>
                           );
-                        })}
+                        })
+                      : null}
                     </TableRow>
                   );
                 })
