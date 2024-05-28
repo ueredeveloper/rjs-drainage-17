@@ -1,4 +1,4 @@
-const url = 'https://njs-drainage.ueredeveloper.repl.co';
+const url = 'https://njs-drainage-ueredeveloper.replit.app';
 //const url = 'https://ec96a2d0-8ba3-41ec-9211-9dbcf7faee95-00-1dq8pdj62qrea.hacker.replit.dev'
 
 /**
@@ -98,6 +98,7 @@ async function findPointsInASystem(tp_id, lat, lng) {
   */
 async function getUsers(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
+  console.log('getUsuarios')
   let response = await fetch(url
     + `/azure/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
     method: 'GET',

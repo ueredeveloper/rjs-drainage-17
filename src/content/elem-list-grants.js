@@ -273,7 +273,12 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
+/* ElemContent
+      - import ElemListGrants
+      */
 export default function ElemListGrants({ points, setSelectedRows }) {
+
+  console.log(points)
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
