@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
@@ -10,7 +10,7 @@ function ElemShowUser({ user, setUser }) {
 
   //const { row } = props;
   const [open, setOpen] = useState(false);
- //console.log(user)
+  //console.log(user)
 
   /*
   {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, FormControl, IconButton, InputLabel, MenuItem, Select, TableCell, TableRow } from '@mui/material';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import { findPointsInASystem } from '../../../../../../services';
@@ -21,6 +21,8 @@ export function ElemDemand({ demand, user, setUser }) {
     function onClick() {
         setLoading((prevLoading) => !prevLoading);
 
+        console.log('on click elem demand ', demand)
+
         // setar usuário
         setUser(prev => {
             return {
@@ -39,8 +41,11 @@ export function ElemDemand({ demand, user, setUser }) {
 
         let { sub_tp_id, int_latitude, int_longitude } = demand;
 
-        findPointsInASystem(sub_tp_id, int_latitude, int_longitude)
+        console.log(sub_tp_id, int_latitude, int_longitude)
 
+        if (sub_tp_id!==undefined && int_latitude!==undefined && int_longitude!==undefined) {
+
+        findPointsInASystem(sub_tp_id, int_latitude, int_longitude)
             .then(
                 points => {
 
@@ -56,7 +61,7 @@ export function ElemDemand({ demand, user, setUser }) {
                         int_longitude: demand.int_longitude
                     }
 
-                    let _markers = [marker, ...points._points]
+                    let _markers = [marker, ...points._points || []]
                     let { _hg_info, _hg_shape } = points
                     // verificar disponibilidade com o ponto (user) adicionado.
                     let _hg_analyse = analyseItsAvaiable(_hg_info, _markers);
@@ -74,14 +79,23 @@ export function ElemDemand({ demand, user, setUser }) {
                             hg_info: _hg_info,
                             hg_analyse: _hg_analyse,
                         }
-                    })
+                    });
+
+                
                 }
             )
             .then(() => { setLoading(false); })
+
+        } else {
+            setLoading((prevLoading) => !prevLoading);
+            alert("Dados Inválidos!!!")
+            
+        }
     }
 
     return (
         <TableRow key="1" sx={{ bgcolor: '#ECECEC' }}>
+            {console.log('render elem demand ', demand)}
             <TableCell>{demand.int_latitude}</TableCell>
             <TableCell>{demand.int_longitude}</TableCell>
             {/** mostra vazões em janeiro */}

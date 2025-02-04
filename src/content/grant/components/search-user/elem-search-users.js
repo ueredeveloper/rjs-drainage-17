@@ -5,7 +5,7 @@ import FormLabel from '@mui/material/FormLabel';
 /* icons */
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from '@mui/material/IconButton';
-import { getUsers } from '../../../../services/search';
+import { getUsers } from '../../../../services';
 import { blue } from '@mui/material/colors';
 import { CircularProgress, Fade } from '@mui/material';
 
@@ -34,10 +34,9 @@ function ElemSearchUsers({ search, setSearch, setUsers }) {
   async function searchUsers() {
     setLoading((prevLoading) => !prevLoading);
 
-    await getUsers(search.us_nome,
-      search.us_cpf_cnpj,
-      search.doc_sei,
-      search.proc_sei)
+    let keyword = search.us_nome || search.us_cpf_cnpj || search.doc_sei || search.proc_sei;
+
+    await getUsers(keyword)
       .then((users) => {
         let _users = users.map(user => {
           user.dt_demanda = {

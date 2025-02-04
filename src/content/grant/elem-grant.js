@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -21,7 +21,6 @@ import { ElemSearchUsers } from './components/search-user/elem-search-users';
 
 import './elem-grant.css';
 import { Tooltip } from '@mui/material';
-import { SystemContext } from '../elem-content';
 
 const style = {
     position: 'absolute',
@@ -40,8 +39,6 @@ function ElemGrant() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    const [context, setContext] = useContext(SystemContext)
 
     //"demandas": [{ "dt_demandas": { "demanda": [] } }]
     const [search, setSearch] = useState({
@@ -94,19 +91,6 @@ function ElemGrant() {
             'int_shape': { 'coordinates': [] }
 
         });
-
-    const handleUserChange = (event) => {
-        /*
-        setMarker(prev => {
-            return {
-                ...prev,
-                [event.target.name]: event.target.value
-            }
-        });*/
-
-    };
-
-
 
     return (
         <Box>

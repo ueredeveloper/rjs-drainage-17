@@ -9,23 +9,53 @@ import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 
 import { ElemDemand } from './demand/elem-demand';
-import { findDemands } from '../../../../../services/shapes';
+import { findDemands } from '../../../../../services/search';
 
 function ElemOpenDemands({ open, user, setUser }) {
 
   const [demands, setDemands] = useState([{ dt_demanda: { demandas: [] } }]);
 
   function updateDemands(end_id) {
-    findDemands(end_id).then(demands => {
-      setDemands(demands)
-    });
+
+    if (end_id != null) {
+
+
+      findDemands(end_id).then(demands => {
+        console.log(demands.length)
+        let _demands = demands.map((res) => {
+          return {
+            // Usuário
+            us_nome: user.us_nome,
+            us_cpf_cnpj: user.us_cpf_cnpj,
+            proc_sei: user.proc_sei,
+            // Dados de vazão, interferência, ...
+            ind_id: res.ind_id,
+            end_id: res.end_id,
+            end_logradouro: res.end_logradouro,
+            int_latitude: res.int_latitude,
+            int_longitude: res.int_longitude,
+            dt_demanda: { demandas: res.dt_demanda },
+            sub_tp_id: res.sub_tp_id,
+            vol_anual_ma: res.vol_anual_ma,
+          };
+        });
+
+        setDemands(_demands);
+
+      });
+
+    }
+
   }
+
 
   useEffect(() => {
 
     if (open) {
       updateDemands(user.end_id)
     }
+
+    console.log(demands)
   }, [open]);
 
   return (
@@ -49,6 +79,7 @@ function ElemOpenDemands({ open, user, setUser }) {
               </TableHead>
 
               <TableBody>
+                {console.log(demands)}
                 {
                   demands.map((demand, i) => (
                     <ElemDemand key={"elem_demand_" + i} demand={demand} user={user} setUser={setUser} />)

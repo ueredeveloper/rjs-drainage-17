@@ -89,46 +89,5 @@ async function findPointsInASystem(tp_id, lat, lng) {
   })
   return response;
 }
-/**
-* Buscar a shape solicitada no servidor
-* @param shape Pode ser os valores 'hidrogeo_fraturado' ou 'hidrogeo_poroso'
-*
-  */
-async function getUsers(us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
 
-  console.log('getUsuarios')
-  let response = await fetch(url
-    + `/azure/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
-    method: 'GET',
-    mode: "cors",
-    headers: {
-      Accept: 'application/JSON',
-      'Content-Type': 'application/JSON',
-    }
-
-  }).then(res => {
-    return res.json();
-  })
-  return response;
-}
-/** 
-* Buscar as demandas de vazões de acordo com o usuário solicitado.
-*/
-async function findDemands(end_id) {
-
-  let response = await fetch(url + `/azure/getDemandas?end_id=${end_id}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/JSON',
-      'Content-Type': 'application/JSON',
-    }
-
-  }).then(res => {
-    return res.json();
-  })
-
-  return response;
-}
-
-
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem, getUsers, findDemands, fetchShape}
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem, fetchShape}

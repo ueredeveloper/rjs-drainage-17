@@ -1,4 +1,5 @@
-const url = 'https://njs-drainage-ueredeveloper.replit.app';
+//const url = 'https://njs-drainage-ueredeveloper.replit.app';
+const url = 'http://localhost:8080';
 //const url = 'https://ec96a2d0-8ba3-41ec-9211-9dbcf7faee95-00-1dq8pdj62qrea.hacker.replit.dev'
 
 /**
@@ -9,18 +10,40 @@ const url = 'https://njs-drainage-ueredeveloper.replit.app';
 * @param proc_sei Número do processo.
 *
   */
-export async function getUsers (us_nome, us_cpf_cnpj, doc_sei, proc_sei) {
+async function getUsers(keyword) {
 
-    let response = await fetch(url + `/azure/getUsuarios?us_nome=${us_nome}&us_cpf_cnpj=${us_cpf_cnpj}&doc_sei=${doc_sei}&proc_sei=${proc_sei}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/JSON',
-        'Content-Type': 'application/JSON',
-      }
-  
-    }).then(res => {
-      return res.json();
-    })
-    return response;
-  }
-  
+  let response = await fetch(url + `/user/list-by-keyword?keyword=${keyword}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/JSON',
+      'Content-Type': 'application/JSON',
+    }
+
+  }).then(res => {
+    return res.json();
+  })
+
+  console.log(response)
+  return response;
+}
+
+/** 
+* Buscar as demandas de vazões de acordo com o usuário solicitado.
+*/
+async function findDemands(end_id) {
+
+  let response = await fetch(url + `/interference/search-by-end-id?endId=${end_id}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/JSON',
+      'Content-Type': 'application/JSON',
+    }
+
+  }).then(res => {
+    return res.json();
+  })
+
+  return response;
+}
+
+export { getUsers, findDemands }

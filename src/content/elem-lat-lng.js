@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
@@ -7,10 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import { findPointsInASystem } from '../services';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { CircularProgress, Fade, Paper, TableContainer } from '@mui/material';
+import { CircularProgress, Fade, Paper } from '@mui/material';
 import { analyseItsAvaiable } from '../tools';
 import { SystemContext } from './elem-content';
-import { initialState } from './initial-state';
 
 /**
  * Componente para entrada de coordenadas latitude e longitude.
@@ -57,6 +56,8 @@ export default function ElemLatLng() {
     await findPointsInASystem(tp_id, lat, lng)
       .then(points => {
 
+
+
         let markers = [
           // cria o primeiro marcador que não tem vazão pois buscou-se apenas uma coordenada
           {
@@ -65,7 +66,7 @@ export default function ElemLatLng() {
             dt_demanda: { demandas: [] }
           },
           // adiciona os pontos buscados no servidor após o primeiro marcador
-          ...points._points
+          ...points._points || []
         ];
         // verificar disponibilidade com o ponto (marker) adicionado.
         let _hg_analyse = analyseItsAvaiable(points._hg_info, markers);
@@ -79,14 +80,23 @@ export default function ElemLatLng() {
             hg_analyse: _hg_analyse,
           };
         });
+
+
+
       })
       .then(
 
         console.log(system)
-      // centralizar o mapa na nova coordenada
-      //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
-    )
+        // centralizar o mapa na nova coordenada
+        //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+      )
       .then(() => { setLoading(false); });
+
+
+
+
+
+
   }
 
   return (
