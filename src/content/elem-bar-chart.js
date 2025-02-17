@@ -24,8 +24,6 @@ function ElemBarChart() {
   //const [hg_analyse, _setHGAnalyse] = useState(hg_analyse);
   const [context] = useContext(SystemContext);
 
-  console.log(context)
-
   // Define o estado interno checked e a função para atualizá-lo. Se true, escala logarítimica, se false, linear.
   const [checked, setChecked] = useState(false);
 

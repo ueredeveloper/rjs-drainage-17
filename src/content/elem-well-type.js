@@ -50,8 +50,13 @@ function ElemWellType() {
             '& .MuiSvgIcon-root': {
               fontSize: 20,
             },
-          }} color="secondary" />} label="Manual/Tubular Raso" />
+          }} color="secondary" />} label="Manual" />
           <FormControlLabel value="2" control={<Radio sx={{
+            '& .MuiSvgIcon-root': {
+              fontSize: 20,
+            },
+          }} color="secondary" />} label="Tubular Raso" />
+          <FormControlLabel value="3" control={<Radio sx={{
             '& .MuiSvgIcon-root': {
               fontSize: 20,
             },

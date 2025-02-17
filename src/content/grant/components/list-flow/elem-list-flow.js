@@ -44,29 +44,34 @@ function ElemListFlow({ user, setUser }) {
 
   const onChange = (e, index) => {
     const { name, value } = e.target;
-    let newDem = demands.map((_dem, i) => {
-      if (i === index) {
-        return { ..._dem, [name]: value }
-      }
-      return _dem;
-    })
-    setDemands(newDem);
 
-    setUser(prev => {
-      return {
-        ...prev,
-        demandas: {
-          ...prev.demandas,
-          demandas: newDem
+    if (demands.length > 0) {
+      let newDem = demands.map((_dem, i) => {
+        if (i === index) {
+          return { ..._dem, [name]: value }
         }
+        return _dem;
+      })
+      setDemands(newDem);
 
-      }
-    })
+      setUser(prev => {
+        return {
+          ...prev,
+          demandas: {
+            ...prev.demandas,
+            demandas: newDem
+          }
+
+        }
+      })
+
+    }
+
   };
 
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', overflowX: 'auto'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', overflowX: 'auto' }}>
       <FormLabel id="demo-controlled-radio-buttons-group" sx={{ my: 1 }}>Vazão</FormLabel>
       <Paper elevation={3} style={{ margin: 1 }} sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ height: 170, maxHeight: 170 }}>
@@ -121,26 +126,27 @@ function ElemListFlow({ user, setUser }) {
                 </TableCell>
                 <TableCell>{'Vazão (l/h)'}</TableCell>
 
-                {demands.map((row, i) =>
-                (
-                  <TableCell key={'__' + i}>
+                {demands?.length > 0 && (
+                  <>
+                    <TableCell>{'Vazão (l/h)'}</TableCell>
+                    {demands.map((row, i) => (
+                      <TableCell key={'__' + i}>
+                        {isEditable.vazao_lh ? (
+                          <TextField
+                            color="secondary"
+                            name={'vazao_lh'}
+                            value={row.vazao_lh}
+                            onChange={(e) => onChange(e, i)}
+                            variant="standard"
+                          />
+                        ) : (
+                          row.vazao_lh
+                        )}
+                      </TableCell>
+                    ))}
+                  </>
+                )}
 
-                    {isEditable.vazao_lh ? (
-                      <TextField
-                        color="secondary"
-                        name={'vazao_lh'}
-                        value={row.vazao_lh}
-
-                        onChange={(e) => onChange(e, i)}
-                        variant="standard"
-                      />
-                    ) : (
-                      row.vazao_lh
-                    )}
-                  </TableCell>
-                )
-                )
-                }
               </TableRow>
 
               <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
@@ -171,25 +177,24 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Tempo (h/dia)'}</TableCell>
-                {demands.map((row, i) =>
-                (
-                  <TableCell key={'__' + i}>
-                    {isEditable.tempo_h ? (
-                      <TextField
-                        color="secondary"
-                        name={'tempo_h'}
-                        value={row.tempo_h}
-
-                        onChange={(e) => onChange(e, i)}
-                        variant="standard"
-                      />
-                    ) : (
-                      row.tempo_h
-                    )}
-                  </TableCell>
-                )
-                )
+                {demands?.length > 0 &&
+                  demands.map((row, i) => (
+                    <TableCell key={'__' + i}>
+                      {isEditable.tempo_h ? (
+                        <TextField
+                          color="secondary"
+                          name="tempo_h"
+                          value={row.tempo_h}
+                          onChange={(e) => onChange(e, i)}
+                          variant="standard"
+                        />
+                      ) : (
+                        row.tempo_h
+                      )}
+                    </TableCell>
+                  ))
                 }
+
               </TableRow>
               {/** PERÍDO DIAS */}
               <TableRow sx={{ '& .MuiTableCell-sizeMedium': { px: 1, py: 0 } }}>
@@ -220,25 +225,24 @@ function ElemListFlow({ user, setUser }) {
                   )}
                 </TableCell>
                 <TableCell>{'Período (dias/mês)'}</TableCell>
-                {demands.map((row, i) =>
-                (
-                  <TableCell key={'__' + i}>
-                    {isEditable.periodo_d ? (
-                      <TextField
-                        color="secondary"
-                        name={'periodo_d'}
-                        value={row.periodo_d}
-
-                        onChange={(e) => onChange(e, i)}
-                        variant="standard"
-                      />
-                    ) : (
-                      row.periodo_d
-                    )}
-                  </TableCell>
-                )
-                )
+                {demands?.length > 0 &&
+                  demands.map((row, i) => (
+                    <TableCell key={'__' + i}>
+                      {isEditable.periodo_d ? (
+                        <TextField
+                          color="secondary"
+                          name="periodo_d"
+                          value={row.periodo_d}
+                          onChange={(e) => onChange(e, i)}
+                          variant="standard"
+                        />
+                      ) : (
+                        row.periodo_d
+                      )}
+                    </TableCell>
+                  ))
                 }
+
               </TableRow>
 
             </TableBody>

@@ -38,14 +38,18 @@ function ElemSearchUsers({ search, setSearch, setUsers }) {
 
     await getUsers(keyword)
       .then((users) => {
-        let _users = users.map(user => {
-          user.dt_demanda = {
-            "demandas": [],
-            "vol_anual_ma": "0"
-          }
-          return user;
-        })
-        setUsers(_users)
+
+        if (users.length>0){
+          let _users = users?.map(user => {
+            user.dt_demanda = {
+              "demandas": [],
+              "vol_anual_ma": "0"
+            }
+            return user;
+          })
+          setUsers(_users)
+        }
+        
       }
       ).then(() =>
         setLoading(false));

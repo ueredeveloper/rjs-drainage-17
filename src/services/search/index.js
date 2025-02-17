@@ -1,6 +1,4 @@
-//const url = 'https://njs-drainage-ueredeveloper.replit.app';
-const url = 'http://localhost:8080';
-//const url = 'https://ec96a2d0-8ba3-41ec-9211-9dbcf7faee95-00-1dq8pdj62qrea.hacker.replit.dev'
+const url = 'https://j-sb-drainage-ueredeveloper.replit.app';
 
 /**
 * Buscar a shape solicitada no servidor
@@ -23,7 +21,6 @@ async function getUsers(keyword) {
     return res.json();
   })
 
-  console.log(response)
   return response;
 }
 

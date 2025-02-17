@@ -131,12 +131,13 @@ function ElemGrant() {
                                             <TableCell>Endereço</TableCell></TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {users.map((user, i) => (
+                                        
+                                        {users.length>0 && (users.map((user, i) => (
                                             <ElemShowUser
                                                 key={'_' + i}
                                                 user={user}
                                                 setUser={setUser}
-                                            />
+                                            />)
                                         ))}
                                     </TableBody>
                                 </Table>

@@ -6,15 +6,15 @@ const url = 'https://njs-drainage-ueredeveloper.replit.app';
  * @returns {Promise<Array>} - Uma Promise que resolve para uma matriz de pontos dentro do polígono.
  */
 async function findPointsInsidePolygon(polygon) {
-  let points = await fetch(url + '/findPointsInsidePolygon', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(polygon)
-  }).then(response => {
-    return response.json();
-  })
+    let points = await fetch(url + '/findPointsInsidePolygon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(polygon)
+    }).then(response => {
+        return response.json();
+    })
 
-  return points;
+    return points;
 }
 /**
  * Função assíncrona que encontra pontos dentro de um círculo.
@@ -23,15 +23,15 @@ async function findPointsInsidePolygon(polygon) {
  */
 async function findPointsInsideCircle(circle) {
 
-  let points = await fetch(url + '/findPointsInsideCircle', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(circle)
-  }).then(response => {
-    return response.json();
-  })
+    let points = await fetch(url + '/findPointsInsideCircle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(circle)
+    }).then(response => {
+        return response.json();
+    })
 
-  return points;
+    return points;
 }
 /**
  * Função assíncrona que encontra pontos dentro de um retângulo.
@@ -39,15 +39,15 @@ async function findPointsInsideCircle(circle) {
  * @returns {Promise<Array>} - Uma Promise que resolve para uma matriz de pontos dentro do retângulo.
  */
 async function findPointsInsideRectangle(rectangle) {
-  let points = await fetch(url + '/findPointsInsideRectangle', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(rectangle)
-  }).then(response => {
-    return response.json();
-  })
+    let points = await fetch(url + '/findPointsInsideRectangle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(rectangle)
+    }).then(response => {
+        return response.json();
+    })
 
-  return points;
+    return points;
 }
 /**
 * Buscar a shape solicitada no servidor
@@ -56,17 +56,17 @@ async function findPointsInsideRectangle(rectangle) {
   */
 async function fetchShape(shape) {
 
-  let response = await fetch(url + `/getShape?shape=${shape}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/JSON',
-      'Content-Type': 'application/JSON',
-    }
+    let response = await fetch(url + `/getShape?shape=${shape}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/JSON',
+            'Content-Type': 'application/JSON',
+        }
 
-  }).then(res => {
-    return res.json();
-  })
-  return response;
+    }).then(res => {
+        return res.json();
+    })
+    return response;
 }
 /**
 * Através de uma coordenada buscar todos os pontos no sistema (fraturado ou poroso) ao qual pertence a coordenada. 
@@ -75,19 +75,30 @@ async function fetchShape(shape) {
 * @para {float} lng Longitue.
 *
   */
+
+
 async function findPointsInASystem(tp_id, lat, lng) {
 
-  let response = await fetch(url + `/findPointsInASystem?tp_id=${tp_id}&lat=${lat}&lng=${lng}`, {
-    method: 'GET',
-    headers: {
-      Accept: 'application/JSON',
-      'Content-Type': 'application/JSON',
-    }
+    //  Tipo de poço na forma antiga 1 - Manual e 2 - Tubular
+    //      opções neste sistema
+    //          1 - Manual e (antigo 1)
+    //          2 - Tubular Raso (antigo 1)
+    //          3 - Tubular Profundo (antito 2)
+    let _tp_id = (tp_id === 1 || tp_id === 2) ? 1 : 2;
 
-  }).then(res => {
-    return res.json();
-  })
-  return response;
+    let response = await fetch(url + `/findPointsInASystem?tp_id=${_tp_id}&lat=${lat}&lng=${lng}`, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/JSON',
+            'Content-Type': 'application/JSON',
+        }
+
+    }).then(res => {
+        return res.json();
+    })
+    return response;
 }
 
-export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem, fetchShape}
+
+
+export { findPointsInsidePolygon, findPointsInsideRectangle, findPointsInsideCircle, findPointsInASystem, fetchShape }

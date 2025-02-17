@@ -283,8 +283,6 @@ EnhancedTableToolbar.propTypes = {
       */
 export default function ElemListGrants({ points, setSelectedRows }) {
 
-  console.log(points)
-
   const [order, setOrder] = useState(DEFAULT_ORDER);
   const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const [selected, setSelected] = useState([]);
@@ -311,7 +309,7 @@ export default function ElemListGrants({ points, setSelectedRows }) {
 
     // primeira renderização da tabela com todas as outorgas selecionadas
     const newSelected = markers.map((n) => n.id);
-    console.log('primeira renderização todos', newSelected, 'markers', markers)
+ 
     setSelected(newSelected);
 
   }, [markers]);

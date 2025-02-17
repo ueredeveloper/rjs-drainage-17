@@ -92,6 +92,8 @@ function nFormatter(num, digits) {
  */
 function analyseItsAvaiable(_info, _points) {
 
+  console.log(_info, _points)
+
   let _Q = 0;
   _points.map((_point) => {
 

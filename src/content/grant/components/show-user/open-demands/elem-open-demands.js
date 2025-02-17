@@ -19,10 +19,12 @@ function ElemOpenDemands({ open, user, setUser }) {
 
     if (end_id != null) {
 
-
       findDemands(end_id).then(demands => {
-        console.log(demands.length)
-        let _demands = demands.map((res) => {
+
+        console.log(demands)
+
+        let _demands = demands?.map((res) => {
+
           return {
             // Usuário
             us_nome: user.us_nome,
@@ -34,9 +36,8 @@ function ElemOpenDemands({ open, user, setUser }) {
             end_logradouro: res.end_logradouro,
             int_latitude: res.int_latitude,
             int_longitude: res.int_longitude,
-            dt_demanda: { demandas: res.dt_demanda },
+            dt_demanda: { demandas: res.dt_demanda, vol_anual_ma: res.vol_anual_ma },
             sub_tp_id: res.sub_tp_id,
-            vol_anual_ma: res.vol_anual_ma,
           };
         });
 
@@ -55,7 +56,6 @@ function ElemOpenDemands({ open, user, setUser }) {
       updateDemands(user.end_id)
     }
 
-    console.log(demands)
   }, [open]);
 
   return (
@@ -79,9 +79,9 @@ function ElemOpenDemands({ open, user, setUser }) {
               </TableHead>
 
               <TableBody>
-                {console.log(demands)}
+
                 {
-                  demands.map((demand, i) => (
+                  demands?.map((demand, i) => (
                     <ElemDemand key={"elem_demand_" + i} demand={demand} user={user} setUser={setUser} />)
                   )
                 }

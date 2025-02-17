@@ -8,7 +8,6 @@ import ElemPolygon from './components/elem-polygon';
 import ElemPolyline from './components/elem-polyline';
 import { fetchShape } from '../../services';
 import { SystemContext } from '../elem-content';
-import { initialState } from '../initial-state';
 
 /**
  * Componente para exibir um mapa com conteúdo.
@@ -35,10 +34,7 @@ function ElemMapContent({ tab, mode }) {
   /**
    * Map controls
    */
-  const [controls, setControls] = useState({
-    center: { lat: -15.760780, lng: -47.815997 },
 
-  })
   const [system, setSystem, overlays, setOverlays, shapes, setShapes] = useContext(SystemContext);
  
   const [system_markers, setSystemMarkers] = useState([]);
@@ -49,7 +45,6 @@ function ElemMapContent({ tab, mode }) {
   }, [system.markers]);
 
   useEffect(() => {
-    console.log(system)
     setSystemMarkers(system.sel_markers)
   }, [system.sel_markers]);
 
@@ -101,7 +96,6 @@ function ElemMapContent({ tab, mode }) {
       if (checked && polygons.length === 0 && _shapes[shape].polygons.length === 0) {
 
         getShape(shape).then(_polygons => {
-          console.log('servidor')
 
           setShapes(prev => {
             return {
@@ -167,14 +161,14 @@ function ElemMapContent({ tab, mode }) {
 
         {
           shapes.fraturado.polygons.map((shape, i) => {
-            console.log('render polygon fraturado')
+        
             return (
               <ElemPolygon key={i} shape={shape} map={map} />
             )
           })
         }
         {shapes.poroso.polygons.map((shape, i) => {
-          console.log('render polygon poroso')
+       
           return (
             <ElemPolygon key={i} shape={shape} map={map} />
           )

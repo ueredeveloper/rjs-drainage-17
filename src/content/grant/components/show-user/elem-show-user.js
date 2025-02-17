@@ -10,7 +10,6 @@ function ElemShowUser({ user, setUser }) {
 
   //const { row } = props;
   const [open, setOpen] = useState(false);
-  //console.log(user)
 
   /*
   {

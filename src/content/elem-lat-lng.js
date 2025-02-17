@@ -11,6 +11,7 @@ import { CircularProgress, Fade, Paper } from '@mui/material';
 import { analyseItsAvaiable } from '../tools';
 import { SystemContext } from './elem-content';
 
+
 /**
  * Componente para entrada de coordenadas latitude e longitude.
  * @returns {JSX.Element} O componente de coordenadas latitude e longitude.
@@ -56,8 +57,6 @@ export default function ElemLatLng() {
     await findPointsInASystem(tp_id, lat, lng)
       .then(points => {
 
-
-
         let markers = [
           // cria o primeiro marcador que não tem vazão pois buscou-se apenas uma coordenada
           {
@@ -80,23 +79,14 @@ export default function ElemLatLng() {
             hg_analyse: _hg_analyse,
           };
         });
-
-
-
       })
       .then(
 
         console.log(system)
-        // centralizar o mapa na nova coordenada
-        //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
-      )
+      // centralizar o mapa na nova coordenada
+      //() => { map.setCenter({ lat: parseFloat(lat), lng: parseFloat(lng) }) }
+    )
       .then(() => { setLoading(false); });
-
-
-
-
-
-
   }
 
   return (
@@ -152,7 +142,10 @@ export default function ElemLatLng() {
                   <CircularProgress size={25} />
                 </Fade>
                 :
-                <IconButton color="secondary" size="large" onClick={() => { handle().then(() => { setLoading(false); }); }}>
+                <IconButton color="secondary" size="large" onClick={() => {
+                  handle().then(() => { setLoading(false); });
+
+                }}>
                   <SearchIcon />
                 </IconButton>
             }
