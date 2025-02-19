@@ -36,7 +36,8 @@ function ElemOpenDemands({ open, user, setUser }) {
             end_logradouro: res.end_logradouro,
             int_latitude: res.int_latitude,
             int_longitude: res.int_longitude,
-            dt_demanda: { demandas: res.dt_demanda, vol_anual_ma: res.vol_anual_ma },
+            // Organiza as demandas por mês com a função sort().
+            dt_demanda: { demandas: res.dt_demanda.sort((a, b)=> a.mes-b.mes), vol_anual_ma: res.vol_anual_ma },
             sub_tp_id: res.sub_tp_id,
           };
         });

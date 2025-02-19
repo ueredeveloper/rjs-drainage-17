@@ -38,7 +38,8 @@ async function findDemands(end_id) {
 
   }).then(res => {
     return res.json();
-  })
+  });
+  console.log(response)
 
   return response;
 }

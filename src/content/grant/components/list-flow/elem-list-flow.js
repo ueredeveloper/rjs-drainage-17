@@ -52,6 +52,8 @@ function ElemListFlow({ user, setUser }) {
         }
         return _dem;
       })
+
+      console.log('new dem', newDem)
       setDemands(newDem);
 
       setUser(prev => {
@@ -128,7 +130,7 @@ function ElemListFlow({ user, setUser }) {
 
                 {demands?.length > 0 && (
                   <>
-                    <TableCell>{'Vazão (l/h)'}</TableCell>
+                    
                     {demands.map((row, i) => (
                       <TableCell key={'__' + i}>
                         {isEditable.vazao_lh ? (

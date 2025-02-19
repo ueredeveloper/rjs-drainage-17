@@ -96,6 +96,8 @@ async function findPointsInASystem(tp_id, lat, lng) {
     }).then(res => {
         return res.json();
     })
+
+    console.log('find points in a system ', response)
     return response;
 }
 
