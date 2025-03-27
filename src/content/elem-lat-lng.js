@@ -12,16 +12,40 @@ import { analyseItsAvaiable } from '../tools';
 import { SystemContext } from './elem-content';
 import AlertContent from "./alert-content"; // Certifique-se de que este componente tenha a lógica de alerta
 
+/**
+ * Componente para entrada de coordenadas e busca de pontos em um sistema geográfico.
+ * Utiliza contexto para compartilhar estado do sistema e exibe alertas em caso de erro.
+ *
+ * @returns {JSX.Element} O componente de entrada de coordenadas.
+ */
 export default function ElemLatLng() {
   const [loading, setLoading] = useState(false);
   const [system, setSystem, map] = useContext(SystemContext);
   const [openAlert, setOpenAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState(""); // Estado para armazenar a mensagem do alerta
-  const [timeoutId, setTimeoutId] = useState(null); // Estado para armazenar o id do setTimeout
+  
+  /**
+   * Estado para armazenar a mensagem do alerta.
+   * @type {string}
+   */
+  const [alertMessage, setAlertMessage] = useState("");
 
+  /**
+   * Estado para armazenar o id do setTimeout (tempo de 4s para o alerta).
+   * @type {number | null}
+   */
+  const [timeoutId, setTimeoutId] = useState(null);
+
+  /**
+   * Manipula mudanças nos campos de entrada e formata os valores.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} event - Evento de mudança no campo de entrada.
+   */
   const handleChange = (event) => {
     let { name, value } = event.target;
-    value = value.replace(",", ".").trim().replace(/\s+/g, ''); // Substitui vírgula por ponto e remove espaços em branco
+    // Substitui vírgula por ponto e remove espaços em branco nas coordenadas digitadas
+    value = value.replace(",", ".").trim().replace(/\s+/g, '');
+
+    // Atualiza a variável system
     setSystem((prev) => ({
       ...prev,
       point: {
@@ -31,13 +55,18 @@ export default function ElemLatLng() {
     }));
   };
 
+  /**
+   * Manipula a busca de pontos no sistema com base nas coordenadas fornecidas.
+   * Atualiza o estado do sistema e exibe alertas em caso de erro.
+   *
+   * @async
+   */
   async function handle() {
     setLoading(true);
     let { tp_id, lat, lng } = system.point;
 
     try {
       const points = await findPointsInASystem(tp_id, lat, lng);
-
       let markers = [
         { int_latitude: lat, int_longitude: lng, dt_demanda: { demandas: [] } },
         ...points._points || []
@@ -53,34 +82,32 @@ export default function ElemLatLng() {
           hg_analyse: _hg_analyse,
         }));
       } else {
-        setAlertMessage("Coordenadas inválidas. Verifique a latitude e longitude!"); // Define a mensagem do alerta
-        setOpenAlert(true); // Exibe o alerta
+        setAlertMessage("Coordenadas inválidas. Verifique a latitude e longitude!");
+        setOpenAlert(true);
 
-        // Cancela qualquer timeout anterior, caso exista
         if (timeoutId) {
           clearTimeout(timeoutId);
         }
 
         const newTimeoutId = setTimeout(() => {
-          setOpenAlert(false); // Fecha o alerta após 4 segundos
+          setOpenAlert(false);
         }, 4000);
 
-        setTimeoutId(newTimeoutId); // Atualiza o id do timeout
+        setTimeoutId(newTimeoutId);
       }
     } catch (error) {
-      setAlertMessage("Falha na requisição. verifique a latitude e longitude!"); // Define a mensagem do alerta
+      setAlertMessage("Falha na requisição. Verifique a latitude e longitude!");
       setOpenAlert(true);
 
-      // Cancela qualquer timeout anterior, caso exista
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
 
       const newTimeoutId = setTimeout(() => {
-        setOpenAlert(false); // Fecha o alerta após 4 segundos
+        setOpenAlert(false);
       }, 4000);
 
-      setTimeoutId(newTimeoutId); // Atualiza o id do timeout
+      setTimeoutId(newTimeoutId);
     } finally {
       setLoading(false);
     }
@@ -105,7 +132,7 @@ export default function ElemLatLng() {
               size="small"
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
-                  handle();  // Chama a função de pesquisa quando Enter é pressionado
+                  handle();
                 }
               }}
             />
@@ -119,7 +146,7 @@ export default function ElemLatLng() {
               size="small"
               onKeyDown={(event) => {
                 if (event.key === 'Enter') {
-                  handle();  // Chama a função de pesquisa quando Enter é pressionado
+                  handle();
                 }
               }}
             />

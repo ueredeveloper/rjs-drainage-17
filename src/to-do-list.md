@@ -13,7 +13,19 @@ Implementar melhorias na validação de coordenadas geográficas e na exibição
    - Garantir que a latitude esteja entre -90 e 90 graus  
    - Exibir mensagem de erro caso os valores sejam inválidos  
 
+```
+   function createValidator (){
+      let i = ...
+   }
+
+```
+
 2️⃣ **Criar um alerta para coordenadas inseridas incorretamente**   
+
+   ```
+   Substitui vírgula por ponto e remove espaços em branco
+   value = value.replace(",", ".").trim().replace(/\s+/g, ''); 
+   ```
    - Exibir mensagem específica para valores inválidos  
    - Estilizar alerta para destacar o erro  
 
