@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 import ElemMapContent from './map/elem-map-content';
 import ElemWellType from './elem-well-type';
 import ElemAnalyse from './elem-analyse';
@@ -13,9 +13,6 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { makeStyles } from '@mui/styles';
-import { findPointsInASystem } from '../services';
-import { analyseItsAvaiable } from '../tools';
-import { orange } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme) => ({
   content: {
